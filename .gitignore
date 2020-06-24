@@ -1,0 +1,4 @@
+node_modules
+rest
+.env
+build
