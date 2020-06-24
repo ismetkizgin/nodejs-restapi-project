@@ -17,6 +17,9 @@ app.set('api_key', process.env.API_KEY || 'secret');
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(routers.authRouter);
+app.use(routers.slideRouter);
+app.use(routers.pageRouter);
+app.use(routers.InstantEarthquakesRouter);
 
 app.use((req, res, next) => {
     res.send("404 NOT FOUND");
