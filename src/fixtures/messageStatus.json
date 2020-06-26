@@ -1,0 +1,80 @@
+{
+    "userMessage": {
+        "not_found": {
+            "status": 404,
+            "message": "There is no such user !"
+        },
+        "ok_SignUp": {
+            "status": 200,
+            "message": "User registration has taken place"
+        },
+        "INTERNAL_SERVER_ERROR_SignUp":{
+            "status": 500,
+            "message":"Error while registering user !"
+        },
+        "ok_Delete":{
+            "status":200,
+            "message":"User deletion has occurred."
+        },
+        "INTERNAL_SERVER_ERROR_Delete":{
+            "status":500,
+            "message":"An error occurred during user deletion !"
+        },   
+    },
+    "slideMessage":{
+        "not_found_all":{
+            "status":404,
+            "message":"No slide available !"
+        },
+        "ok_İnsert":{
+            "status":200,
+            "message":"Slide added."
+        },
+        "INTERNAL_SERVER_ERROR_İnsert":{
+            "status":500,
+            "message":"There was an error adding slide !"
+        },
+        "ok_Update":{
+            "status":200,
+            "message":"Slide updated."
+        },
+        "INTERNAL_SERVER_ERROR_Update":{
+            "status":500,
+            "message":"There was an error updating the slide !"
+        },
+        "not_found_delete":{
+            "status":404,
+            "message":"There is no such slide !"
+        },
+    },
+    "pageMessage":{
+        "not_found_all":{
+            "status":404,
+            "message":"No content available !"
+        },
+        "ok_insert":{
+            "status":200,
+            "message":"Page added."
+        },
+        "INTERNAL_SERVER_ERROR_insert":{
+            "status":500,
+            "message":"There was an error adding page !"
+        },
+        "ok_Update":{
+            "status":200,
+            "message":"The page has been updated."
+        },
+        "INTERNAL_SERVER_ERROR_Update":{
+            "status":500,
+            "message":"Error updating page !"
+        },
+        "not_found_Delete":{
+            "status":404,
+            "message":"There is no such page!"
+        },
+    },
+    
+
+}
+
+    
