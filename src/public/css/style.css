@@ -3,36 +3,122 @@
 /* RESET
 ----------------------------------------------------------------------------------------*/
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
     margin: 0;
     padding: 0;
     border: 0;
-    font-size:100%;
+    font-size: 100%;
     font: inherit;
     vertical-align: baseline;
 }
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
     display: block;
 }
-img, embed, object, video { max-width: 100%; }
-.ie6 img.full, .ie6 object.full, .ie6 embed, .ie6 video { width: 100%; }
+img,
+embed,
+object,
+video {
+    max-width: 100%;
+}
+.ie6 img.full,
+.ie6 object.full,
+.ie6 embed,
+.ie6 video {
+    width: 100%;
+}
 
 /* BASE
 ----------------------------------------------------------------------------------------*/
 
-*{  
+* {
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
@@ -40,66 +126,66 @@ img, embed, object, video { max-width: 100%; }
     transition: all 0.3s ease;
 }
 html,
-body{
-    position:relative; 
+body {
+    position: relative;
     min-height: 100%;
     height: 100%;
     -webkit-backface-visibility: hidden;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
 }
-strong{
+strong {
     font-weight: 500;
 }
-i{
+i {
     font-style: italic;
 }
-.overflow-hidden{
+.overflow-hidden {
     position: relative;
     overflow: hidden;
 }
-.content a{
+.content a {
     color: #00a8e3;
     text-decoration: none;
 }
-.content a:hover{
+.content a:hover {
     text-decoration: underline;
 }
-  
-  /* Create an active/current tablink class */
-  .active{
-    background-color:#DCDEE9;
+
+/* Create an active/current tablink class */
+.active {
+    background-color: #dcdee9;
     color: #00a8e3;
-  }
-  
-  /* Style the tab content */
-  .tabcontent {
+}
+
+/* Style the tab content */
+.tabcontent {
     display: none;
-  }
-p{
+}
+p {
     font-size: 14px;
-    color: #777A7A;
+    color: #777a7a;
     margin-bottom: 16px;
     line-height: 1.6;
     font-weight: 300;
 }
-.content h1:first-child{
+.content h1:first-child {
     font-size: 1.333em;
     color: #034c8f;
     padding-top: 2.5em;
     text-transform: uppercase;
-    border-top: 1px solid rgba(255,255,255,0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
     border-top-width: 0;
     margin-top: 0;
     margin-bottom: 1.3em;
     clear: both;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
 }
 code,
-pre{
-    font-family: 'Source Code Pro', monospace;
+pre {
+    font-family: "Source Code Pro", monospace;
 }
-.higlighted{
-    background-color: rgba(0,0,0,0.05);
+.higlighted {
+    background-color: rgba(0, 0, 0, 0.05);
     padding: 3px;
     border-radius: 3px;
 }
@@ -107,7 +193,7 @@ pre{
 /* LEFT-MENU
 ----------------------------------------------------------------------------------------*/
 
-.left-menu{
+.left-menu {
     position: fixed;
     z-index: 3;
     top: 0;
@@ -119,7 +205,7 @@ pre{
     overflow-x: hidden;
     font-size: 18px;
 }
-.content-logo{
+.content-logo {
     position: relative;
     display: block;
     width: 100%;
@@ -127,47 +213,47 @@ pre{
     padding: 1.425em 11.5%;
     padding-right: 0;
 }
-.content-logo img{
+.content-logo img {
     display: inline-block;
     max-width: 70%;
     vertical-align: middle;
 }
-.content-logo span{
+.content-logo span {
     display: inline-block;
     margin-left: 10px;
     vertical-align: middle;
-    color: #323F4C;
+    color: #323f4c;
     font-size: 1.1em;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
 }
-.content-menu{
+.content-menu {
     margin: 2em auto 2em;
     padding: 0 0 100px;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
 }
-.content-menu ul{
+.content-menu ul {
     list-style: none;
     margin: 0;
     padding: 0;
     line-height: 28px;
 }
-.content-menu ul li{
+.content-menu ul li {
     list-style: none;
     margin: 0;
     padding: 0;
     line-height: 42px;
 }
 .content-menu ul li:hover,
-.content-menu ul li.active{
-    background-color:#DCDEE9;
+.content-menu ul li.active {
+    background-color: #dcdee9;
 }
 .content-menu ul li:hover a,
-.content-menu ul li.active a{
+.content-menu ul li.active a {
     color: #00a8e3;
 }
-.content-menu ul li a{
+.content-menu ul li a {
     padding: 0.5em 13.25% 0em;
-    color: #777A7A;
+    color: #777a7a;
     letter-spacing: 0.025em;
     line-height: 1.2;
     text-transform: capitalize;
@@ -185,7 +271,7 @@ pre{
     min-height: 100%;
     padding-bottom: 1px;
 }
-.content-code{
+.content-code {
     width: 50%;
     position: absolute;
     right: 0;
@@ -198,17 +284,17 @@ pre{
     position: relative;
     z-index: 30;
 }
-.content h1, 
-.content h2, 
-.content h3, 
-.content h4, 
-.content h5, 
-.content h6, 
-.content p, 
-.content table, 
-.content ul, 
-.content ol, 
-.content aside, 
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6,
+.content p,
+.content table,
+.content ul,
+.content ol,
+.content aside,
 .content dl {
     margin-right: 50%;
     padding: 0 28px;
@@ -217,32 +303,32 @@ pre{
     max-width: 680px;
 }
 .content h2,
-.content h3, 
-.content h4, 
-.content h5, 
+.content h3,
+.content h4,
+.content h5,
 .content h6 {
     font-size: 15px;
     margin-top: 2.5em;
     margin-bottom: 0.8em;
     color: #034c8f;
     text-transform: uppercase;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: "Roboto Condensed", sans-serif;
 }
-.content h2{
+.content h2 {
     font-size: 1.333em;
 }
-.content h4{
+.content h4 {
     color: #00a8e3;
     margin-top: 0;
     text-transform: none;
     font-size: 14px;
     margin-bottom: 0.2em;
 }
-.content-page .content p, 
+.content-page .content p,
 .content-page .content pre {
     max-width: 680px;
 }
-.content pre, 
+.content pre,
 .content blockquote {
     background-color: #323f4c;
     border-color: #323f4c;
@@ -254,17 +340,18 @@ pre{
     clear: right;
     box-sizing: border-box;
 }
-.content pre code, .content pre {
+.content pre code,
+.content pre {
     font-size: 12px;
     line-height: 1.5;
 }
 .content blockquote,
 .content pre,
-.content pre code{
+.content pre code {
     padding-top: 0;
     margin-top: 0;
 }
-.content pre code{
+.content pre code {
     margin-top: -2em;
 }
 .content table {
@@ -289,21 +376,36 @@ pre{
     text-align: left;
     vertical-align: top;
     line-height: 1.6;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-weight: 300;
-    color: #777A7A;
+    color: #777a7a;
+}
+.w3-teal {
+    display: none;
 }
 /* RESPONSIVE
 ----------------------------------------------------------------------------------------*/
 
-@media only screen and (max-width:980px){
-    .content h1, .content h2, .content h3, .content h4, .content h5, .content h6, .content p, .content table, .content ul, .content ol, .content aside, .content dl {
+@media only screen and (max-width: 980px) {
+    .content h1,
+    .content h2,
+    .content h3,
+    .content h4,
+    .content h5,
+    .content h6,
+    .content p,
+    .content table,
+    .content ul,
+    .content ol,
+    .content aside,
+    .content dl {
         margin-right: 0;
     }
-    .content-code{
+    .content-code {
         display: none;
     }
-    .content pre, .content blockquote {
+    .content pre,
+    .content blockquote {
         margin: 20px 0;
         padding: 28px;
         display: block;
@@ -315,22 +417,40 @@ pre{
     }
 }
 
-@media only screen and (max-width:680px){
-    .left-menu{
+@media only screen and (max-width: 680px) {
+    .left-menu {
         position: relative;
         width: auto;
     }
-    .left-menu .content-menu{
+    .left-menu {
         display: none;
     }
-    .content-page{
+    .display-none {
+        display: none;
+    }
+    .display-block {
+        width: 18rem;
+        display: block;
+    }
+    .content-page {
         margin-left: 0;
+    }
+    .w3-teal {
+        display: block;
     }
 }
 
 /* BROWSER AND NON-SEMANTIC STYLING
 ----------------------------------------------------------------------------------------*/
 
-.cf:before, .cf:after { content: ""; display: block; }
-.cf:after { clear: both; }
-.ie6 .cf { zoom: 1 }
+.cf:before,
+.cf:after {
+    content: "";
+    display: block;
+}
+.cf:after {
+    clear: both;
+}
+.ie6 .cf {
+    zoom: 1;
+}
