@@ -18,8 +18,8 @@ function openCity(evt, cityName) {
 }
 
 function slideBar_open() {
-  document.getElementById("mySidebar").className = "w3-sidebar left-menu display-block";
+  document.getElementById("mySidebar").className = "sidebar left-menu display-block";
 }
 function slideBar_close() {
-  document.getElementById("mySidebar").className = "w3-sidebar left-menu display-none";
+  document.getElementById("mySidebar").className = "sidebar left-menu display-none";
 }

@@ -430,12 +430,12 @@ pre {
     .left-menu {
         display: none;
     }
-    .slidbar-button{
+    .slidbar-button {
         float: left;
         text-align: left;
         font-size: 7vw;
     }
-    .header-logo{
+    .header-logo {
         text-align: right;
         padding-right: 15px;
     }
@@ -470,4 +470,13 @@ pre {
 }
 .ie6 .cf {
     zoom: 1;
+}
+
+/* sideBar
+----------------------------------------------------------------------------------------*/
+
+.sidebar {
+    background-color: #fff;
+    position: fixed !important;
+    overflow: auto;
 }
