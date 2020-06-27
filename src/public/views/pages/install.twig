@@ -1,0 +1,82 @@
+<div class="content-page tabcontent" id="London" style="display: block;">
+	<div class="content-code"></div>
+	<div class="content">
+
+		<div class="overflow-hidden content-section">
+			<h1 id="get-started">Get started</h1>
+			<pre>
+                    API Domain
+                    <script>document.write(path)</script>
+                </pre>
+			<p>
+				Solver API provides access to solver algorithms.
+			</p>
+		</div>
+
+		<div class="overflow-hidden content-section" id="content-get-characters">
+			<h2 id="get-install">Installation Instructions</h2>
+			<pre><code class="bash">
+#package install
+$ npm install
+
+#project build
+$ npm build
+                </code></pre>
+			<p>
+				Solver Api, install and compile project packages<br>
+			</p>
+			<br>
+
+
+		</div>
+
+		<div class="overflow-hidden content-section">
+			<h2 id="get-countdown">Countdown Solver</h2>
+			<pre><code class="bash">
+# Request Example
+GET <script>document.write(path)</script>countdownsolver/[2,4,5,7,5,50]/425
+                </code></pre>
+			<p>
+				For the countdown solver, you need to make a GET call to the URL below :<br>
+				<code class="higlighted">
+					<script>
+						document.write(path)
+					</script>countdownsolver/[2,4,5,7,5,50]/425</code>
+			</p>
+			<br>
+			<pre><code class="json">
+Result example:
+{
+    "result": "50 * 4 * 2 = 400\n5 * 5 = 25\n400 + 25 = 425\n",
+    "score": 9
+}
+                </code></pre>
+
+		</div>
+
+		<div class="overflow-hidden content-section">
+			<h2 id="get-word">Word Solver</h2>
+			<pre><code class="bash">
+# Request Example
+GET <script>document.write(path)</script>wordsolver/[m, e, k, t, u, a,g, y] 
+                </code></pre>
+			<p>
+				For the word solver, you need to make a GET call to the URL below :<br>
+				<code class="higlighted">
+					<script>
+						document.write(path)
+					</script>wordsolver/[m, e, k, t, u, a,g, y]</code>
+			</p>
+			<br>
+			<pre><code class="json">
+Result example:
+{
+    "word": "MUKTEZA",
+    "score": 9
+}
+                </code></pre>
+
+		</div>
+	</div>
+	<div class="content-code"></div>
+</div>
