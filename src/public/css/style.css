@@ -383,6 +383,11 @@ pre {
 .w3-teal {
     display: none;
 }
+
+#header-response {
+    display: none;
+}
+
 /* RESPONSIVE
 ----------------------------------------------------------------------------------------*/
 
@@ -424,6 +429,18 @@ pre {
     }
     .left-menu {
         display: none;
+    }
+    .slidbar-button{
+        float: left;
+        text-align: left;
+        font-size: 7vw;
+    }
+    .header-logo{
+        text-align: right;
+        padding-right: 15px;
+    }
+    #header-response {
+        display: block;
     }
     .display-none {
         display: none;
