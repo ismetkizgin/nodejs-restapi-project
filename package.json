@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "main": "./build/app.js",
   "scripts": {
-    "start": "babel-node src/app.js"
+    "start": "npm run build && node ./build/app.js -p $PORT",
+    "start:dev": "nodemon src/app.js --exec babel-node",
+    "build": "npm run clean && npm run babel-build",
+    "babel-build": "babel -d ./build ./src -s --copy-files",
+    "clean": "rm -rf ./build && mkdir build",
+    "heroku-postbuild": "npm install --only=dev"
   },
   "dependencies": {
-    "babel-cli": "^6.26.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
