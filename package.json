@@ -6,7 +6,7 @@
     "start": "npm run build && node ./build/app.js",
     "start:dev": "nodemon src/app.js --exec babel-node",
     "build": "npm run clean && npm run babel-build",
-    "babel-build": "babel -d ./build ./src -s",
+    "babel-build": "babel -d ./build ./src -s --copy-files",
     "clean": "rm -rf ./build && mkdir build"
   },
   "dependencies": {
