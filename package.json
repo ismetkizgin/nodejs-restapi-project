@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "./build/app.js",
   "scripts": {
-    "start": "npm run build && node ./build/app.js -p $PORT",
+    "start": "nodemon src/app.js --exec babel-node",
     "start:dev": "nodemon src/app.js --exec babel-node",
     "build": "npm run clean && npm run babel-build",
     "babel-build": "babel -d ./build ./src -s --copy-files",
@@ -21,9 +21,7 @@
     "request": "^2.88.2",
     "require-directory": "^2.1.1",
     "twig": "^1.15.1",
-    "validator": "^13.0.0"
-  },
-  "devDependencies": {
+    "validator": "^13.0.0",
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.4",
     "@babel/node": "^7.8.4",
