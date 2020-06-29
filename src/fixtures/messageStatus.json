@@ -1,6 +1,6 @@
 {
     "userMessage": {
-        "Found_Not": {
+        "All_Not_Found": {
             "status": 404,
             "message": "There is no such user !"
         },
