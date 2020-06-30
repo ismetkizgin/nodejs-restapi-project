@@ -6,7 +6,7 @@ module.exports = {
         if (isInt(req.body.UserIdentityNo) && !isEmpty(req.body.UserPassword))
             next();
         else
-            res.send({ status: validateMessage.status, message: validateMessage.message });
+            res.status(validateMessage.status).send({ message: validateMessage.message });
     },
 
     all: (req, res, next) => {
@@ -22,13 +22,13 @@ module.exports = {
         if (state)
             next();
         else
-            res.send({ status: validateMessage.status, message: validateMessage.message });
+            res.status(validateMessage.status).send({ message: validateMessage.message });
     },
 
     deleteMyAccount: (req, res, next) => {
         if (isInt(req.body.UserIdentityNo))
             next();
         else
-            res.send({ status: validateMessage.status, message: validateMessage.message });
+            res.status(validateMessage.status).send({ message: validateMessage.message });
     }
 }
