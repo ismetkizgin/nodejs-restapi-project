@@ -1,5 +1,5 @@
 const dbConnection = require('../mysqlConnector');
-const errorMessage = require('../../../fixtures/messageStatus.json').slideMessage;
+import { slideMessage } from '../../../fixtures/messageStatus.json';
 
 module.exports = {
     all: () => {
@@ -10,7 +10,7 @@ module.exports = {
                         resolve(result);
                     }
                     else {
-                        resolve({ status: errorMessage.All_Not_Found.status, message: errorMessage.All_Not_Found.message });
+                        resolve({ status: slideMessage.All_Not_Found.status, message: slideMessage.All_Not_Found.message });
                     }
                 }
                 else
@@ -24,10 +24,10 @@ module.exports = {
             dbConnection.query('INSERT INTO tblSlide SET ?', data, (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
-                        resolve({ status: errorMessage.Insert_Ok.status, message: errorMessage.Insert_Ok.message });
+                        resolve({ status: slideMessage.Insert_Ok.status, message: slideMessage.Insert_Ok.message });
                     }
                     else {
-                        resolve({ status: errorMessage.Insert_Internal_Server_Error.status, message: errorMessage.Insert_Internal_Server_Error.message });
+                        resolve({ status: slideMessage.Insert_Internal_Server_Error.status, message: slideMessage.Insert_Internal_Server_Error.message });
                     }
                 }
                 else
@@ -43,10 +43,10 @@ module.exports = {
             dbConnection.query('UPDATE tblSlide SET SlideName = :SlideName, SlideUrl = :SlideUrl, SlidePictureUrl = :SlidePictureUrl WHERE SlideID = : SlideID', data, (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
-                        resolve({ status: errorMessage.Update_Ok.status, message: errorMessage.Update_Ok.message });
+                        resolve({ status: slideMessage.Update_Ok.status, message: slideMessage.Update_Ok.message });
                     }
                     else {
-                        resolve({ status: errorMessage.Update_Internal_Server_Error.status, message: errorMessage.Update_Internal_Server_Error.message });
+                        resolve({ status: slideMessage.Update_Internal_Server_Error.status, message: slideMessage.Update_Internal_Server_Error.message });
                     }
                 }
                 else
@@ -63,7 +63,7 @@ module.exports = {
                         resolve(result[0]);
                     }
                     else {
-                        resolve({ status: errorMessage.Delete_Not_Found.status, message: errorMessage.Delete_Not_Found.message });
+                        resolve({ status: slideMessage.Delete_Not_Found.status, message: slideMessage.Delete_Not_Found.message });
                     }
                 }
                 else
