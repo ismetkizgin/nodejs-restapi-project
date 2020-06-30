@@ -53,6 +53,10 @@
         "Delete_Not_Found": {
             "status": 404,
             "message": "There is no such slide !"
+        },
+        "Slide_Post_Router_Proxy_Authentication_Required": {
+            "status": 407,
+            "message": "Unauthorized transaction !"
         }
     },
     "pageMessage": {
