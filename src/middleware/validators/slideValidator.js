@@ -9,6 +9,6 @@ module.exports = {
 		if (state)
 			next();
 		else
-			res.send({ status: validateMessage.status, message: validateMessage.message });
+			res.status(validateMessage.status).send({ message: validateMessage.message });
 	}
 }
