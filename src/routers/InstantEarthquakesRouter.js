@@ -10,7 +10,7 @@ router.get('/InstantEarthquakes', async (req, res) => {
             res.send(JSON.parse(body));
         });
     } catch (error) {
-        res.send(error);
+        res.status(error.status).send({ message: error.message });
     }
 });
 
@@ -18,10 +18,10 @@ router.get('/InstantEarthquakes', async (req, res) => {
 router.get('/InstantEarthquakes/:piece', async (req, res) => {
     try {
         request(requestUrl, function (error, response, body) {
-            res.send(JSON.parse(body).splice(0,req.params.piece));
+            res.send(JSON.parse(body).splice(0, req.params.piece));
         });
     } catch (error) {
-        res.send(error);
+        res.status(error.status).send({ message: error.message });
     }
 });
 
