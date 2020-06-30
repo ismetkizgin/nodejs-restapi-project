@@ -40,7 +40,7 @@ router.delete('/delete-my-account', verifyToken, async (req, res) => {
 			const result = await userTransactions.delete(req.body.UserIdentityNo);
 			res.json(result);
 		} else {
-			res.status(userMessage.DeleteMyAccount_Proxy_Authentication_Required.status).json({ message: userMessage.DeleteMyAccount_Proxy_Authentication_Required.message});
+			res.status(userMessage.DeleteMyAccount_Router_Proxy_Authentication_Required.status).json({ message: userMessage.DeleteMyAccount_Router_Proxy_Authentication_Required});
 		}
 	} catch (err) {
 		res.status(err.status).json({ message: err.message });

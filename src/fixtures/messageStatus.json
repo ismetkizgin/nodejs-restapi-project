@@ -24,7 +24,7 @@
             "status": 400,
             "message": "There is such user"
         },
-        "DeleteMyAccount_Proxy_Authentication_Required": {
+        "DeleteMyAccount_Router_Proxy_Authentication_Required": {
             "status": 407,
             "message": "You are not authorized to do this !"
         }
