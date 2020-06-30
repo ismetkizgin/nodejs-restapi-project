@@ -7,7 +7,7 @@ export const verifyToken = (req, res, next) => {
         jwt.verify(token, req.app.get('api_key'), (err, decoded) => {
 
             if (err) {
-                res.json({ status: tokenMessage.Token_Invalid.status, message: tokenMessage.Token_Invalid.message })
+                res.status(tokenMessage.Token_Invalid.status).json({ message: tokenMessage.Token_Invalid.message });
             } else {
                 req.decode = decoded,
                     next();
@@ -15,6 +15,6 @@ export const verifyToken = (req, res, next) => {
         });
 
     } else {
-        res.json({ status: tokenMessage.Token_Null.status, message: tokenMessage.Token_Null.message })
+        res.status(tokenMessage.Token_Null.status).json({ message: tokenMessage.Token_Null.message });
     }
 };
