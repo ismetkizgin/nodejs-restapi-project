@@ -1,5 +1,5 @@
 const dbConnection = require('../mysqlConnector');
-const errorMessage = require('../../../fixtures/messageStatus.json').userMessage;
+import { userMessage } from '../../../fixtures/messageStatus.json';
 
 module.exports = {
     login: (data) => {
@@ -10,7 +10,7 @@ module.exports = {
                         resolve(result[0][0]);
                     }
                     else {
-                        resolve({ status: errorMessage.All_Not_Found.status, message: errorMessage.All_Not_Found.message });
+                        resolve({ status: userMessage.All_Not_Found.status, message: userMessage.All_Not_Found.message });
                     }
                 }
                 else
@@ -24,10 +24,10 @@ module.exports = {
             dbConnection.query('INSERT INTO tblUser SET ?', data, (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
-                        resolve({ status: errorMessage.SignUp_Ok.status, message: errorMessage.SignUp_Ok.message });
+                        resolve({ status: userMessage.SignUp_Ok.status, message: userMessage.SignUp_Ok.message });
                     }
                     else {
-                        resolve({ status: errorMessage.SignUp_Internal_Server_Error.status, message: errorMessage.SignUp_Internal_Server_Error });
+                        resolve({ status: userMessage.SignUp_Internal_Server_Error.status, message: userMessage.SignUp_Internal_Server_Error });
                     }
                 }
                 else
@@ -44,7 +44,7 @@ module.exports = {
                         resolve(result[0]);
                     }
                     else {
-                        resolve({ status: errorMessage.All_Not_Found.status, message: errorMessage.All_Not_Found.message });
+                        resolve({ status: userMessage.All_Not_Found.status, message: userMessage.All_Not_Found.message });
                     }
                 }
                 else
@@ -57,10 +57,10 @@ module.exports = {
             dbConnection.query('DELETE FROM tblUser WHERE UserIdentityNo = ?', [UserIdentityNo], (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
-                        resolve({ status: errorMessage.Delete_Ok.status, message: errorMessage.Delete_Ok.message });
+                        resolve({ status: userMessage.Delete_Ok.status, message: userMessage.Delete_Ok.message });
                     }
                     else {
-                        resolve({ status: errorMessage.Delete_Internal_Server_Error.status, message: errorMessage.Delete_Internal_Server_Error.message });
+                        resolve({ status: userMessage.Delete_Internal_Server_Error.status, message: userMessage.Delete_Internal_Server_Error.message });
                     }
                 }
                 else
