@@ -1,4 +1,5 @@
 const dbConnection = require('../mysqlConnector');
+const errorMessage = require('../../../fixtures/messageStatus.json').slideMessage;
 
 module.exports = {
     all: () => {
@@ -9,7 +10,7 @@ module.exports = {
                         resolve(result);
                     }
                     else {
-                        resolve({ status: 404, message: 'No slide available !' });
+                        resolve({ status: errorMessage.All_Not_Found.status, message: errorMessage.All_Not_Found.message });
                     }
                 }
                 else
@@ -23,10 +24,10 @@ module.exports = {
             dbConnection.query('INSERT INTO tblSlide SET ?', data, (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
-                        resolve({ status: true, message: 'Slide added.' });
+                        resolve({ status: errorMessage.Insert_Ok.status, message: errorMessage.Insert_Ok.message });
                     }
                     else {
-                        resolve({ status: 500, message: 'There was an error adding slide !' });
+                        resolve({ status: errorMessage.Insert_Internal_Server_Error.status, message: errorMessage.Insert_Internal_Server_Error.message });
                     }
                 }
                 else
@@ -42,10 +43,10 @@ module.exports = {
             dbConnection.query('UPDATE tblSlide SET SlideName = :SlideName, SlideUrl = :SlideUrl, SlidePictureUrl = :SlidePictureUrl WHERE SlideID = : SlideID', data, (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
-                        resolve({ status: true, message: 'Slide updated.' });
+                        resolve({ status: errorMessage.Update_Ok.status, message: errorMessage.Update_Ok.message });
                     }
                     else {
-                        resolve({ status: 500, message: 'There was an error updating the slide !' });
+                        resolve({ status: errorMessage.Update_Internal_Server_Error.status, message: errorMessage.Update_Internal_Server_Error.message });
                     }
                 }
                 else
@@ -62,7 +63,7 @@ module.exports = {
                         resolve(result[0]);
                     }
                     else {
-                        resolve({ status: 404, message: 'There is no such slide !' });
+                        resolve({ status: errorMessage.Delete_Not_Found.status, message: errorMessage.Delete_Not_Found.message });
                     }
                 }
                 else
