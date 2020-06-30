@@ -1,4 +1,5 @@
 import { isEmpty } from '../functions/validatorFunctions'
+import { validateMessage } from '../../fixtures/messageStatus.json'
 
 module.exports = {
 	sliderAdd: async (req, res, next) => {
@@ -8,6 +9,6 @@ module.exports = {
 		if (state)
 			next();
 		else
-			res.send({ status: false, message: 'Must have correct data entry' });
+			res.status(validateMessage.status).send({ message: validateMessage.message });
 	}
 }

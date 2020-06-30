@@ -1,9 +1,9 @@
 import express from 'express'
-const router = express();
-
 import { verifyToken, slideValidator } from '../middleware'
-
 import dbFactory from '../database'
+import { slideMessage } from '../fixtures/messageStatus.json'
+
+const router = express();
 const slideTransactions = dbFactory('slideTransactions');
 
 router.get('/slide', async (req, res) => {
@@ -11,7 +11,7 @@ router.get('/slide', async (req, res) => {
 		const response = await slideTransactions.all();
 		res.send(response);
 	} catch (error) {
-		res.send(error);
+		res.status(error.status).send({ message: error.message });
 	}
 });
 
@@ -21,10 +21,10 @@ router.post('/slide/add', verifyToken, slideValidator.sliderAdd, async (req, res
 			const response = await slideTransactions.insert(req.body);
 			res.send(response);
 		} else {
-			res.send({ status: false, message: 'Unauthorized transaction !' });
+			res.status(slideMessage.Slide_Post_Router_Proxy_Authentication_Required.status).send({ message: slideMessage.Slide_Post_Router_Proxy_Authentication_Required.message });
 		}
 	} catch (error) {
-		res.send(error);
+		res.status(error.status).send({ message: error.message });
 	}
 });
 
