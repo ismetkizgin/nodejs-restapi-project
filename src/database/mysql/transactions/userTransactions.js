@@ -1,4 +1,5 @@
 const dbConnection = require('../mysqlConnector');
+const errorMessage = require('../../../fixtures/messageStatus.json').userMessage;
 
 module.exports = {
     login: (data) => {
@@ -9,7 +10,7 @@ module.exports = {
                         resolve(result[0][0]);
                     }
                     else {
-                        resolve({ status: 404, message: 'There is no such user !' });
+                        resolve({ status: errorMessage.All_Not_Found.status, message: errorMessage.All_Not_Found.message });
                     }
                 }
                 else
@@ -23,10 +24,10 @@ module.exports = {
             dbConnection.query('INSERT INTO tblUser SET ?', data, (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
-                        resolve({ status: true, message: 'User registration has taken place.' });
+                        resolve({ status: errorMessage.SignUp_Ok.status, message: errorMessage.SignUp_Ok.message });
                     }
                     else {
-                        resolve({ status: 500, message: 'Error while registering user !' });
+                        resolve({ status: errorMessage.SignUp_Internal_Server_Error.status, message: errorMessage.SignUp_Internal_Server_Error });
                     }
                 }
                 else
@@ -43,7 +44,7 @@ module.exports = {
                         resolve(result[0]);
                     }
                     else {
-                        resolve({ status: 404, message: 'There is no such user !' });
+                        resolve({ status: errorMessage.All_Not_Found.status, message: errorMessage.All_Not_Found.message });
                     }
                 }
                 else
@@ -56,10 +57,10 @@ module.exports = {
             dbConnection.query('DELETE FROM tblUser WHERE UserIdentityNo = ?', [UserIdentityNo], (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
-                        resolve({ status: true, message: 'User deletion has occurred.' });
+                        resolve({ status: errorMessage.Delete_Ok.status, message: errorMessage.Delete_Ok.message });
                     }
                     else {
-                        resolve({ status: 500, message: 'An error occurred during user deletion !' });
+                        resolve({ status: errorMessage.Delete_Internal_Server_Error.status, message: errorMessage.Delete_Internal_Server_Error.message });
                     }
                 }
                 else
