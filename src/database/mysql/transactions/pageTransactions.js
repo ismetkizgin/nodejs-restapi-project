@@ -1,5 +1,5 @@
 const dbConnection = require('../mysqlConnector');
-const errorMessage = require('../../../fixtures/messageStatus.json').pageMessage;
+import { pageMessage } from '../../../fixtures/messageStatus.json';
 
 module.exports = {
     all: (piece) => {
@@ -11,7 +11,7 @@ module.exports = {
                         resolve(result);
                     }
                     else {
-                        resolve({ status: errorMessage.All_Not_Found.status, message: errorMessage.All_Not_Found.message });
+                        resolve({ status: pageMessage.All_Not_Found.status, message: pageMessage.All_Not_Found.message });
                     }
                 }
                 else
@@ -28,7 +28,7 @@ module.exports = {
                         resolve(result);
                     }
                     else {
-                        resolve({ status: errorMessage.All_Not_Found.status, message: errorMessage.All_Not_Found.message });
+                        resolve({ status: pageMessage.All_Not_Found.status, message: pageMessage.All_Not_Found.message });
                     }
                 }
                 else
@@ -42,10 +42,10 @@ module.exports = {
             dbConnection.query('INSERT INTO tblPage SET ?', data, (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
-                        resolve({ status: errorMessage.Insert_Ok.status, message: errorMessage.Insert_Ok.message });
+                        resolve({ status: pageMessage.Insert_Ok.status, message: pageMessage.Insert_Ok.message });
                     }
                     else {
-                        resolve({ status: errorMessage.Insert_Internal_Server_Error.status, message: errorMessage.Insert_Internal_Server_Error.message });
+                        resolve({ status: pageMessage.Insert_Internal_Server_Error.status, message: pageMessage.Insert_Internal_Server_Error.message });
                     }
                 }
                 else
@@ -61,10 +61,10 @@ module.exports = {
             dbConnection.query('UPDATE tblPage SET PageTitle=:PageTitle, PageContent=:PageContent, PageDateTime=:PageDateTime, PagePicture=:PagePicture, PageStatusID=:PageStatusID, PageDescription=:PageDescription, PageKeywords=:PageKeywords where PageID=:PageID', data, (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
-                        resolve({ status: errorMessage.Update_Ok.status, message: errorMessage.Update_Ok.message });
+                        resolve({ status: pageMessage.Update_Ok.status, message: pageMessage.Update_Ok.message });
                     }
                     else {
-                        resolve({ status: errorMessage.Update_Internal_Server_Error.status, message: errorMessage.Update_Internal_Server_Error.message });
+                        resolve({ status: pageMessage.Update_Internal_Server_Error.status, message: pageMessage.Update_Internal_Server_Error.message });
                     }
                 }
                 else
@@ -81,7 +81,7 @@ module.exports = {
                         resolve(result[0]);
                     }
                     else {
-                        resolve({ status: errorMessage.Delete_Not_Found.status, message: errorMessage.Delete_Not_Found.message });
+                        resolve({ status: pageMessage.Delete_Not_Found.status, message: pageMessage.Delete_Not_Found.message });
                     }
                 }
                 else
