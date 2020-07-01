@@ -1,163 +1,14 @@
-@charset "utf-8";
 
-/* RESET
-----------------------------------------------------------------------------------------*/
-
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
-    display: block;
-}
-img,
-embed,
-object,
-video {
-    max-width: 100%;
-}
-.ie6 img.full,
-.ie6 object.full,
-.ie6 embed,
-.ie6 video {
-    width: 100%;
-}
 
 /* BASE
 ----------------------------------------------------------------------------------------*/
 
-* {
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    -ms-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-}
-html,
-body {
-    position: relative;
-    min-height: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    font-family: "Roboto", sans-serif;
-}
-strong {
-    font-weight: 500;
-}
-i {
-    font-style: italic;
-}
-.overflow-hidden {
-    position: relative;
-    overflow: hidden;
-}
-.content a {
-    color: #00a8e3;
-    text-decoration: none;
-}
-.content a:hover {
-    text-decoration: underline;
-}
 
-/* Create an active/current tablink class */
 .active {
     background-color: #dcdee9;
     color: #00a8e3;
 }
 
-/* Style the tab content */
 .tabcontent {
     display: none;
 }
@@ -167,6 +18,7 @@ p {
     margin-bottom: 16px;
     line-height: 1.6;
     font-weight: 300;
+    text-align: justify;
 }
 .content h1:first-child {
     font-size: 1.333em;
@@ -326,7 +178,7 @@ pre {
 }
 .content-page .content p,
 .content-page .content pre {
-    max-width: 680px;
+    max-width: 760px;
 }
 .content pre,
 .content blockquote {
