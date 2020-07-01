@@ -1,81 +1,40 @@
-<div class="content-page tabcontent" id="London" style="display: block;">
+<div class="content-page tabcontent" id="tabInstallation" style="display: block;">
 	<div class="content-code"></div>
 	<div class="content">
-
 		<div class="overflow-hidden content-section">
-			<h1 id="get-started">Get started</h1>
-			<pre>
-                    API Domain
-                    <script>document.write(path)</script>
-                </pre>
-			<p>
-				Solver API provides access to solver algorithms.
-			</p>
+			<h1>Get started</h1>
+			<pre>API Domain
+<script>document.write(path)</script></pre>
+			<p>The REST API used in MyFIS projects works on the domain given on the right, in line with the requests made with certain parameters. The operating methods of the REST API project are given below.</p>
 		</div>
-
-		<div class="overflow-hidden content-section" id="content-get-characters">
-			<h2 id="get-install">Installation Instructions</h2>
-			<pre><code class="bash">
-#package install
+		<div class="overflow-hidden content-section">
+			<h1>Project Publishing Instructions</h1>
+			<p>The project can be published in two different ways.</p>
+			<p>&emsp;1- Docker<br>&emsp;2- NPM</p>
+			<h2>Installation with Docker</h2>
+			<pre><code>#deploy project with docker
+$ docker-compose up
+        
+#install docker database backup
+$ cat &#60;sql_filename&#62; | docker exec -i &#60;container_name&#62; mysql -u root --password=root &#60;database_name&#62;</code></pre>
+			<p>To publish the project on Docker, go to the project directory and write the following codes;<br></p>
+			<br>
+			<h2>Installation with NPM</h2>
+			<pre><code>#package install
 $ npm install
 
-#project build
-$ npm build
-                </code></pre>
-			<p>
-				Solver Api, install and compile project packages<br>
-			</p>
-			<br>
-
-
+#project start
+$ npm start</code></pre>
+			<p>To publish the project in NPM, go to the project directory and write the following codes;</p>
 		</div>
-
 		<div class="overflow-hidden content-section">
-			<h2 id="get-countdown">Countdown Solver</h2>
-			<pre><code class="bash">
-# Request Example
-GET <script>document.write(path)</script>countdownsolver/[2,4,5,7,5,50]/425
-                </code></pre>
-			<p>
-				For the countdown solver, you need to make a GET call to the URL below :<br>
-				<code class="higlighted">
-					<script>
-						document.write(path)
-					</script>countdownsolver/[2,4,5,7,5,50]/425</code>
-			</p>
-			<br>
-			<pre><code class="json">
-Result example:
-{
-    "result": "50 * 4 * 2 = 400\n5 * 5 = 25\n400 + 25 = 425\n",
-    "score": 9
-}
-                </code></pre>
+			<h1>Running the project as a developer</h1>
+			<pre><code>#package install
+$ npm install
 
-		</div>
-
-		<div class="overflow-hidden content-section">
-			<h2 id="get-word">Word Solver</h2>
-			<pre><code class="bash">
-# Request Example
-GET <script>document.write(path)</script>wordsolver/[m, e, k, t, u, a,g, y] 
-                </code></pre>
-			<p>
-				For the word solver, you need to make a GET call to the URL below :<br>
-				<code class="higlighted">
-					<script>
-						document.write(path)
-					</script>wordsolver/[m, e, k, t, u, a,g, y]</code>
-			</p>
-			<br>
-			<pre><code class="json">
-Result example:
-{
-    "word": "MUKTEZA",
-    "score": 9
-}
-                </code></pre>
-
+#project start
+$ npm run start:dev</code></pre>
+<p>As a developer, to start the project and do the test operations, first go to the project directory and install the packages, then give the necessary command to start the mode.</p>
 		</div>
 	</div>
 	<div class="content-code"></div>
