@@ -27,7 +27,7 @@ router.post('/sign-up', authValidator.all, async (req, res) => {
 		const findUserIdentityNo = await userTransactions.findUserIdentityNo(req.body.UserIdentityNo);
 		if (findUserIdentityNo.status == 404) {
 			const result = await userTransactions.signup(req.body);
-			res.json(result);
+			res.json({message: result.message});
 		} else res.status(userMessage.SignUp_Router_Bad_Request.status).json({ message: userMessage.SignUp_Router_Bad_Request.message });
 	} catch (err) {
 		res.status(err.status).json({ message: err.message });
@@ -38,7 +38,7 @@ router.delete('/delete-my-account', verifyToken, async (req, res) => {
 	try {
 		if (req.decode.UserIdentityNo == req.body.UserIdentityNo) {
 			const result = await userTransactions.delete(req.body.UserIdentityNo);
-			res.json(result);
+			res.json({message: result.message});
 		} else {
 			res.status(userMessage.DeleteMyAccount_Router_Proxy_Authentication_Required.status).json({ message: userMessage.DeleteMyAccount_Router_Proxy_Authentication_Required});
 		}

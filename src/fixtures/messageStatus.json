@@ -20,8 +20,8 @@
             "status": 500,
             "message": "An error occurred during user deletion !"
         },
-        "SignUp_Router_Bad_Request": {
-            "status": 400,
+        "SignUp_Router_Expectation_Failed": {
+            "status": 417,
             "message": "There is such user"
         },
         "DeleteMyAccount_Router_Proxy_Authentication_Required": {
@@ -86,7 +86,7 @@
         }
     },
     "validateMessage": {
-        "status": 400,
+        "status": 417,
         "message": "Must have correct data entry."
     },
     "tokenMessage": {
@@ -95,7 +95,7 @@
             "message": "Failed to authentication token."
         },
         "Token_Null": {
-            "status": 400,
+            "status": 417,
             "message": "No token provided."
         }
     }
