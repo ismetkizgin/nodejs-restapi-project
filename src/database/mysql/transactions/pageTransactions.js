@@ -1,4 +1,5 @@
 const dbConnection = require('../mysqlConnector');
+import { pageMessage } from '../../../fixtures/messageStatus.json';
 
 module.exports = {
     all: (piece) => {
@@ -10,7 +11,7 @@ module.exports = {
                         resolve(result);
                     }
                     else {
-                        resolve({ status: 404, message: 'No content available !' });
+                        resolve({ status: pageMessage.All_Not_Found.status, message: pageMessage.All_Not_Found.message });
                     }
                 }
                 else
@@ -27,7 +28,7 @@ module.exports = {
                         resolve(result);
                     }
                     else {
-                        resolve({ status: 404, message: 'No content available !' });
+                        resolve({ status: pageMessage.All_Not_Found.status, message: pageMessage.All_Not_Found.message });
                     }
                 }
                 else
@@ -41,10 +42,10 @@ module.exports = {
             dbConnection.query('INSERT INTO tblPage SET ?', data, (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
-                        resolve({ status: true, message: 'Page added.' });
+                        resolve({ status: pageMessage.Insert_Ok.status, message: pageMessage.Insert_Ok.message });
                     }
                     else {
-                        resolve({ status: 500, message: 'There was an error adding page !' });
+                        resolve({ status: pageMessage.Insert_Internal_Server_Error.status, message: pageMessage.Insert_Internal_Server_Error.message });
                     }
                 }
                 else
@@ -60,10 +61,10 @@ module.exports = {
             dbConnection.query('UPDATE tblPage SET PageTitle=:PageTitle, PageContent=:PageContent, PageDateTime=:PageDateTime, PagePicture=:PagePicture, PageStatusID=:PageStatusID, PageDescription=:PageDescription, PageKeywords=:PageKeywords where PageID=:PageID', data, (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
-                        resolve({ status: true, message: 'The page has been updated.' });
+                        resolve({ status: pageMessage.Update_Ok.status, message: pageMessage.Update_Ok.message });
                     }
                     else {
-                        resolve({ status: 500, message: 'Error updating page !' });
+                        resolve({ status: pageMessage.Update_Internal_Server_Error.status, message: pageMessage.Update_Internal_Server_Error.message });
                     }
                 }
                 else
@@ -80,7 +81,7 @@ module.exports = {
                         resolve(result[0]);
                     }
                     else {
-                        resolve({ status: 404, message: 'There is no such page!' });
+                        resolve({ status: pageMessage.Delete_Not_Found.status, message: pageMessage.Delete_Not_Found.message });
                     }
                 }
                 else

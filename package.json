@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "main": "./build/app.js",
   "scripts": {
-    "start": "npm run build && node ./build/app.js",
+    "start": "npm run build && node ./build/app.js -p $PORT",
     "start:dev": "nodemon src/app.js --exec babel-node",
     "build": "npm run clean && npm run babel-build",
-    "babel-build": "babel -d ./build ./src -s",
-    "clean": "rm -rf ./build && mkdir build"
+    "babel-build": "babel -d ./build ./src -s --copy-files",
+    "clean": "rm -rf ./build && mkdir build",
+    "heroku-postbuild": "npm install --only=dev && npm run build"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -19,6 +20,7 @@
     "path": "^0.12.7",
     "request": "^2.88.2",
     "require-directory": "^2.1.1",
+    "twig": "^1.15.1",
     "validator": "^13.0.0"
   },
   "devDependencies": {
