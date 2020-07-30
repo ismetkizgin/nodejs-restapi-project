@@ -40,7 +40,7 @@ module.exports = {
     update: (data) => {
         return new Promise((resolve, reject) => {
             data.SlideURL = data.SlideURL != null ? data.SlideURL : null;
-            dbConnection.query('UPDATE tblSlide SET SlideName = :SlideName, SlideUrl = :SlideUrl, SlidePictureUrl = :SlidePictureUrl WHERE SlideID = : SlideID', data, (error, result) => {
+            dbConnection.query('UPDATE tblSlide SET SlideTitle = :SlideTitle, SlideUrl = :SlideUrl, SlidePicPath = :SlidePicPath WHERE SlideID = : SlideID', data, (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
                         resolve({ status: slideMessage.Update_Ok.status, message: slideMessage.Update_Ok.message });
