@@ -219,63 +219,51 @@ CREATE TABLE IF NOT EXISTS `tblUserState` (
 ENGINE = InnoDB;
 
 SHOW WARNINGS;
-USE `My-Fis` ;
+
 
 -- -----------------------------------------------------
--- function UserLogin
+-- procedure UserLogin
 -- -----------------------------------------------------
 
 USE `My-Fis`;
-DROP function IF EXISTS `UserLogin`;
+DROP procedure IF EXISTS `UserLogin`;
 SHOW WARNINGS;
 
 DELIMITER $$
 USE `My-Fis`$$
-CREATE FUNCTION `UserLogin` (UserIdentitiyNo INT, UserPassword INT )
-RETURNS INT
+CREATE PROCEDURE `UserLogin` ( IN UserIdentitiyNo INT, IN UserPassword INT  ) 
 BEGIN
-	DECLARE Result INT;
-	SET Result = 0;
-    
-	IF(Select * From tblUser where UserIdentityNo = UserIdentitiyNo and UserPassword = UserPassword ) THEN
-        SET Result = 1;
-    ELSE
-        SET Result = 0;
-    END IF;
-    
-    return Result;
-END$$
+    select U.UserID,U.UserIdentity,U.UserFirstName,U.UserLastName ,UD.UserAdressCity,UD.UserAdressDistrict,
+    UD.UserAdressStreet ,UD.UserAdressNo ,UD.UserAdressApartmentName, UD.UserEmail ,UD.UserPhone , UD.UserFamilyPeopleCount
+    from tblUser U inner join tblUserDetails UD on U.UserID=UD.UserID 
+    where U.UserIdentityNo = UserIdentityNo and U.UserPassword = UserPassword;
+END;$$
 
 DELIMITER ;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- function AdminLogin
+-- procedure AdminLogin
 -- -----------------------------------------------------
 
 USE `My-Fis`;
-DROP function IF EXISTS `AdminLogin`;
+DROP procedure IF EXISTS `AdminLogin`;
 SHOW WARNINGS;
 
 DELIMITER $$
 USE `My-Fis`$$
-CREATE FUNCTION `AdminLogin` (  AdminIdentitiyNo INT,   AdminPassword INT )
-RETURNS INT
+CREATE PROCEDURE `AdminLogin` ( IN AdminIdentitiyNo INT,   IN AdminPassword INT  ) 
 BEGIN
-	DECLARE Result INT;
-	SET Result = 0;
-	
-    IF(Select * From tblStateAgencyAdmin where AdminIdentitiyNo = AdminIdentitiyNo and AdminPassword = AdminPassword ) THEN
-        SET Result = 1;
-    ELSE
-        SET Result = 0;
-    END IF;
-    
-    return Result;
-END$$
+    select SAA.StateAgencyAdminID, SAA.StateAgencyAdminIdentityNo , SAA.StateAgencyAdminFirstName, SAA.StateAgencyAdminLastName,
+    AST.AdminStatusName, SA.StateAgencyName
+    from tblStateAgencyAdmin SAA inner join tblAdminStatus AST  on SAA. StateAgencyAdminID = AST.StateAgencyAdminID 
+    inner join tblStateAgency SA on SAA.StateAgencyAdminID = SA.StateAgencyAdminID
+    where AdminIdentitiyNo = AdminIdentitiyNo and AdminPassword = AdminPassword;
+END;$$
 
 DELIMITER ;
 SHOW WARNINGS;
+
 
 -- -----------------------------------------------------
 -- procedure UserSignUp
