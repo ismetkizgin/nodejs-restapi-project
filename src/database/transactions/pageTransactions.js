@@ -1,11 +1,11 @@
-const dbConnection = require('../mysqlConnector');
-import { pageMessage } from '../../../fixtures/messageStatus.json';
+const { mysqlDataContext } = require('../dataContexts');
+import { pageMessage } from '../../fixtures/messageStatus.json'
 
 module.exports = {
     all: (piece) => {
         return new Promise((resolve, reject) => {
             const limit = piece != null ? `LIMIT ${piece}` : ''
-            dbConnection.query(`SELECT * FROM tblPage order by PageID desc ${limit}`, (error, result) => {
+            mysqlDataContext.query(`SELECT * FROM tblPage order by PageID desc ${limit}`, (error, result) => {
                 if (!error) {
                     if (result != null) {
                         resolve(result);
@@ -22,7 +22,7 @@ module.exports = {
 
     whereStatus: (PageStatusID) => {
         return new Promise((resolve, reject) => {
-            dbConnection.query('SELECT * FROM tblPage where PageStatusID=? order by PageID desc', [PageStatusID], (error, result) => {
+            mysqlDataContext.query('SELECT * FROM tblPage where PageStatusID=? order by PageID desc', [PageStatusID], (error, result) => {
                 if (!error) {
                     if (result != null) {
                         resolve(result);
@@ -39,7 +39,7 @@ module.exports = {
 
     insert: (data) => {
         return new Promise((resolve, reject) => {
-            dbConnection.query('INSERT INTO tblPage SET ?', data, (error, result) => {
+            mysqlDataContext.query('INSERT INTO tblPage SET ?', data, (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
                         resolve({ status: pageMessage.Insert_Ok.status, message: pageMessage.Insert_Ok.message });
@@ -58,7 +58,7 @@ module.exports = {
     update: (data) => {
         return new Promise((resolve, reject) => {
             data.SlideURL = data.SlideURL != null ? data.SlideURL : null;
-            dbConnection.query('UPDATE tblPage SET PageTitle=:PageTitle, PageContent=:PageContent, PageDateTime=:PageDateTime, PagePicture=:PagePicture, PageStatusID=:PageStatusID, PageDescription=:PageDescription, PageKeywords=:PageKeywords where PageID=:PageID', data, (error, result) => {
+            mysqlDataContext.query('UPDATE tblPage SET PageTitle=:PageTitle, PageContent=:PageContent, PageDateTime=:PageDateTime, PagePicture=:PagePicture, PageStatusID=:PageStatusID, PageDescription=:PageDescription, PageKeywords=:PageKeywords where PageID=:PageID', data, (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
                         resolve({ status: pageMessage.Update_Ok.status, message: pageMessage.Update_Ok.message });
@@ -75,7 +75,7 @@ module.exports = {
 
     delete: (PageID) => {
         return new Promise((resolve, reject) => {
-            dbConnection.query('DELETE FROM tblPage WHERE PageID = ?', [PageID], (error, result) => {
+            mysqlDataContext.query('DELETE FROM tblPage WHERE PageID = ?', [PageID], (error, result) => {
                 if (!error) {
                     if (result[0] != null) {
                         resolve(result[0]);

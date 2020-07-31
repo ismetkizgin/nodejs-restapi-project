@@ -1,12 +1,8 @@
-const mysqlDbTransactions = require('./mysql');
+const transactions = require('./transactions');
 
-export default (transactionsName) => {
-    switch (transactionsName) {
-        case 'userTransactions':
-            return mysqlDbTransactions.userTransactions;
-        case 'slideTransactions':
-            return mysqlDbTransactions.slideTransactions;
-        case 'pageTransactions':
-            return mysqlDbTransactions.pageTransactions;
-    }
+module.exports = (provider) => {
+    let transaction = transactions[provider];
+    if (!transaction)
+        throw new Error('Database transaction is not found. Database transaction provider: ' + provider);
+    return transaction;
 }

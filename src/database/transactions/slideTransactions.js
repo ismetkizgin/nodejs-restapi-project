@@ -1,10 +1,10 @@
-const dbConnection = require('../mysqlConnector');
-import { slideMessage } from '../../../fixtures/messageStatus.json';
+const { mysqlDataContext } = require('../dataContexts');
+import { slideMessage } from '../../fixtures/messageStatus.json';
 
 module.exports = {
     all: () => {
         return new Promise((resolve, reject) => {
-            dbConnection.query('SELECT * FROM tblSlide order by SlideID desc', (error, result) => {
+            mysqlDataContext.query('SELECT * FROM tblSlide order by SlideID desc', (error, result) => {
                 if (!error) {
                     if (result != null) {
                         resolve(result);
@@ -21,7 +21,7 @@ module.exports = {
 
     insert: (data) => {
         return new Promise((resolve, reject) => {
-            dbConnection.query('INSERT INTO tblSlide SET ?', data, (error, result) => {
+            mysqlDataContext.query('INSERT INTO tblSlide SET ?', data, (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
                         resolve({ status: slideMessage.Insert_Ok.status, message: slideMessage.Insert_Ok.message });
@@ -40,7 +40,7 @@ module.exports = {
     update: (data) => {
         return new Promise((resolve, reject) => {
             data.SlideURL = data.SlideURL != null ? data.SlideURL : null;
-            dbConnection.query('UPDATE tblSlide SET SlideTitle = :SlideTitle, SlideUrl = :SlideUrl, SlidePicPath = :SlidePicPath WHERE SlideID = : SlideID', data, (error, result) => {
+            mysqlDataContext.query('UPDATE tblSlide SET SlideTitle = :SlideTitle, SlideUrl = :SlideUrl, SlidePicPath = :SlidePicPath WHERE SlideID = : SlideID', data, (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
                         resolve({ status: slideMessage.Update_Ok.status, message: slideMessage.Update_Ok.message });
@@ -57,7 +57,7 @@ module.exports = {
 
     delete: (SlideID) => {
         return new Promise((resolve, reject) => {
-            dbConnection.query('DELETE FROM tblSlide WHERE SlideID = ?', [SlideID], (error, result) => {
+            mysqlDataContext.query('DELETE FROM tblSlide WHERE SlideID = ?', [SlideID], (error, result) => {
                 if (!error) {
                     if (result[0] != null) {
                         resolve(result[0]);
