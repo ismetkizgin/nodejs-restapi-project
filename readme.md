@@ -1,6 +1,6 @@
 # MyFIS RESTFUL API Project
 
-The REST API used in MyFIS projects works on the domain given on the right, in line with the requests made with certain parameters. The operating methods of the REST API project are given below.
+Deploy methods of MyFis REST API project are given below.
 
 ### Project Publishing Instructions
 The project can be published in two different ways.
