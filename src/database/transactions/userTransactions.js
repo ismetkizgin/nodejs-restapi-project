@@ -1,10 +1,10 @@
-const dbConnection = require('../mysqlConnector');
-import { userMessage } from '../../../fixtures/messageStatus.json';
+const { mysqlDataContext } = require('../dataContexts');
+import { userMessage } from '../../fixtures/messageStatus.json';
 
 module.exports = {
     login: (data) => {
         return new Promise((resolve, reject) => {
-            dbConnection.query('CALL prLogin(?, ?)', [data.UserIdentityNo, data.UserPassword], (error, result) => {
+            mysqlDataContext.query('CALL prLogin(?, ?)', [data.UserIdentityNo, data.UserPassword], (error, result) => {
                 if (!error) {
                     if (result[0][0] != null) {
                         resolve(result[0][0]);
@@ -21,7 +21,7 @@ module.exports = {
 
     signup: (data) => {
         return new Promise((resolve, reject) => {
-            dbConnection.query('INSERT INTO tblUser SET ?', data, (error, result) => {
+            mysqlDataContext.query('INSERT INTO tblUser SET ?', data, (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
                         resolve({ status: userMessage.SignUp_Ok.status, message: userMessage.SignUp_Ok.message });
@@ -38,7 +38,7 @@ module.exports = {
 
     findUserIdentityNo: (UserIdentityNo) => {
         return new Promise((resolve, reject) => {
-            dbConnection.query('SELECT * FROM tblUser WHERE UserIdentityNo = ?', [UserIdentityNo], (error, result) => {
+            mysqlDataContext.query('SELECT * FROM tblUser WHERE UserIdentityNo = ?', [UserIdentityNo], (error, result) => {
                 if (!error) {
                     if (result[0] != null) {
                         resolve(result[0]);
@@ -54,7 +54,7 @@ module.exports = {
     },
     delete: (UserIdentityNo) => {
         return new Promise((resolve, reject) => {
-            dbConnection.query('DELETE FROM tblUser WHERE UserIdentityNo = ?', [UserIdentityNo], (error, result) => {
+            mysqlDataContext.query('DELETE FROM tblUser WHERE UserIdentityNo = ?', [UserIdentityNo], (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
                         resolve({ status: userMessage.Delete_Ok.status, message: userMessage.Delete_Ok.message });
