@@ -4,7 +4,7 @@ import { userMessage } from '../../fixtures/messageStatus.json';
 module.exports = {
     login: (data) => {
         return new Promise((resolve, reject) => {
-            mysqlDataContext.query('CALL prLogin(?, ?)', [data.UserIdentityNo, data.UserPassword], (error, result) => {
+            mysqlDataContext.query('CALL UserLogin(?, ?)', [data.UserIdentityNo, data.UserPassword], (error, result) => {   
                 if (!error) {
                     if (result[0][0] != null) {
                         resolve(result[0][0]);
@@ -18,7 +18,6 @@ module.exports = {
             });
         });
     },
-
     signup: (data) => {
         return new Promise((resolve, reject) => {
             mysqlDataContext.query('INSERT INTO tblUser SET ?', data, (error, result) => {
@@ -35,7 +34,6 @@ module.exports = {
             });
         });
     },
-
     findUserIdentityNo: (UserIdentityNo) => {
         return new Promise((resolve, reject) => {
             mysqlDataContext.query('SELECT * FROM tblUser WHERE UserIdentityNo = ?', [UserIdentityNo], (error, result) => {
