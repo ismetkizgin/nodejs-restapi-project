@@ -22,7 +22,6 @@ module.exports = {
         return new Promise((resolve, reject) => {
             mysqlDataContext.query('CALL UserSignUp(?,?,?,?,?,?,?,?,?,?,?,?)', [data.UserFirstName, data.UserLastName, data.UserIdentityNo, data.UserPassword, data.UserAdressCity, data.UserAdressDistrict, data.UserAdressStreet, data.UserAdressNo, data.UserAdressApartmentName, data.UserEmail, data.UserPhone, data.UserFamilyPeopleCount], (error, result) => {
                 if (!error) {
-                    console.log(result)
                     if (result.affectedRows != 0) {
                         resolve({ status: userMessage.SignUp_Ok.status, message: userMessage.SignUp_Ok.message });
                     }
