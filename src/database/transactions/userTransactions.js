@@ -4,7 +4,7 @@ import { userMessage } from '../../fixtures/messageStatus.json';
 module.exports = {
     login: (data) => {
         return new Promise((resolve, reject) => {
-            mysqlDataContext.query('CALL UserLogin(?, ?)', [data.UserIdentityNo, data.UserPassword], (error, result) => {   
+            mysqlDataContext.query('CALL UserLogin(?, ?)', [data.UserIdentityNo, data.UserPassword], (error, result) => {
                 if (!error) {
                     if (result[0][0] != null) {
                         resolve(result[0][0]);
@@ -20,13 +20,14 @@ module.exports = {
     },
     signup: (data) => {
         return new Promise((resolve, reject) => {
-            mysqlDataContext.query('INSERT INTO tblUser SET ?', data, (error, result) => {
+            mysqlDataContext.query('CALL UserSignUp(?,?,?,?,?,?,?,?,?,?,?,?)', [data.UserFirstName, data.UserLastName, data.UserIdentityNo, data.UserPassword, data.UserAdressCity, data.UserAdressDistrict, data.UserAdressStreet, data.UserAdressNo, data.UserAdressApartmentName, data.UserEmail, data.UserPhone, data.UserFamilyPeopleCount], (error, result) => {
                 if (!error) {
+                    console.log(result)
                     if (result.affectedRows != 0) {
                         resolve({ status: userMessage.SignUp_Ok.status, message: userMessage.SignUp_Ok.message });
                     }
                     else {
-                        resolve({ status: userMessage.SignUp_Internal_Server_Error.status, message: userMessage.SignUp_Internal_Server_Error });
+                        resolve({ status: userMessage.SignUp_Internal_Server_Error.status, message: userMessage.SignUp_Internal_Server_Error.message });
                     }
                 }
                 else
