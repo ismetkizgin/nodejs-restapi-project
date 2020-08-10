@@ -110,8 +110,8 @@ CREATE TABLE IF NOT EXISTS `tblStateAgencyAdmin` (
   `StateAgencyAdminFirstName` VARCHAR(30) NULL,
   `StateAgencyAdminLastName` VARCHAR(30) NULL,
   `StateAgencyAdminIdentityNo` bigint(11) NULL,
-  `StateAgencyAdminEmail` VARCHAR(30) NULL,
-  `StateAgencyAdminPassword` VARCHAR(10) NULL,
+  `StateAgencyAdminEmail` VARCHAR(40) NULL,
+  `StateAgencyAdminPassword` VARCHAR(99) NULL,
   `AdminStatusID` INT NULL,
   `StateAgencyID` INT NULL,
   PRIMARY KEY (`StateAgencyAdminID`))
@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `tblUser` (
   `UserFirstName` VARCHAR(30) NULL,
   `UserLastName` VARCHAR(20) NULL,
   `UserIdentityNo` BIGINT(11) NULL,
-  `UserPassword` VARCHAR(10) NULL,
+  `UserPassword` VARCHAR(99) NULL,
   PRIMARY KEY (`UserID`))
 ENGINE = InnoDB;
 
@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `tblUserDetails` (
   `UserAdressStreet` VARCHAR(25) NULL,
   `UserAdressNo` VARCHAR(10) NULL,
   `UserAdressApartmentName` VARCHAR(20) NULL,
-  `UserEmail` VARCHAR(25) NULL,
+  `UserEmail` VARCHAR(40) NULL,
   `UserPhone` VARCHAR(15) NULL,
   `UserFamilyPeopleCount` INT NULL,
   `UserID` INT NULL,
@@ -238,7 +238,7 @@ SHOW WARNINGS;
 
 DELIMITER $$
 USE `My-Fis`$$
-CREATE PROCEDURE `UserLogin` ( IN UserIdentityNo bigint(11), IN UserPassword VARCHAR(15)  )
+CREATE PROCEDURE `UserLogin` ( IN UserIdentityNo bigint(11), IN UserPassword VARCHAR(99)  )
 BEGIN
     select U.UserID,U.UserIdentityNo,U.UserFirstName,U.UserLastName ,UD.UserAdressCity,UD.UserAdressDistrict,
     UD.UserAdressStreet ,UD.UserAdressNo ,UD.UserAdressApartmentName, UD.UserEmail ,UD.UserPhone , UD.UserFamilyPeopleCount
@@ -259,7 +259,7 @@ SHOW WARNINGS;
 
 DELIMITER $$
 USE `My-Fis`$$
-CREATE PROCEDURE `AdminLogin` ( IN AdminIdentitiyNo bigint(11),   IN AdminPassword VARCHAR(15)  ) 
+CREATE PROCEDURE `AdminLogin` ( IN AdminIdentitiyNo bigint(11),   IN AdminPassword VARCHAR(99)  )
 BEGIN
     select SAA.StateAgencyAdminID, SAA.StateAgencyAdminIdentityNo , SAA.StateAgencyAdminFirstName, SAA.StateAgencyAdminLastName,
     AST.AdminStatusName, SA.StateAgencyName
@@ -282,15 +282,54 @@ SHOW WARNINGS;
 
 DELIMITER $$
 USE `My-Fis`$$
-CREATE PROCEDURE `UserSignUp` ( IN UserFirstName VARCHAR(30), IN UserLastName VARCHAR(20),IN UserIdentityNo BIGINT(11), IN UserPassword INT,  IN UserAdressCity VARCHAR(15), IN UserAdressDistrict VARCHAR(25), IN UserAdressStreet VARCHAR(25), IN UserAdressNo VARCHAR(10), IN UserAdressApartmentName VARCHAR(20), IN UserEmail VARCHAR(25), IN UserPhone VARCHAR(15), IN UserFamilyPeopleCount INT  )
+CREATE PROCEDURE `UserSignUp` ( IN User_FirstName VARCHAR(30), IN User_LastName VARCHAR(20),IN User_IdentityNo BIGINT(11), IN User_Password VARCHAR(99),
+  IN User_AdressCity VARCHAR(15), IN User_AdressDistrict VARCHAR(25), IN User_AdressStreet VARCHAR(25), IN User_AdressNo VARCHAR(10),
+  IN User_AdressApartmentName VARCHAR(20), IN User_Email VARCHAR(40), IN User_Phone VARCHAR(15), IN User_FamilyPeopleCount INT  )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         ROLLBACK;
     END;
     START TRANSACTION;
-		INSERT INTO tblUser (UserFirstName,UserLastName,UserIdentityNo,UserPassword) VALUES ( UserFirstName,UserLastName,UserIdentityNo,UserPassword);
-		INSERT INTO tblUserDetails (UserAdressCity,UserAdressDistrict,UserAdressStreet,UserAdressNo,UserAdressApartmentName,UserEmail,UserPhone,UserFamilyPeopleCount,UserID) VALUES (UserAdressCity,UserAdressDistrict,UserAdressStreet,UserAdressNo,UserAdressApartmentName,UserEmail,UserPhone,UserFamilyPeopleCount,(Select UserID tblUser ORDER BY UserID DESC LIMIT 1));
+		INSERT INTO tblUser (UserFirstName,UserLastName,UserIdentityNo,UserPassword) VALUES ( User_FirstName,User_LastName,User_IdentityNo,User_Password);
+		INSERT INTO tblUserDetails (UserAdressCity,UserAdressDistrict,UserAdressStreet,UserAdressNo,UserAdressApartmentName,UserEmail,UserPhone,UserFamilyPeopleCount,UserID)
+		VALUES (User_AdressCity,User_AdressDistrict,User_AdressStreet,User_AdressNo,User_AdressApartmentName,User_Email,User_Phone,User_FamilyPeopleCount,
+		        (Select UserID tblUser ORDER BY UserID DESC LIMIT 1));
+	COMMIT;
+END$$
+
+DELIMITER ;
+SHOW WARNINGS;
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+-- -----------------------------------------------------
+-- procedure AdminSignUp
+-- -----------------------------------------------------
+
+USE `My-Fis`;
+DROP procedure IF EXISTS `AdminSignUp`;
+SHOW WARNINGS;
+
+DELIMITER $$
+USE `My-Fis`$$
+CREATE PROCEDURE `AdminSignUp` ( IN AdminFirstName VARCHAR(30), IN AdminLastName VARCHAR(30),IN AdminIdentityNo BIGINT(11),
+IN AdminPassword VARCHAR(99),  IN AdminEmail VARCHAR(40), IN StatusName VARCHAR(40), IN AgencyName VARCHAR(30))
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+    END;
+    START TRANSACTION;
+		INSERT INTO tblStateAgencyAdmin (StateAgencyAdminFirstName,StateAgencyAdminLastName,StateAgencyAdminIdentityNo,
+		                                 StateAgencyAdminEmail,StateAgencyAdminPassword,AdminStatusID,StateAgencyID)
+		VALUES (AdminFirstName,AdminLastName,AdminIdentityNo,
+		        AdminEmail,AdminPassword,
+		        (Select AdminStatusID from tblAdminStatus where AdminStatusName=StatusName),
+		        (Select StateAgencyID from tblStateAgency where StateAgencyName=AgencyName));
 	COMMIT;
 END$$
 
