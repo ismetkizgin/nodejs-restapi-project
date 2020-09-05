@@ -282,9 +282,12 @@ SHOW WARNINGS;
 
 DELIMITER $$
 USE `My-Fis`$$
-CREATE PROCEDURE `UserSignUp` ( IN User_FirstName VARCHAR(30), IN User_LastName VARCHAR(20),IN User_IdentityNo BIGINT(11), IN User_Password VARCHAR(99),
-  IN User_AdressCity VARCHAR(15), IN User_AdressDistrict VARCHAR(25), IN User_AdressStreet VARCHAR(25), IN User_AdressNo VARCHAR(10),
-  IN User_AdressApartmentName VARCHAR(20), IN User_Email VARCHAR(40), IN User_Phone VARCHAR(15), IN User_FamilyPeopleCount INT  )
+CREATE PROCEDURE `UserSignUp` ( IN User_FirstName varchar(30), IN User_LastName varchar(20),
+                                            IN User_IdentityNo bigint(11), IN User_Password varchar(99),
+                                            IN User_City varchar(15), IN User_District varchar(25),
+                                            IN User_Street varchar(25), IN User_No varchar(10),
+                                            IN User_ApartmentName varchar(20), IN User_Email varchar(40),
+                                            IN User_Phone varchar(15), IN User_FamilyPeopleCount int  )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
@@ -293,8 +296,8 @@ BEGIN
     START TRANSACTION;
 		INSERT INTO tblUser (UserFirstName,UserLastName,UserIdentityNo,UserPassword) VALUES ( User_FirstName,User_LastName,User_IdentityNo,User_Password);
 		INSERT INTO tblUserDetails (UserAdressCity,UserAdressDistrict,UserAdressStreet,UserAdressNo,UserAdressApartmentName,UserEmail,UserPhone,UserFamilyPeopleCount,UserID)
-		VALUES (User_AdressCity,User_AdressDistrict,User_AdressStreet,User_AdressNo,User_AdressApartmentName,User_Email,User_Phone,User_FamilyPeopleCount,
-		        (Select UserID tblUser ORDER BY UserID DESC LIMIT 1));
+		VALUES (User_City,User_District,User_Street,User_No,User_ApartmentName,User_Email,User_Phone,User_FamilyPeopleCount,
+		        (Select UserID FROM tblUser ORDER BY UserID DESC LIMIT 1));
 	COMMIT;
 END$$
 
