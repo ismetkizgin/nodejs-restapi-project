@@ -27,7 +27,7 @@ DROP TABLE IF EXISTS `tblAdminStatus` ;
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `tblAdminStatus` (
   `AdminStatusID` INT NOT NULL AUTO_INCREMENT,
-  `AdminStatusName` NVARCHAR(20) NULL,
+  `AdminStatusName` VARCHAR(20) NULL,
   PRIMARY KEY (`AdminStatusID`))
 ENGINE = InnoDB;
 
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `tblPage` (
   `PageTitle` VARCHAR(250) NULL,
   `PageContent` TEXT NULL,
   `PageDateTime` DATETIME NULL,
-  `PagePicturePath` NVARCHAR(100) NULL,
+  `PagePicturePath` VARCHAR(100) NULL,
   `PageDescription` TEXT NULL,
   `PageKeywords` TEXT NULL,
   `PageStatusID` INT NULL,
@@ -61,7 +61,7 @@ DROP TABLE IF EXISTS `tblPageStatus` ;
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `tblPageStatus` (
   `PageStatusID` INT NOT NULL AUTO_INCREMENT,
-  `PageStatusName` NVARCHAR(30) NULL,
+  `PageStatusName` VARCHAR(30) NULL,
   PRIMARY KEY (`PageStatusID`))
 ENGINE = InnoDB;
 
@@ -75,9 +75,9 @@ DROP TABLE IF EXISTS `tblSlide` ;
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `tblSlide` (
   `SlideID` INT NOT NULL AUTO_INCREMENT,
-  `SlideTitle` NVARCHAR(100) NULL,
-  `SlideUrl` NVARCHAR(100) NULL,
-  `SlidePicPath` NVARCHAR(100) NULL,
+  `SlideTitle` VARCHAR(200) NULL,
+  `SlideUrl` TEXT NULL,
+  `SlidePicPath` TEXT NULL,
   PRIMARY KEY (`SlideID`))
 ENGINE = InnoDB;
 
@@ -91,9 +91,9 @@ DROP TABLE IF EXISTS `tblStateAgency` ;
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `tblStateAgency` (
   `StateAgencyID` INT NOT NULL AUTO_INCREMENT,
-  `StateAgencyName` NVARCHAR(30) NULL,
+  `StateAgencyName` VARCHAR(30) NULL,
   `StateAgencyNo` BIGINT(10) NULL,
-  `StateAgencyEmail` NVARCHAR(40) NULL,
+  `StateAgencyEmail` VARCHAR(40) NULL,
   PRIMARY KEY (`StateAgencyID`))
 ENGINE = InnoDB;
 
@@ -107,11 +107,11 @@ DROP TABLE IF EXISTS `tblStateAgencyAdmin` ;
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `tblStateAgencyAdmin` (
   `StateAgencyAdminID` INT NOT NULL AUTO_INCREMENT,
-  `StateAgencyAdminFirstName` NVARCHAR(30) NULL,
-  `StateAgencyAdminLastName` NVARCHAR(30) NULL,
-  `StateAgencyAdminIdentityNo` NVARCHAR(20) NULL,
-  `StateAgencyAdminEmail` NVARCHAR(30) NULL,
-  `StateAgencyAdminPassword` NVARCHAR(10) NULL,
+  `StateAgencyAdminFirstName` VARCHAR(30) NULL,
+  `StateAgencyAdminLastName` VARCHAR(30) NULL,
+  `StateAgencyAdminIdentityNo` bigint(11) NULL,
+  `StateAgencyAdminEmail` VARCHAR(40) NULL,
+  `StateAgencyAdminPassword` VARCHAR(99) NULL,
   `AdminStatusID` INT NULL,
   `StateAgencyID` INT NULL,
   PRIMARY KEY (`StateAgencyAdminID`))
@@ -127,7 +127,7 @@ DROP TABLE IF EXISTS `tblStatusAuth` ;
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `tblStatusAuth` (
   `StatusAuthID` INT NOT NULL AUTO_INCREMENT,
-  `StatusAuthName` NVARCHAR(20) NULL,
+  `StatusAuthName` VARCHAR(40) NULL,
   `AdminStatusID` INT NULL,
   PRIMARY KEY (`StatusAuthID`))
 ENGINE = InnoDB;
@@ -142,10 +142,10 @@ DROP TABLE IF EXISTS `tblUser` ;
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `tblUser` (
   `UserID` INT NOT NULL AUTO_INCREMENT,
-  `UserFirstName` NVARCHAR(30) NULL,
-  `UserLastName` NVARCHAR(20) NULL,
+  `UserFirstName` VARCHAR(30) NULL,
+  `UserLastName` VARCHAR(20) NULL,
   `UserIdentityNo` BIGINT(11) NULL,
-  `UserPassword` VARCHAR(10) NULL,
+  `UserPassword` VARCHAR(99) NULL,
   PRIMARY KEY (`UserID`))
 ENGINE = InnoDB;
 
@@ -159,13 +159,13 @@ DROP TABLE IF EXISTS `tblUserDetails` ;
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `tblUserDetails` (
   `UserDetailsID` INT NOT NULL AUTO_INCREMENT,
-  `UserAdressCity` NVARCHAR(15) NULL,
-  `UserAdressDistrict` NVARCHAR(25) NULL,
-  `UserAdressStreet` NVARCHAR(25) NULL,
-  `UserAdressNo` NVARCHAR(10) NULL,
-  `UserAdressApartmentName` NVARCHAR(20) NULL,
-  `UserEmail` NVARCHAR(25) NULL,
-  `UserPhone` NVARCHAR(15) NULL,
+  `UserAdressCity` VARCHAR(15) NULL,
+  `UserAdressDistrict` VARCHAR(25) NULL,
+  `UserAdressStreet` VARCHAR(25) NULL,
+  `UserAdressNo` VARCHAR(10) NULL,
+  `UserAdressApartmentName` VARCHAR(20) NULL,
+  `UserEmail` VARCHAR(40) NULL,
+  `UserPhone` VARCHAR(15) NULL,
   `UserFamilyPeopleCount` INT NULL,
   `UserID` INT NULL,
   PRIMARY KEY (`UserDetailsID`))
@@ -222,60 +222,55 @@ SHOW WARNINGS;
 USE `My-Fis` ;
 
 -- -----------------------------------------------------
--- function UserLogin
+-- function drop AdminLogin and UserLogin
 -- -----------------------------------------------------
 
-USE `My-Fis`;
-DROP function IF EXISTS `UserLogin`;
-SHOW WARNINGS;
-
-DELIMITER $$
-USE `My-Fis`$$
-CREATE FUNCTION `UserLogin` (UserIdentitiyNo INT, UserPassword INT )
-RETURNS INT
-BEGIN
-	DECLARE Result INT;
-	SET Result = 0;
-    
-	IF(Select * From tblUser where UserIdentityNo = UserIdentitiyNo and UserPassword = UserPassword ) THEN
-        SET Result = 1;
-    ELSE
-        SET Result = 0;
-    END IF;
-    
-    return Result;
-END$$
-
-DELIMITER ;
-SHOW WARNINGS;
-
--- -----------------------------------------------------
--- function AdminLogin
--- -----------------------------------------------------
-
-USE `My-Fis`;
 DROP function IF EXISTS `AdminLogin`;
+DROP function IF EXISTS `UserLogin`;
+
+-- -----------------------------------------------------
+-- procedure UserLogin
+-- -----------------------------------------------------
+
+USE `My-Fis`;
+DROP procedure IF EXISTS `UserLogin`;
 SHOW WARNINGS;
 
 DELIMITER $$
 USE `My-Fis`$$
-CREATE FUNCTION `AdminLogin` (  AdminIdentitiyNo INT,   AdminPassword INT )
-RETURNS INT
+CREATE PROCEDURE `UserLogin` ( IN UserIdentityNo bigint(11), IN UserPassword VARCHAR(99)  )
 BEGIN
-	DECLARE Result INT;
-	SET Result = 0;
-	
-    IF(Select * From tblStateAgencyAdmin where AdminIdentitiyNo = AdminIdentitiyNo and AdminPassword = AdminPassword ) THEN
-        SET Result = 1;
-    ELSE
-        SET Result = 0;
-    END IF;
-    
-    return Result;
-END$$
+    select U.UserID,U.UserIdentityNo,U.UserFirstName,U.UserLastName ,UD.UserAdressCity,UD.UserAdressDistrict,
+    UD.UserAdressStreet ,UD.UserAdressNo ,UD.UserAdressApartmentName, UD.UserEmail ,UD.UserPhone , UD.UserFamilyPeopleCount
+    from tblUser U inner join tblUserDetails UD on U.UserID=UD.UserID 
+    where U.UserIdentityNo = UserIdentityNo and U.UserPassword = UserPassword;
+END;$$
 
 DELIMITER ;
 SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- procedure AdminLogin
+-- -----------------------------------------------------
+
+USE `My-Fis`;
+DROP procedure IF EXISTS `AdminLogin`;
+SHOW WARNINGS;
+
+DELIMITER $$
+USE `My-Fis`$$
+CREATE PROCEDURE `AdminLogin` ( IN AdminIdentitiyNo bigint(11),   IN AdminPassword VARCHAR(99)  )
+BEGIN
+    select SAA.StateAgencyAdminID, SAA.StateAgencyAdminIdentityNo , SAA.StateAgencyAdminFirstName, SAA.StateAgencyAdminLastName,
+    AST.AdminStatusName, SA.StateAgencyName
+    from tblStateAgencyAdmin SAA inner join tblAdminStatus AST  on SAA.AdminStatusID = AST.AdminStatusID
+    inner join tblStateAgency SA on SAA.StateAgencyID = SA.StateAgencyID
+    where SAA.StateAgencyAdminIdentityNo = AdminIdentitiyNo and SAA.StateAgencyAdminPassword = AdminPassword;
+END;$$
+
+DELIMITER ;
+SHOW WARNINGS;
+
 
 -- -----------------------------------------------------
 -- procedure UserSignUp
@@ -287,17 +282,54 @@ SHOW WARNINGS;
 
 DELIMITER $$
 USE `My-Fis`$$
-CREATE PROCEDURE `UserSignUp` ( IN UserFirstName NVARCHAR(30), IN UserLastName NVARCHAR(20),IN UserIdentityNo BIGINT(11), IN UserPassword INT,  IN UserAdressCity NVARCHAR(15), IN UserAdressDistrict INT, IN UserAdressStreet INT, IN UserAdressNo INT, IN UserAdressApartmentName INT, IN UserEmail INT, IN UserPhone INT, IN UserFamilyPeopleCount INT  ) 
+CREATE PROCEDURE `UserSignUp` ( IN User_FirstName VARCHAR(30), IN User_LastName VARCHAR(20),IN User_IdentityNo BIGINT(11), IN User_Password VARCHAR(99),
+  IN User_AdressCity VARCHAR(15), IN User_AdressDistrict VARCHAR(25), IN User_AdressStreet VARCHAR(25), IN User_AdressNo VARCHAR(10),
+  IN User_AdressApartmentName VARCHAR(20), IN User_Email VARCHAR(40), IN User_Phone VARCHAR(15), IN User_FamilyPeopleCount INT  )
 BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+    END;
     START TRANSACTION;
-		INSERT INTO tblUser (UserFirstName,UserLastName,UserIdentityNo,UserPassword) VALUES ( UserFirstName,UserLastName,UserIdentityNo,UserPassword);
-		IF @@ERROR<>0 then
-			rollback;
-		END IF;
-		INSERT INTO tblUserDetails (UserAdressCity,UserAdressDistrict,UserAdressStreet,UserAdressNo,UserAdressApartmentName,UserEmail,UserPhone,UserFamilyPeopleCount,UserID) VALUES (UserAdressCity,UserAdressDistrict,UserAdressStreet,UserAdressNo,UserAdressApartmentName,UserEmail,UserPhone,UserFamilyPeopleCount,(Select UserID tblUser ORDER BY UserID DESC LIMIT 1));
-		IF @@ERROR<>0 then
-			rollback;
-		END IF;
+		INSERT INTO tblUser (UserFirstName,UserLastName,UserIdentityNo,UserPassword) VALUES ( User_FirstName,User_LastName,User_IdentityNo,User_Password);
+		INSERT INTO tblUserDetails (UserAdressCity,UserAdressDistrict,UserAdressStreet,UserAdressNo,UserAdressApartmentName,UserEmail,UserPhone,UserFamilyPeopleCount,UserID)
+		VALUES (User_AdressCity,User_AdressDistrict,User_AdressStreet,User_AdressNo,User_AdressApartmentName,User_Email,User_Phone,User_FamilyPeopleCount,
+		        (Select UserID tblUser ORDER BY UserID DESC LIMIT 1));
+	COMMIT;
+END$$
+
+DELIMITER ;
+SHOW WARNINGS;
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+-- -----------------------------------------------------
+-- procedure AdminSignUp
+-- -----------------------------------------------------
+
+USE `My-Fis`;
+DROP procedure IF EXISTS `AdminSignUp`;
+SHOW WARNINGS;
+
+DELIMITER $$
+USE `My-Fis`$$
+CREATE PROCEDURE `AdminSignUp` ( IN AdminFirstName VARCHAR(30), IN AdminLastName VARCHAR(30),IN AdminIdentityNo BIGINT(11),
+IN AdminPassword VARCHAR(99),  IN AdminEmail VARCHAR(40), IN StatusName VARCHAR(40), IN AgencyName VARCHAR(30))
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+    END;
+    START TRANSACTION;
+		INSERT INTO tblStateAgencyAdmin (StateAgencyAdminFirstName,StateAgencyAdminLastName,StateAgencyAdminIdentityNo,
+		                                 StateAgencyAdminEmail,StateAgencyAdminPassword,AdminStatusID,StateAgencyID)
+		VALUES (AdminFirstName,AdminLastName,AdminIdentityNo,
+		        AdminEmail,AdminPassword,
+		        (Select AdminStatusID from tblAdminStatus where AdminStatusName=StatusName),
+		        (Select StateAgencyID from tblStateAgency where StateAgencyName=AgencyName));
 	COMMIT;
 END$$
 
