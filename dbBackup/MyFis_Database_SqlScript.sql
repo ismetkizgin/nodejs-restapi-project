@@ -219,7 +219,6 @@ CREATE TABLE IF NOT EXISTS `tblUserState` (
 ENGINE = InnoDB;
 
 SHOW WARNINGS;
-USE `My-Fis` ;
 
 -- -----------------------------------------------------
 -- function drop AdminLogin and UserLogin
@@ -232,12 +231,10 @@ DROP function IF EXISTS `UserLogin`;
 -- procedure UserLogin
 -- -----------------------------------------------------
 
-USE `My-Fis`;
 DROP procedure IF EXISTS `UserLogin`;
 SHOW WARNINGS;
 
 DELIMITER $$
-USE `My-Fis`$$
 CREATE PROCEDURE `UserLogin` ( IN UserIdentityNo bigint(11), IN UserPassword VARCHAR(99)  )
 BEGIN
     select U.UserID,U.UserIdentityNo,U.UserFirstName,U.UserLastName ,UD.UserAdressCity,UD.UserAdressDistrict,
@@ -253,12 +250,10 @@ SHOW WARNINGS;
 -- procedure AdminLogin
 -- -----------------------------------------------------
 
-USE `My-Fis`;
 DROP procedure IF EXISTS `AdminLogin`;
 SHOW WARNINGS;
 
 DELIMITER $$
-USE `My-Fis`$$
 CREATE PROCEDURE `AdminLogin` ( IN AdminIdentitiyNo bigint(11),   IN AdminPassword VARCHAR(99)  )
 BEGIN
     select SAA.StateAgencyAdminID, SAA.StateAgencyAdminIdentityNo , SAA.StateAgencyAdminFirstName, SAA.StateAgencyAdminLastName,
@@ -276,12 +271,10 @@ SHOW WARNINGS;
 -- procedure UserSignUp
 -- -----------------------------------------------------
 
-USE `My-Fis`;
 DROP procedure IF EXISTS `UserSignUp`;
 SHOW WARNINGS;
 
 DELIMITER $$
-USE `My-Fis`$$
 CREATE PROCEDURE `UserSignUp` ( IN User_FirstName varchar(30), IN User_LastName varchar(20),
                                             IN User_IdentityNo bigint(11), IN User_Password varchar(99),
                                             IN User_City varchar(15), IN User_District varchar(25),
@@ -304,21 +297,14 @@ END$$
 DELIMITER ;
 SHOW WARNINGS;
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-
 -- -----------------------------------------------------
 -- procedure AdminSignUp
 -- -----------------------------------------------------
 
-USE `My-Fis`;
 DROP procedure IF EXISTS `AdminSignUp`;
 SHOW WARNINGS;
 
 DELIMITER $$
-USE `My-Fis`$$
 CREATE PROCEDURE `AdminSignUp` ( IN AdminFirstName VARCHAR(30), IN AdminLastName VARCHAR(30),IN AdminIdentityNo BIGINT(11),
 IN AdminPassword VARCHAR(99),  IN AdminEmail VARCHAR(40), IN StatusName VARCHAR(40), IN AgencyName VARCHAR(30))
 BEGIN
@@ -338,7 +324,3 @@ END$$
 
 DELIMITER ;
 SHOW WARNINGS;
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
