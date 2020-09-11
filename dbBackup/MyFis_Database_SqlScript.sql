@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: localhost:3306
--- Üretim Zamanı: 12 Eyl 2020, 01:46:42
+-- Üretim Zamanı: 12 Eyl 2020, 02:14:00
 -- Sunucu sürümü: 8.0.21-0ubuntu0.20.04.4
 -- PHP Sürümü: 7.4.7
 
@@ -22,204 +22,17 @@ SET time_zone = "+00:00";
 -- Veritabanı: `my-fis`
 --
 
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `tblAdminStatus`
---
-DROP TABLE IF EXISTS `tblAdminStatus` ;
-
-CREATE TABLE `tblAdminStatus` (
-  `AdminStatusID` int NOT NULL,
-  `AdminStatusName` varchar(20) COLLATE utf8_turkish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
-
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `tblPage`
---
-DROP TABLE IF EXISTS `tblPage` ;
-
-CREATE TABLE `tblPage` (
-  `PageID` int NOT NULL,
-  `PageTitle` varchar(250) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `PageContent` text COLLATE utf8_turkish_ci,
-  `PageDateTime` datetime DEFAULT NULL,
-  `PagePicturePath` varchar(100) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `PageDescription` text COLLATE utf8_turkish_ci,
-  `PageKeywords` text COLLATE utf8_turkish_ci,
-  `PageStatusID` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
-
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `tblPageStatus`
---
-DROP TABLE IF EXISTS `tblPageStatus` ;
-
-CREATE TABLE `tblPageStatus` (
-  `PageStatusID` int NOT NULL,
-  `PageStatusName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
-
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `tblSlide`
---
-DROP TABLE IF EXISTS `tblSlide` ;
-
-CREATE TABLE `tblSlide` (
-  `SlideID` int NOT NULL,
-  `SlideTitle` varchar(200) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `SlideUrl` text COLLATE utf8_turkish_ci,
-  `SlidePicPath` text COLLATE utf8_turkish_ci
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
-
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `tblStateAgency`
---
-DROP TABLE IF EXISTS `tblStateAgency` ;
-
-CREATE TABLE `tblStateAgency` (
-  `StateAgencyID` int NOT NULL,
-  `StateAgencyName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `StateAgencyNo` bigint DEFAULT NULL,
-  `StateAgencyEmail` varchar(40) COLLATE utf8_turkish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
-
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `tblStateAgencyAdmin`
---
-DROP TABLE IF EXISTS `tblStateAgencyAdmin` ;
-
-CREATE TABLE `tblStateAgencyAdmin` (
-  `StateAgencyAdminID` int NOT NULL,
-  `StateAgencyAdminFirstName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `StateAgencyAdminLastName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `StateAgencyAdminIdentityNo` bigint DEFAULT NULL,
-  `StateAgencyAdminEmail` varchar(40) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `StateAgencyAdminPassword` varchar(99) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `AdminStatusID` int DEFAULT NULL,
-  `StateAgencyID` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
-
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `tblStatusAuth`
---
-DROP TABLE IF EXISTS `tblStatusAuth` ;
-
-CREATE TABLE `tblStatusAuth` (
-  `StatusAuthID` int NOT NULL,
-  `StatusAuthName` varchar(40) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `AdminStatusID` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
-
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `tblUser`
---
-DROP TABLE IF EXISTS `tblUser` ;
-
-CREATE TABLE `tblUser` (
-  `UserID` int NOT NULL,
-  `UserFirstName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `UserLastName` varchar(20) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `UserIdentityNo` bigint DEFAULT NULL,
-  `UserPassword` varchar(99) COLLATE utf8_turkish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
-
---
--- Tablo için tablo yapısı `tblUserDetails`
---
-DROP TABLE IF EXISTS `tblUserDetails` ;
-
-CREATE TABLE `tblUserDetails` (
-  `UserDetailsID` int NOT NULL,
-  `UserAdressCity` varchar(15) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `UserAdressDistrict` varchar(25) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `UserAdressStreet` varchar(25) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `UserAdressNo` varchar(10) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `UserAdressApartmentName` varchar(20) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `UserEmail` varchar(40) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `UserPhone` varchar(15) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `UserFamilyPeopleCount` int DEFAULT NULL,
-  `UserID` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
-
-
---
--- Tablo için tablo yapısı `tblUserFamily`
---
-DROP TABLE IF EXISTS `tblUserFamily` ;
-
-CREATE TABLE `tblUserFamily` (
-  `UserFamilyID` int NOT NULL,
-  `UserIdentityNo` bigint DEFAULT NULL,
-  `UserID` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
-
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `tblUserLocations`
---
-DROP TABLE IF EXISTS `tblUserLocations` ;
-
-CREATE TABLE `tblUserLocations` (
-  `UserLocationsID` int NOT NULL,
-  `UserLocationsLat` float DEFAULT NULL,
-  `UserLocationsLon` float DEFAULT NULL,
-  `UserLocationsLastDate` datetime DEFAULT NULL,
-  `UserID` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
-
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `tblUserState`
---
-DROP TABLE IF EXISTS `tblUserState` ;
-
-CREATE TABLE `tblUserState` (
-  `UserStateID` int NOT NULL,
-  `UserID` int DEFAULT NULL,
-  `UserState` smallint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
-
+DELIMITER $$
 --
 -- Yordamlar
 --
-DELIMITER $$
-
--- -----------------------------------------------------
--- procedure AdminLogin
--- -----------------------------------------------------
-
-DROP procedure IF EXISTS `AdminLogin`;
-
 CREATE PROCEDURE `AdminLogin` (IN `AdminIdentitiyNo` BIGINT(11), IN `AdminPassword` VARCHAR(99))  BEGIN
     select SAA.StateAgencyAdminID, SAA.StateAgencyAdminIdentityNo , SAA.StateAgencyAdminFirstName, SAA.StateAgencyAdminLastName,
     AST.AdminStatusName, SA.StateAgencyName
     from tblStateAgencyAdmin SAA inner join tblAdminStatus AST  on SAA.AdminStatusID = AST.AdminStatusID
     inner join tblStateAgency SA on SAA.StateAgencyID = SA.StateAgencyID
     where SAA.StateAgencyAdminIdentityNo = AdminIdentitiyNo and SAA.StateAgencyAdminPassword = AdminPassword;
-END;
-
--- -----------------------------------------------------
--- procedure AdminSignUp
--- -----------------------------------------------------
-
-DROP procedure IF EXISTS `AdminSignUp`;
+END$$
 
 CREATE PROCEDURE `AdminSignUp` (IN `AdminFirstName` VARCHAR(30), IN `AdminLastName` VARCHAR(30), IN `AdminIdentityNo` BIGINT(11), IN `AdminPassword` VARCHAR(99), IN `AdminEmail` VARCHAR(40), IN `StatusName` VARCHAR(40), IN `AgencyName` VARCHAR(30))  BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -238,26 +51,14 @@ CREATE PROCEDURE `AdminSignUp` (IN `AdminFirstName` VARCHAR(30), IN `AdminLastNa
 		        (Select StateAgencyID from tblStateAgency where StateAgencyName=AgencyName));
     (Select StateAgencyAdminID FROM tblStateAgencyAdmin ORDER BY StateAgencyAdminID DESC LIMIT 1);    
 	COMMIT;
-END;
-
--- -----------------------------------------------------
--- procedure UserLogin
--- -----------------------------------------------------
-
-DROP procedure IF EXISTS `UserLogin`;
+END$$
 
 CREATE PROCEDURE `UserLogin` (IN `UserIdentityNo` BIGINT(11), IN `UserPassword` VARCHAR(99))  BEGIN
     select U.UserID,U.UserIdentityNo,U.UserFirstName,U.UserLastName ,UD.UserAdressCity,UD.UserAdressDistrict,
     UD.UserAdressStreet ,UD.UserAdressNo ,UD.UserAdressApartmentName, UD.UserEmail ,UD.UserPhone , UD.UserFamilyPeopleCount
     from tblUser U inner join tblUserDetails UD on U.UserID=UD.UserID
     where U.UserIdentityNo = UserIdentityNo and U.UserPassword = UserPassword;
-END;
-
--- -----------------------------------------------------
--- procedure UserSignUp
--- -----------------------------------------------------
-
-DROP procedure IF EXISTS `UserSignUp`;
+END$$
 
 CREATE PROCEDURE `UserSignUp` (IN `User_FirstName` VARCHAR(30), IN `User_LastName` VARCHAR(20), IN `User_IdentityNo` BIGINT(11), IN `User_Password` VARCHAR(99), IN `User_City` VARCHAR(15), IN `User_District` VARCHAR(25), IN `User_Street` VARCHAR(25), IN `User_No` VARCHAR(10), IN `User_ApartmentName` VARCHAR(20), IN `User_Email` VARCHAR(40), IN `User_Phone` VARCHAR(15), IN `User_FamilyPeopleCount` INT)  BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -274,9 +75,178 @@ CREATE PROCEDURE `UserSignUp` (IN `User_FirstName` VARCHAR(30), IN `User_LastNam
 		        (Select UserID FROM tblUser ORDER BY UserID DESC LIMIT 1));    
     (Select UserID FROM tblUser ORDER BY UserID DESC LIMIT 1);
 	COMMIT;
-END;
+END$$
+
 DELIMITER ;
 
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `tblAdminStatus`
+--
+
+CREATE TABLE `tblAdminStatus` (
+  `AdminStatusID` int NOT NULL,
+  `AdminStatusName` varchar(20) COLLATE utf8_turkish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `tblPage`
+--
+
+CREATE TABLE `tblPage` (
+  `PageID` int NOT NULL,
+  `PageTitle` varchar(250) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `PageContent` text COLLATE utf8_turkish_ci,
+  `PageDateTime` datetime DEFAULT NULL,
+  `PagePicturePath` varchar(100) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `PageDescription` text COLLATE utf8_turkish_ci,
+  `PageKeywords` text COLLATE utf8_turkish_ci,
+  `PageStatusID` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `tblPageStatus`
+--
+
+CREATE TABLE `tblPageStatus` (
+  `PageStatusID` int NOT NULL,
+  `PageStatusName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `tblSlide`
+--
+
+CREATE TABLE `tblSlide` (
+  `SlideID` int NOT NULL,
+  `SlideTitle` varchar(200) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `SlideUrl` text COLLATE utf8_turkish_ci,
+  `SlidePicPath` text COLLATE utf8_turkish_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `tblStateAgency`
+--
+
+CREATE TABLE `tblStateAgency` (
+  `StateAgencyID` int NOT NULL,
+  `StateAgencyName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `StateAgencyNo` bigint DEFAULT NULL,
+  `StateAgencyEmail` varchar(40) COLLATE utf8_turkish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `tblStateAgencyAdmin`
+--
+
+CREATE TABLE `tblStateAgencyAdmin` (
+  `StateAgencyAdminID` int NOT NULL,
+  `StateAgencyAdminFirstName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `StateAgencyAdminLastName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `StateAgencyAdminIdentityNo` bigint DEFAULT NULL,
+  `StateAgencyAdminEmail` varchar(40) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `StateAgencyAdminPassword` varchar(99) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `AdminStatusID` int DEFAULT NULL,
+  `StateAgencyID` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `tblStatusAuth`
+--
+
+CREATE TABLE `tblStatusAuth` (
+  `StatusAuthID` int NOT NULL,
+  `StatusAuthName` varchar(40) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `AdminStatusID` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `tblUser`
+--
+
+CREATE TABLE `tblUser` (
+  `UserID` int NOT NULL,
+  `UserFirstName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `UserLastName` varchar(20) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `UserIdentityNo` bigint DEFAULT NULL,
+  `UserPassword` varchar(99) COLLATE utf8_turkish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `tblUserDetails`
+--
+
+CREATE TABLE `tblUserDetails` (
+  `UserDetailsID` int NOT NULL,
+  `UserAdressCity` varchar(15) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `UserAdressDistrict` varchar(25) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `UserAdressStreet` varchar(25) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `UserAdressNo` varchar(10) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `UserAdressApartmentName` varchar(20) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `UserEmail` varchar(40) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `UserPhone` varchar(15) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `UserFamilyPeopleCount` int DEFAULT NULL,
+  `UserID` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `tblUserFamily`
+--
+
+CREATE TABLE `tblUserFamily` (
+  `UserFamilyID` int NOT NULL,
+  `UserIdentityNo` bigint DEFAULT NULL,
+  `UserID` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `tblUserLocations`
+--
+
+CREATE TABLE `tblUserLocations` (
+  `UserLocationsID` int NOT NULL,
+  `UserLocationsLat` float DEFAULT NULL,
+  `UserLocationsLon` float DEFAULT NULL,
+  `UserLocationsLastDate` datetime DEFAULT NULL,
+  `UserID` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tablo için tablo yapısı `tblUserState`
+--
+
+CREATE TABLE `tblUserState` (
+  `UserStateID` int NOT NULL,
+  `UserID` int DEFAULT NULL,
+  `UserState` smallint DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
+--
+-- Dökümü yapılmış tablolar için indeksler
+--
 
 --
 -- Tablo için indeksler `tblAdminStatus`
