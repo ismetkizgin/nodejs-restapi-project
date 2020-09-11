@@ -22,60 +22,12 @@ SET time_zone = "+00:00";
 -- Veritabanı: `my-fis`
 --
 
-DELIMITER $$
---
--- Yordamlar
---
-CREATE PROCEDURE `AdminLogin` (IN `AdminIdentitiyNo` BIGINT(11), IN `AdminPassword` VARCHAR(99))  BEGIN
-    select SAA.StateAgencyAdminID, SAA.StateAgencyAdminIdentityNo , SAA.StateAgencyAdminFirstName, SAA.StateAgencyAdminLastName,
-    AST.AdminStatusName, SA.StateAgencyName
-    from tblStateAgencyAdmin SAA inner join tblAdminStatus AST  on SAA.AdminStatusID = AST.AdminStatusID
-    inner join tblStateAgency SA on SAA.StateAgencyID = SA.StateAgencyID
-    where SAA.StateAgencyAdminIdentityNo = AdminIdentitiyNo and SAA.StateAgencyAdminPassword = AdminPassword;
-END$$
-
-CREATE PROCEDURE `AdminSignUp` (IN `AdminFirstName` VARCHAR(30), IN `AdminLastName` VARCHAR(30), IN `AdminIdentityNo` BIGINT(11), IN `AdminPassword` VARCHAR(99), IN `AdminEmail` VARCHAR(40), IN `StatusName` VARCHAR(40), IN `AgencyName` VARCHAR(30))  BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        ROLLBACK;
-    END;
-    START TRANSACTION;
-		INSERT INTO tblStateAgencyAdmin (StateAgencyAdminFirstName,StateAgencyAdminLastName,StateAgencyAdminIdentityNo,
-		                                 StateAgencyAdminEmail,StateAgencyAdminPassword,AdminStatusID,StateAgencyID)
-		VALUES (AdminFirstName,AdminLastName,AdminIdentityNo,
-		        AdminEmail,AdminPassword,
-		        (Select AdminStatusID from tblAdminStatus where AdminStatusName=StatusName),
-		        (Select StateAgencyID from tblStateAgency where StateAgencyName=AgencyName));
-	COMMIT;
-END$$
-
-CREATE PROCEDURE `UserLogin` (IN `UserIdentityNo` BIGINT(11), IN `UserPassword` VARCHAR(99))  BEGIN
-    select U.UserID,U.UserIdentityNo,U.UserFirstName,U.UserLastName ,UD.UserAdressCity,UD.UserAdressDistrict,
-    UD.UserAdressStreet ,UD.UserAdressNo ,UD.UserAdressApartmentName, UD.UserEmail ,UD.UserPhone , UD.UserFamilyPeopleCount
-    from tblUser U inner join tblUserDetails UD on U.UserID=UD.UserID
-    where U.UserIdentityNo = UserIdentityNo and U.UserPassword = UserPassword;
-END$$
-
-CREATE PROCEDURE `UserSignUp` (IN `User_FirstName` VARCHAR(30), IN `User_LastName` VARCHAR(20), IN `User_IdentityNo` BIGINT(11), IN `User_Password` VARCHAR(99), IN `User_City` VARCHAR(15), IN `User_District` VARCHAR(25), IN `User_Street` VARCHAR(25), IN `User_No` VARCHAR(10), IN `User_ApartmentName` VARCHAR(20), IN `User_Email` VARCHAR(40), IN `User_Phone` VARCHAR(15), IN `User_FamilyPeopleCount` INT)  BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        ROLLBACK;
-    END;
-    START TRANSACTION;
-		INSERT INTO tblUser (UserFirstName,UserLastName,UserIdentityNo,UserPassword) VALUES ( User_FirstName,User_LastName,User_IdentityNo,User_Password);
-		INSERT INTO tblUserDetails (UserAdressCity,UserAdressDistrict,UserAdressStreet,UserAdressNo,UserAdressApartmentName,UserEmail,UserPhone,UserFamilyPeopleCount,UserID)
-		VALUES (User_City,User_District,User_Street,User_No,User_ApartmentName,User_Email,User_Phone,User_FamilyPeopleCount,
-		        (Select UserID FROM tblUser ORDER BY UserID DESC LIMIT 1));
-	COMMIT;
-END$$
-
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
 -- Tablo için tablo yapısı `tblAdminStatus`
 --
+DROP TABLE IF EXISTS `tblAdminStatus` ;
 
 CREATE TABLE `tblAdminStatus` (
   `AdminStatusID` int NOT NULL,
@@ -87,6 +39,7 @@ CREATE TABLE `tblAdminStatus` (
 --
 -- Tablo için tablo yapısı `tblPage`
 --
+DROP TABLE IF EXISTS `tblPage` ;
 
 CREATE TABLE `tblPage` (
   `PageID` int NOT NULL,
@@ -104,6 +57,7 @@ CREATE TABLE `tblPage` (
 --
 -- Tablo için tablo yapısı `tblPageStatus`
 --
+DROP TABLE IF EXISTS `tblPageStatus` ;
 
 CREATE TABLE `tblPageStatus` (
   `PageStatusID` int NOT NULL,
@@ -115,6 +69,7 @@ CREATE TABLE `tblPageStatus` (
 --
 -- Tablo için tablo yapısı `tblSlide`
 --
+DROP TABLE IF EXISTS `tblSlide` ;
 
 CREATE TABLE `tblSlide` (
   `SlideID` int NOT NULL,
@@ -128,6 +83,7 @@ CREATE TABLE `tblSlide` (
 --
 -- Tablo için tablo yapısı `tblStateAgency`
 --
+DROP TABLE IF EXISTS `tblStateAgency` ;
 
 CREATE TABLE `tblStateAgency` (
   `StateAgencyID` int NOT NULL,
@@ -141,6 +97,7 @@ CREATE TABLE `tblStateAgency` (
 --
 -- Tablo için tablo yapısı `tblStateAgencyAdmin`
 --
+DROP TABLE IF EXISTS `tblStateAgencyAdmin` ;
 
 CREATE TABLE `tblStateAgencyAdmin` (
   `StateAgencyAdminID` int NOT NULL,
@@ -158,6 +115,7 @@ CREATE TABLE `tblStateAgencyAdmin` (
 --
 -- Tablo için tablo yapısı `tblStatusAuth`
 --
+DROP TABLE IF EXISTS `tblStatusAuth` ;
 
 CREATE TABLE `tblStatusAuth` (
   `StatusAuthID` int NOT NULL,
@@ -170,6 +128,7 @@ CREATE TABLE `tblStatusAuth` (
 --
 -- Tablo için tablo yapısı `tblUser`
 --
+DROP TABLE IF EXISTS `tblUser` ;
 
 CREATE TABLE `tblUser` (
   `UserID` int NOT NULL,
@@ -180,24 +139,9 @@ CREATE TABLE `tblUser` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 --
--- Tablo döküm verisi `tblUser`
---
-
-INSERT INTO `tblUser` (`UserID`, `UserFirstName`, `UserLastName`, `UserIdentityNo`, `UserPassword`) VALUES
-(1, 'iasdasd', 'adasd', 12313123123, 'asdadas'),
-(10, 'hakan2', 'gaze', 12122311, 'password'),
-(19, 'İsmet', 'kizgin', 1234569902, 'password'),
-(34, 'İsmet', 'kizgin', 1234569909, 'password'),
-(36, 'İsmet', 'kizgin', 1234569904, 'password'),
-(38, 'İsmet', 'kizgin', 1234569901, 'password'),
-(40, 'İsmet', 'kizgin', 1234569907, 'password'),
-(42, 'İsmet', 'kizgin', 1234569911, 'password');
-
--- --------------------------------------------------------
-
---
 -- Tablo için tablo yapısı `tblUserDetails`
 --
+DROP TABLE IF EXISTS `tblUserDetails` ;
 
 CREATE TABLE `tblUserDetails` (
   `UserDetailsID` int NOT NULL,
@@ -212,25 +156,11 @@ CREATE TABLE `tblUserDetails` (
   `UserID` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
---
--- Tablo döküm verisi `tblUserDetails`
---
-
-INSERT INTO `tblUserDetails` (`UserDetailsID`, `UserAdressCity`, `UserAdressDistrict`, `UserAdressStreet`, `UserAdressNo`, `UserAdressApartmentName`, `UserEmail`, `UserPhone`, `UserFamilyPeopleCount`, `UserID`) VALUES
-(1, 'asdasd', 'adasdas', 'adasdasd', 'adadasd', 'zsaasdasd', 'asasdas', 'asdasdas', 5, 1),
-(6, 'İzmir', 'Dikili Mah', 'Gazi sokak', '12', 'Papatya Aprt', 'asassaas@gmail.com', '555', 5, 10),
-(8, 'Diyarbakır', 'Kayapınar', 'Fırat mah.', '5', 'Deli Apartmanı', 'ismetkizgin@hotmail.com', '05393834430', 5, 19),
-(9, 'Diyarbakır', 'Kayapınar', 'Fırat mah.', '5', 'Deli Apartmanı', 'ismetkizgin@hotmail.com', '05393834430', 5, 34),
-(10, 'Diyarbakır', 'Kayapınar', 'Fırat mah.', '5', 'Deli Apartmanı', 'ismetkizgin@hotmail.com', '05393834430', 5, 36),
-(11, 'Diyarbakır', 'Kayapınar', 'Fırat mah.', '5', 'Deli Apartmanı', 'ismetkizgin@hotmail.com', '05393834430', 5, 38),
-(12, 'Diyarbakır', 'Kayapınar', 'Fırat mah.', '5', 'Deli Apartmanı', 'ismetkizgin@hotmail.com', '05393834430', 5, 40),
-(13, 'Diyarbakır', 'Kayapınar', 'Fırat mah.', '5', 'Deli Apartmanı', 'ismetkizgin@hotmail.com', '05393834430', 5, 42);
-
--- --------------------------------------------------------
 
 --
 -- Tablo için tablo yapısı `tblUserFamily`
 --
+DROP TABLE IF EXISTS `tblUserFamily` ;
 
 CREATE TABLE `tblUserFamily` (
   `UserFamilyID` int NOT NULL,
@@ -243,6 +173,7 @@ CREATE TABLE `tblUserFamily` (
 --
 -- Tablo için tablo yapısı `tblUserLocations`
 --
+DROP TABLE IF EXISTS `tblUserLocations` ;
 
 CREATE TABLE `tblUserLocations` (
   `UserLocationsID` int NOT NULL,
@@ -257,6 +188,7 @@ CREATE TABLE `tblUserLocations` (
 --
 -- Tablo için tablo yapısı `tblUserState`
 --
+DROP TABLE IF EXISTS `tblUserState` ;
 
 CREATE TABLE `tblUserState` (
   `UserStateID` int NOT NULL,
@@ -265,8 +197,86 @@ CREATE TABLE `tblUserState` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 --
--- Dökümü yapılmış tablolar için indeksler
+-- Yordamlar
 --
+DELIMITER $$
+
+-- -----------------------------------------------------
+-- procedure AdminLogin
+-- -----------------------------------------------------
+
+DROP procedure IF EXISTS `AdminLogin`;
+
+CREATE PROCEDURE `AdminLogin` (IN `AdminIdentitiyNo` BIGINT(11), IN `AdminPassword` VARCHAR(99))  BEGIN
+    select SAA.StateAgencyAdminID, SAA.StateAgencyAdminIdentityNo , SAA.StateAgencyAdminFirstName, SAA.StateAgencyAdminLastName,
+    AST.AdminStatusName, SA.StateAgencyName
+    from tblStateAgencyAdmin SAA inner join tblAdminStatus AST  on SAA.AdminStatusID = AST.AdminStatusID
+    inner join tblStateAgency SA on SAA.StateAgencyID = SA.StateAgencyID
+    where SAA.StateAgencyAdminIdentityNo = AdminIdentitiyNo and SAA.StateAgencyAdminPassword = AdminPassword;
+END;
+
+-- -----------------------------------------------------
+-- procedure AdminSignUp
+-- -----------------------------------------------------
+
+DROP procedure IF EXISTS `AdminSignUp`;
+
+CREATE PROCEDURE `AdminSignUp` (IN `AdminFirstName` VARCHAR(30), IN `AdminLastName` VARCHAR(30), IN `AdminIdentityNo` BIGINT(11), IN `AdminPassword` VARCHAR(99), IN `AdminEmail` VARCHAR(40), IN `StatusName` VARCHAR(40), IN `AgencyName` VARCHAR(30))  BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        GET DIAGNOSTICS CONDITION 1
+        @p2 = MESSAGE_TEXT;
+        ROLLBACK;
+        SIGNAL SQLSTATE '45001' SET MESSAGE_TEXT = @p2;
+    END;
+    START TRANSACTION;
+		INSERT INTO tblStateAgencyAdmin (StateAgencyAdminFirstName,StateAgencyAdminLastName,StateAgencyAdminIdentityNo,
+		                                 StateAgencyAdminEmail,StateAgencyAdminPassword,AdminStatusID,StateAgencyID)
+		VALUES (AdminFirstName,AdminLastName,AdminIdentityNo,
+		        AdminEmail,AdminPassword,
+		        (Select AdminStatusID from tblAdminStatus where AdminStatusName=StatusName),
+		        (Select StateAgencyID from tblStateAgency where StateAgencyName=AgencyName));
+    (Select StateAgencyAdminID FROM tblStateAgencyAdmin ORDER BY StateAgencyAdminID DESC LIMIT 1);    
+	COMMIT;
+END;
+
+-- -----------------------------------------------------
+-- procedure UserLogin
+-- -----------------------------------------------------
+
+DROP procedure IF EXISTS `UserLogin`;
+
+CREATE PROCEDURE `UserLogin` (IN `UserIdentityNo` BIGINT(11), IN `UserPassword` VARCHAR(99))  BEGIN
+    select U.UserID,U.UserIdentityNo,U.UserFirstName,U.UserLastName ,UD.UserAdressCity,UD.UserAdressDistrict,
+    UD.UserAdressStreet ,UD.UserAdressNo ,UD.UserAdressApartmentName, UD.UserEmail ,UD.UserPhone , UD.UserFamilyPeopleCount
+    from tblUser U inner join tblUserDetails UD on U.UserID=UD.UserID
+    where U.UserIdentityNo = UserIdentityNo and U.UserPassword = UserPassword;
+END;
+
+-- -----------------------------------------------------
+-- procedure UserSignUp
+-- -----------------------------------------------------
+
+DROP procedure IF EXISTS `UserSignUp`;
+
+CREATE PROCEDURE `UserSignUp` (IN `User_FirstName` VARCHAR(30), IN `User_LastName` VARCHAR(20), IN `User_IdentityNo` BIGINT(11), IN `User_Password` VARCHAR(99), IN `User_City` VARCHAR(15), IN `User_District` VARCHAR(25), IN `User_Street` VARCHAR(25), IN `User_No` VARCHAR(10), IN `User_ApartmentName` VARCHAR(20), IN `User_Email` VARCHAR(40), IN `User_Phone` VARCHAR(15), IN `User_FamilyPeopleCount` INT)  BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        GET DIAGNOSTICS CONDITION 1
+        @p2 = MESSAGE_TEXT;
+        ROLLBACK;
+        SIGNAL SQLSTATE '45001' SET MESSAGE_TEXT = @p2;
+    END;
+    START TRANSACTION;
+		INSERT INTO tblUser (UserFirstName,UserLastName,UserIdentityNo,UserPassword) VALUES ( User_FirstName,User_LastName,User_IdentityNo,User_Password);
+		INSERT INTO tblUserDetails (UserAdressCity,UserAdressDistrict,UserAdressStreet,UserAdressNo,UserAdressApartmentName,UserEmail,UserPhone,UserFamilyPeopleCount,UserID)
+		VALUES (User_City,User_District,User_Street,User_No,User_ApartmentName,User_Email,User_Phone,User_FamilyPeopleCount,
+		        (Select UserID FROM tblUser ORDER BY UserID DESC LIMIT 1));    
+    (Select UserID FROM tblUser ORDER BY UserID DESC LIMIT 1);
+	COMMIT;
+END;
+DELIMITER ;
+
 
 --
 -- Tablo için indeksler `tblAdminStatus`
