@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: localhost:3306
--- Üretim Zamanı: 12 Eyl 2020, 01:02:37
+-- Üretim Zamanı: 12 Eyl 2020, 01:46:42
 -- Sunucu sürümü: 8.0.21-0ubuntu0.20.04.4
 -- PHP Sürümü: 7.4.7
 
@@ -21,6 +21,55 @@ SET time_zone = "+00:00";
 --
 -- Veritabanı: `my-fis`
 --
+
+DELIMITER $$
+--
+-- Yordamlar
+--
+CREATE PROCEDURE `AdminLogin` (IN `AdminIdentitiyNo` BIGINT(11), IN `AdminPassword` VARCHAR(99))  BEGIN
+    select SAA.StateAgencyAdminID, SAA.StateAgencyAdminIdentityNo , SAA.StateAgencyAdminFirstName, SAA.StateAgencyAdminLastName,
+    AST.AdminStatusName, SA.StateAgencyName
+    from tblStateAgencyAdmin SAA inner join tblAdminStatus AST  on SAA.AdminStatusID = AST.AdminStatusID
+    inner join tblStateAgency SA on SAA.StateAgencyID = SA.StateAgencyID
+    where SAA.StateAgencyAdminIdentityNo = AdminIdentitiyNo and SAA.StateAgencyAdminPassword = AdminPassword;
+END$$
+
+CREATE PROCEDURE `AdminSignUp` (IN `AdminFirstName` VARCHAR(30), IN `AdminLastName` VARCHAR(30), IN `AdminIdentityNo` BIGINT(11), IN `AdminPassword` VARCHAR(99), IN `AdminEmail` VARCHAR(40), IN `StatusName` VARCHAR(40), IN `AgencyName` VARCHAR(30))  BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+    END;
+    START TRANSACTION;
+		INSERT INTO tblStateAgencyAdmin (StateAgencyAdminFirstName,StateAgencyAdminLastName,StateAgencyAdminIdentityNo,
+		                                 StateAgencyAdminEmail,StateAgencyAdminPassword,AdminStatusID,StateAgencyID)
+		VALUES (AdminFirstName,AdminLastName,AdminIdentityNo,
+		        AdminEmail,AdminPassword,
+		        (Select AdminStatusID from tblAdminStatus where AdminStatusName=StatusName),
+		        (Select StateAgencyID from tblStateAgency where StateAgencyName=AgencyName));
+	COMMIT;
+END$$
+
+CREATE PROCEDURE `UserLogin` (IN `UserIdentityNo` BIGINT(11), IN `UserPassword` VARCHAR(99))  BEGIN
+    select U.UserID,U.UserIdentityNo,U.UserFirstName,U.UserLastName ,UD.UserAdressCity,UD.UserAdressDistrict,
+    UD.UserAdressStreet ,UD.UserAdressNo ,UD.UserAdressApartmentName, UD.UserEmail ,UD.UserPhone , UD.UserFamilyPeopleCount
+    from tblUser U inner join tblUserDetails UD on U.UserID=UD.UserID
+    where U.UserIdentityNo = UserIdentityNo and U.UserPassword = UserPassword;
+END$$
+
+CREATE PROCEDURE `UserSignUp` (IN `User_FirstName` VARCHAR(30), IN `User_LastName` VARCHAR(20), IN `User_IdentityNo` BIGINT(11), IN `User_Password` VARCHAR(99), IN `User_City` VARCHAR(15), IN `User_District` VARCHAR(25), IN `User_Street` VARCHAR(25), IN `User_No` VARCHAR(10), IN `User_ApartmentName` VARCHAR(20), IN `User_Email` VARCHAR(40), IN `User_Phone` VARCHAR(15), IN `User_FamilyPeopleCount` INT)  BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+    END;
+    START TRANSACTION;
+		INSERT INTO tblUser (UserFirstName,UserLastName,UserIdentityNo,UserPassword) VALUES ( User_FirstName,User_LastName,User_IdentityNo,User_Password);
+		INSERT INTO tblUserDetails (UserAdressCity,UserAdressDistrict,UserAdressStreet,UserAdressNo,UserAdressApartmentName,UserEmail,UserPhone,UserFamilyPeopleCount,UserID)
+		VALUES (User_City,User_District,User_Street,User_No,User_ApartmentName,User_Email,User_Phone,User_FamilyPeopleCount,
+		        (Select UserID FROM tblUser ORDER BY UserID DESC LIMIT 1));
+	COMMIT;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -130,6 +179,20 @@ CREATE TABLE `tblUser` (
   `UserPassword` varchar(99) COLLATE utf8_turkish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
+--
+-- Tablo döküm verisi `tblUser`
+--
+
+INSERT INTO `tblUser` (`UserID`, `UserFirstName`, `UserLastName`, `UserIdentityNo`, `UserPassword`) VALUES
+(1, 'iasdasd', 'adasd', 12313123123, 'asdadas'),
+(10, 'hakan2', 'gaze', 12122311, 'password'),
+(19, 'İsmet', 'kizgin', 1234569902, 'password'),
+(34, 'İsmet', 'kizgin', 1234569909, 'password'),
+(36, 'İsmet', 'kizgin', 1234569904, 'password'),
+(38, 'İsmet', 'kizgin', 1234569901, 'password'),
+(40, 'İsmet', 'kizgin', 1234569907, 'password'),
+(42, 'İsmet', 'kizgin', 1234569911, 'password');
+
 -- --------------------------------------------------------
 
 --
@@ -148,6 +211,20 @@ CREATE TABLE `tblUserDetails` (
   `UserFamilyPeopleCount` int DEFAULT NULL,
   `UserID` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+
+--
+-- Tablo döküm verisi `tblUserDetails`
+--
+
+INSERT INTO `tblUserDetails` (`UserDetailsID`, `UserAdressCity`, `UserAdressDistrict`, `UserAdressStreet`, `UserAdressNo`, `UserAdressApartmentName`, `UserEmail`, `UserPhone`, `UserFamilyPeopleCount`, `UserID`) VALUES
+(1, 'asdasd', 'adasdas', 'adasdasd', 'adadasd', 'zsaasdasd', 'asasdas', 'asdasdas', 5, 1),
+(6, 'İzmir', 'Dikili Mah', 'Gazi sokak', '12', 'Papatya Aprt', 'asassaas@gmail.com', '555', 5, 10),
+(8, 'Diyarbakır', 'Kayapınar', 'Fırat mah.', '5', 'Deli Apartmanı', 'ismetkizgin@hotmail.com', '05393834430', 5, 19),
+(9, 'Diyarbakır', 'Kayapınar', 'Fırat mah.', '5', 'Deli Apartmanı', 'ismetkizgin@hotmail.com', '05393834430', 5, 34),
+(10, 'Diyarbakır', 'Kayapınar', 'Fırat mah.', '5', 'Deli Apartmanı', 'ismetkizgin@hotmail.com', '05393834430', 5, 36),
+(11, 'Diyarbakır', 'Kayapınar', 'Fırat mah.', '5', 'Deli Apartmanı', 'ismetkizgin@hotmail.com', '05393834430', 5, 38),
+(12, 'Diyarbakır', 'Kayapınar', 'Fırat mah.', '5', 'Deli Apartmanı', 'ismetkizgin@hotmail.com', '05393834430', 5, 40),
+(13, 'Diyarbakır', 'Kayapınar', 'Fırat mah.', '5', 'Deli Apartmanı', 'ismetkizgin@hotmail.com', '05393834430', 5, 42);
 
 -- --------------------------------------------------------
 
@@ -322,13 +399,13 @@ ALTER TABLE `tblStatusAuth`
 -- Tablo için AUTO_INCREMENT değeri `tblUser`
 --
 ALTER TABLE `tblUser`
-  MODIFY `UserID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `UserID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `tblUserDetails`
 --
 ALTER TABLE `tblUserDetails`
-  MODIFY `UserDetailsID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `UserDetailsID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `tblUserFamily`
@@ -395,3 +472,7 @@ ALTER TABLE `tblUserLocations`
 ALTER TABLE `tblUserState`
   ADD CONSTRAINT `tblUserState_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `tblUser` (`UserID`) ON DELETE CASCADE;
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
