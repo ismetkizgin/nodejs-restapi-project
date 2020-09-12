@@ -1,102 +1,114 @@
 {
-    "userMessage": {
-        "All_Not_Found": {
-            "status": 404,
-            "message": "There is no such user !"
-        },
-        "SignUp_Ok": {
-            "status": 200,
-            "message": "User registration has taken place."
-        },
-        "SignUp_Internal_Server_Error": {
-            "status": 500,
-            "message": "Error while registering user !"
-        },
-        "Delete_Ok": {
-            "status": 200,
-            "message": "User deletion has occurred."
-        },
-        "Delete_Internal_Server_Error": {
-            "status": 500,
-            "message": "An error occurred during user deletion !"
-        },
-        "SignUp_Router_Expectation_Failed": {
-            "status": 417,
-            "message": "There is such user"
-        },
-        "DeleteMyAccount_Router_Proxy_Authentication_Required": {
-            "status": 407,
-            "message": "You are not authorized to do this !"
-        }
+  "userMessage": {
+    "login": {
+      "Not_Found": {
+        "status": 404,
+        "message": "There is no such user !"
+      }
     },
-    "slideMessage": {
-        "All_Not_Found": {
-            "status": 404,
-            "message": "No slide available !"
-        },
-        "Insert_Ok": {
-            "status": 200,
-            "message": "Slide added."
-        },
-        "Insert_Internal_Server_Error": {
-            "status": 500,
-            "message": "There was an error adding slide !"
-        },
-        "Update_Ok": {
-            "status": 200,
-            "message": "Slide updated."
-        },
-        "Update_Internal_Server_Error": {
-            "status": 500,
-            "message": "There was an error updating the slide !"
-        },
-        "Delete_Not_Found": {
-            "status": 404,
-            "message": "There is no such slide !"
-        },
-        "Slide_Post_Router_Proxy_Authentication_Required": {
-            "status": 407,
-            "message": "Unauthorized transaction !"
-        }
+    "signUp": {
+      "Ok": {
+        "status": 200,
+        "message": "User registration has taken place."
+      },
+      "Internal_Server_Error": {
+        "status": 500,
+        "message": "Error while registering user !"
+      },
+      "Conflict": {
+        "status": 409,
+        "message": "There is such user."
+      }
     },
-    "pageMessage": {
-        "All_Not_Found": {
-            "status": 404,
-            "message": "No content available !"
-        },
-        "Insert_Ok": {
-            "status": 200,
-            "message": "Page added."
-        },
-        "Insert_Internal_Server_Error": {
-            "status": 500,
-            "message": "There was an error adding page !"
-        },
-        "Update_Ok": {
-            "status": 200,
-            "message": "The page has been updated."
-        },
-        "Update_Internal_Server_Error": {
-            "status": 500,
-            "message": "Error updating page !"
-        },
-        "Delete_Not_Found": {
-            "status": 404,
-            "message": "There is no such page!"
-        }
+    "findUserIdentityNo": {
+      "Not_Found": {
+        "status": 404,
+        "message": "There is no such user !"
+      }
     },
-    "validateMessage": {
-        "status": 417,
-        "message": "Must have correct data entry."
-    },
-    "tokenMessage": {
-        "Token_Invalid": {
-            "status": 407,
-            "message": "Failed to authentication token."
-        },
-        "Token_Null": {
-            "status": 417,
-            "message": "No token provided."
-        }
+    "delete": {
+      "Ok": {
+        "status": 200,
+        "message": "User deletion has occurred."
+      },
+      "Internal_Server_Error": {
+        "status": 500,
+        "message": "An error occurred during user deletion !"
+      },
+      "Proxy_Authentication_Required": {
+        "status": 407,
+        "message": "You are not authorized to do this !"
+      }
     }
+  },
+  "slideMessage": {
+    "All_Not_Found": {
+      "status": 404,
+      "message": "No slide available !"
+    },
+    "Insert_Ok": {
+      "status": 200,
+      "message": "Slide added."
+    },
+    "Insert_Internal_Server_Error": {
+      "status": 500,
+      "message": "There was an error adding slide !"
+    },
+    "Update_Ok": {
+      "status": 200,
+      "message": "Slide updated."
+    },
+    "Update_Internal_Server_Error": {
+      "status": 500,
+      "message": "There was an error updating the slide !"
+    },
+    "Delete_Not_Found": {
+      "status": 404,
+      "message": "There is no such slide !"
+    },
+    "Slide_Post_Router_Proxy_Authentication_Required": {
+      "status": 407,
+      "message": "Unauthorized transaction !"
+    }
+  },
+  "pageMessage": {
+    "All_Not_Found": {
+      "status": 404,
+      "message": "No content available !"
+    },
+    "Insert_Ok": {
+      "status": 200,
+      "message": "Page added."
+    },
+    "Insert_Internal_Server_Error": {
+      "status": 500,
+      "message": "There was an error adding page !"
+    },
+    "Update_Ok": {
+      "status": 200,
+      "message": "The page has been updated."
+    },
+    "Update_Internal_Server_Error": {
+      "status": 500,
+      "message": "Error updating page !"
+    },
+    "Delete_Not_Found": {
+      "status": 404,
+      "message": "There is no such page!"
+    }
+  },
+  "validateMessage": {
+    "status": 417,
+    "message": "Must have correct data entry."
+  },
+  "tokenMessage": {
+    "Token_Invalid": {
+      "status": 407,
+      "message": "Failed to authentication token."
+    },
+    "Token_Null": {
+      "status": 417,
+      "message": "No token provided."
+    }
+  }
 }

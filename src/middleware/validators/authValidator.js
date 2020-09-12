@@ -17,7 +17,12 @@ module.exports = {
             && (isEmail(body.UserEmail))
             && (isMobilePhone(body.UserPhone))
             && !(isEmpty(body.UserPassword))
-            && (isInt(body.UserStatusID));
+            && !(isEmpty(body.UserAdressCity))
+            && !(isEmpty(body.UserAdressDistrict))
+            && !(isEmpty(body.UserAdressStreet))
+            && (isInt(body.UserAdressNo))
+            && !(isEmpty(body.UserAdressApartmentName))
+            && (isInt(body.UserFamilyPeopleCount));
 
         if (state)
             next();
