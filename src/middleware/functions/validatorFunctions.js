@@ -1,7 +1,7 @@
 let validator = require('validator');
 
-export function isInt(data) { return data == null ? false : validator.isInt(data) };
-export function isEmpty(data) { return data == null ? true : validator.isEmpty(data) };
-export function isAlpha(data) { return data == null ? false : validator.isAlpha(data, ['tr-TR']) };
-export function isMobilePhone(data) { return data == null ? false : validator.isMobilePhone(data, ['tr-TR']) };
-export function isEmail(data) { return data == null ? false : validator.isEmail(data) };
+export function isInt(value) { return value == null ? false : validator.isInt(value) };
+export function isEmpty(value) { return value == null ? true : validator.isEmpty(value) };
+export function isAlpha(value) { return value == null ? false : validator.isAlpha(value, ['tr-TR']) };
+export function isMobilePhone(value) { return value == null ? false : validator.isMobilePhone(value, ['tr-TR']) };
+export function isEmail(value) { return value == null ? false : validator.isEmail(value) };
