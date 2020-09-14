@@ -14,4 +14,13 @@ router.get('/institution', async (req, res) => {
     }
 });
 
+router.post('/institution', verifyToken, institutionValidator.institutionAdd, async (req, res) => {
+    try {
+        const response = await institutionTransactions.insert(req.body);
+        res.send(response);
+    } catch (error) {
+        res.status(error.status).send({ message: error.message });
+    }
+});
+
 module.exports = router;

@@ -18,5 +18,21 @@ module.exports = {
                     reject({ status: 500, message: error.message });
             });
         });
+    },
+    insert: (data) => {
+        return new Promise((resolve, reject) => {
+            mysqlDataContext.query('INSERT INTO tblStateAgency SET ?', [data], (error, result) => {
+                if (!error) {
+                    if (result.affectedRows != 0) {
+                        resolve({ status: institutionMessage.Insert_Ok.status, message: institutionMessage.Insert_Ok.message });
+                    }
+                    else {
+                        resolve({ status: institutionMessage.Insert_Internal_Server_Error.status, message: institutionMessage.Insert_Internal_Server_Error.message });
+                    }
+                }
+                else
+                    reject({ status: 500, message: error.message });
+            });
+        });
     }
 };
