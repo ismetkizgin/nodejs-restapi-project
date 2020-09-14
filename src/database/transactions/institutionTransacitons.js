@@ -51,5 +51,21 @@ module.exports = {
                     reject({ status: 500, message: error.message });
             });
         });
+    },
+    delete: (StateAgencyID) => {
+        return new Promise((resolve, reject) => {
+            mysqlDataContext.query('DELETE FROM tblStateAgency WHERE StateAgencyID = ?', [StateAgencyID], (error, result) => {
+                if (!error) {
+                    if (result[0] != null) {
+                        resolve(result[0]);
+                    }
+                    else {
+                        resolve({ status: institutionMessage.Delete_Not_Found.status, message: institutionMessage.Delete_Not_Found.message });
+                    }
+                }
+                else
+                    reject({ status: 500, message: error.message });
+            });
+        });
     }
 };

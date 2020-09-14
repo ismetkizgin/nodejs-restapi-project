@@ -19,5 +19,13 @@ module.exports = {
             next();
         else
             res.status(validateMessage.status).send({ message: validateMessage.message });
+    },
+    institutionDelete: async (req, res, next) => {
+        const body = req.body;
+        const state = !isEmpty(body.StateAgencyID);
+        if (state)
+            next();
+        else
+            res.status(validateMessage.status).send({ message: validateMessage.message });
     }
 };

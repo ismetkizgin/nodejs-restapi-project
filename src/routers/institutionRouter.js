@@ -30,5 +30,13 @@ router.put('/institution', verifyToken, institutionValidator.institutionUpdate, 
         res.status(error.status).send({ message: error.message });
     }
 });
+router.delete('/institution', verifyToken, institutionValidator.institutionDelete, async (req, res) => {
+    try {
+        const response = await institutionTransactions.delete(req.body.institutionID);
+        res.send(response);
+    } catch (error) {
+        res.status(error.status).send({ message: error.message });
+    }
+});
 
 module.exports = router;
