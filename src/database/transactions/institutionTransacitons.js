@@ -34,5 +34,22 @@ module.exports = {
                     reject({ status: 500, message: error.message });
             });
         });
+    },
+    update: (data) => {
+        return new Promise((resolve, reject) => {
+            data.SlideURL = data.SlideURL != null ? data.SlideURL : null;
+            mysqlDataContext.query('UPDATE tblStateAgency SET StateAgencyName = :StateAgencyName, StateAgencyNo = :StateAgencyNo, StateAgencyEmail = :StateAgencyEmail WHERE StateAgencyID = : StateAgencyID', data, (error, result) => {
+                if (!error) {
+                    if (result.affectedRows != 0) {
+                        resolve({ status: institutionMessage.Update_Ok.status, message: institutionMessage.Update_Ok.message });
+                    }
+                    else {
+                        resolve({ status: institutionMessage.Update_Internal_Server_Error.status, message: institutionMessage.Update_Internal_Server_Error.message });
+                    }
+                }
+                else
+                    reject({ status: 500, message: error.message });
+            });
+        });
     }
 };

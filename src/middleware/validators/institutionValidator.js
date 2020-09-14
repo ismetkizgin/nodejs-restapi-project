@@ -10,5 +10,14 @@ module.exports = {
             next();
         else
             res.status(validateMessage.status).send({ message: validateMessage.message });
+    },
+    institutionUpdate: async (req, res, next) => {
+        const body = req.body;
+        const state = !isEmpty(body.StateAgencyID) && !isEmpty(body.StateAgencyName)
+            && !isEmpty(body.StateAgencyNo) && !isEmpty(body.StateAgencyEmail);
+        if (state)
+            next();
+        else
+            res.status(validateMessage.status).send({ message: validateMessage.message });
     }
 };
