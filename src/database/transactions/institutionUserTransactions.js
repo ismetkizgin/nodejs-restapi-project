@@ -1,5 +1,5 @@
 const { mysqlDataContext } = require('../dataContexts');
-import { userMessage } from '../../fixtures/messageStatus.json';
+import { institutionUserMessage } from '../../fixtures/messageStatus.json';
 
 module.exports = {
     login: (data) => {
@@ -9,7 +9,7 @@ module.exports = {
                     if (result[0][0] != null)
                         resolve(result[0][0]);
                     else
-                        reject(userMessage.login.Not_Found);
+                        reject(institutionUserMessage.login.Not_Found);
                 else
                     reject({ status: 500, message: error.message });
             });

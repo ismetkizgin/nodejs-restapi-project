@@ -110,5 +110,13 @@
       "status": 417,
       "message": "No token provided."
     }
+  },
+  "institutionUserMessage": {
+    "login": {
+      "Not_Found": {
+        "status": 404,
+        "message": "There is no such user !"
+      }
+    }
   }
 }
