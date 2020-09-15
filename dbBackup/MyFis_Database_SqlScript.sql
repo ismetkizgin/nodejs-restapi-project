@@ -27,11 +27,11 @@ DELIMITER $$
 -- Yordamlar
 --
 CREATE PROCEDURE `AdminLogin` (IN `AdminIdentitiyNo` BIGINT(11), IN `AdminPassword` VARCHAR(99))  BEGIN
-    select SAA.StateAgencyAdminID, SAA.StateAgencyAdminIdentityNo , SAA.StateAgencyAdminFirstName, SAA.StateAgencyAdminLastName,
+    select SAA.StateAgencyUserID, SAA.StateAgencyUserIdentityNo , SAA.StateAgencyUserFirstName, SAA.StateAgencyUserLastName,
     AST.AdminStatusName, SA.StateAgencyName
-    from tblStateAgencyAdmin SAA inner join tblAdminStatus AST  on SAA.AdminStatusID = AST.AdminStatusID
+    from tblStateAgencyUser SAA inner join tblAdminStatus AST  on SAA.AdminStatusID = AST.AdminStatusID
     inner join tblStateAgency SA on SAA.StateAgencyID = SA.StateAgencyID
-    where SAA.StateAgencyAdminIdentityNo = AdminIdentitiyNo and SAA.StateAgencyAdminPassword = AdminPassword;
+    where SAA.StateAgencyUserIdentityNo = AdminIdentitiyNo and SAA.StateAgencyUserPassword = AdminPassword;
 END$$
 
 CREATE PROCEDURE `AdminSignUp` (IN `AdminFirstName` VARCHAR(30), IN `AdminLastName` VARCHAR(30), IN `AdminIdentityNo` BIGINT(11), IN `AdminPassword` VARCHAR(99), IN `AdminEmail` VARCHAR(40), IN `StatusName` VARCHAR(40), IN `AgencyName` VARCHAR(30))  BEGIN
@@ -43,13 +43,13 @@ CREATE PROCEDURE `AdminSignUp` (IN `AdminFirstName` VARCHAR(30), IN `AdminLastNa
         SIGNAL SQLSTATE '45001' SET MESSAGE_TEXT = @p2;
     END;
     START TRANSACTION;
-		INSERT INTO tblStateAgencyAdmin (StateAgencyAdminFirstName,StateAgencyAdminLastName,StateAgencyAdminIdentityNo,
-		                                 StateAgencyAdminEmail,StateAgencyAdminPassword,AdminStatusID,StateAgencyID)
+		INSERT INTO tblStateAgencyUser (StateAgencyUserFirstName,StateAgencyUserLastName,StateAgencyUserIdentityNo,
+		                                 StateAgencyUserEmail,StateAgencyUserPassword,AdminStatusID,StateAgencyID)
 		VALUES (AdminFirstName,AdminLastName,AdminIdentityNo,
 		        AdminEmail,AdminPassword,
 		        (Select AdminStatusID from tblAdminStatus where AdminStatusName=StatusName),
 		        (Select StateAgencyID from tblStateAgency where StateAgencyName=AgencyName));
-    (Select StateAgencyAdminID FROM tblStateAgencyAdmin ORDER BY StateAgencyAdminID DESC LIMIT 1);    
+    (Select StateAgencyUserID FROM tblStateAgencyUser ORDER BY StateAgencyUserID DESC LIMIT 1);    
 	COMMIT;
 END$$
 
@@ -147,16 +147,16 @@ CREATE TABLE `tblStateAgency` (
 -- --------------------------------------------------------
 
 --
--- Tablo için tablo yapısı `tblStateAgencyAdmin`
+-- Tablo için tablo yapısı `tblStateAgencyUser`
 --
 
-CREATE TABLE `tblStateAgencyAdmin` (
-  `StateAgencyAdminID` int NOT NULL,
-  `StateAgencyAdminFirstName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `StateAgencyAdminLastName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `StateAgencyAdminIdentityNo` bigint DEFAULT NULL,
-  `StateAgencyAdminEmail` varchar(40) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `StateAgencyAdminPassword` varchar(99) COLLATE utf8_turkish_ci DEFAULT NULL,
+CREATE TABLE `tblStateAgencyUser` (
+  `StateAgencyUserID` int NOT NULL,
+  `StateAgencyUserFirstName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `StateAgencyUserLastName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `StateAgencyUserIdentityNo` bigint DEFAULT NULL,
+  `StateAgencyUserEmail` varchar(40) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `StateAgencyUserPassword` varchar(99) COLLATE utf8_turkish_ci DEFAULT NULL,
   `AdminStatusID` int DEFAULT NULL,
   `StateAgencyID` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
@@ -280,10 +280,10 @@ ALTER TABLE `tblStateAgency`
   ADD PRIMARY KEY (`StateAgencyID`);
 
 --
--- Tablo için indeksler `tblStateAgencyAdmin`
+-- Tablo için indeksler `tblStateAgencyUser`
 --
-ALTER TABLE `tblStateAgencyAdmin`
-  ADD PRIMARY KEY (`StateAgencyAdminID`),
+ALTER TABLE `tblStateAgencyUser`
+  ADD PRIMARY KEY (`StateAgencyUserID`),
   ADD UNIQUE KEY `AdminStatusID` (`AdminStatusID`),
   ADD UNIQUE KEY `StateAgencyID` (`StateAgencyID`);
 
@@ -364,10 +364,10 @@ ALTER TABLE `tblStateAgency`
   MODIFY `StateAgencyID` int NOT NULL AUTO_INCREMENT;
 
 --
--- Tablo için AUTO_INCREMENT değeri `tblStateAgencyAdmin`
+-- Tablo için AUTO_INCREMENT değeri `tblStateAgencyUser`
 --
-ALTER TABLE `tblStateAgencyAdmin`
-  MODIFY `StateAgencyAdminID` int NOT NULL AUTO_INCREMENT;
+ALTER TABLE `tblStateAgencyUser`
+  MODIFY `StateAgencyUserID` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `tblStatusAuth`
@@ -416,11 +416,11 @@ ALTER TABLE `tblPage`
   ADD CONSTRAINT `tblPage_ibfk_1` FOREIGN KEY (`PageStatusID`) REFERENCES `tblPageStatus` (`PageStatusID`) ON DELETE CASCADE;
 
 --
--- Tablo kısıtlamaları `tblStateAgencyAdmin`
+-- Tablo kısıtlamaları `tblStateAgencyUser`
 --
-ALTER TABLE `tblStateAgencyAdmin`
-  ADD CONSTRAINT `tblStateAgencyAdmin_ibfk_1` FOREIGN KEY (`StateAgencyID`) REFERENCES `tblStateAgency` (`StateAgencyID`) ON DELETE CASCADE,
-  ADD CONSTRAINT `tblStateAgencyAdmin_ibfk_2` FOREIGN KEY (`AdminStatusID`) REFERENCES `tblAdminStatus` (`AdminStatusID`) ON DELETE CASCADE;
+ALTER TABLE `tblStateAgencyUser`
+  ADD CONSTRAINT `tblStateAgencyUser_ibfk_1` FOREIGN KEY (`StateAgencyID`) REFERENCES `tblStateAgency` (`StateAgencyID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `tblStateAgencyUser_ibfk_2` FOREIGN KEY (`AdminStatusID`) REFERENCES `tblAdminStatus` (`AdminStatusID`) ON DELETE CASCADE;
 
 --
 -- Tablo kısıtlamaları `tblStatusAuth`
