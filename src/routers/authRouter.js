@@ -50,4 +50,8 @@ router.delete('/delete-my-account', verifyToken, async (req, res) => {
 	}
 });
 
+router.get('/token-decode', verifyToken, async (req, res) => {
+	res.json(req.decode);
+});
+
 module.exports = router;
