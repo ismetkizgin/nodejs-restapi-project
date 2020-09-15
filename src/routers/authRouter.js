@@ -6,11 +6,21 @@ import { userMessage } from '../fixtures/messageStatus.json'
 
 const router = express();
 const userTransactions = dbFactory('userTransactions');
+const institutionUserTransactions = dbFactory('institutionUserTransactions');
 
-router.post('/login', authValidator.login, async (req, res) => {
+router.post('/login/:loginType', authValidator.login, async (req, res) => {
 	try {
-		const result = await userTransactions.login(req.body);
-		const payload = { UserIdentityNo: result.UserIdentityNo, UserStatus: result.UserStatusName };
+		let result, payload;
+		switch (req.params.loginType) {
+			case 'user':
+				result = await userTransactions.login(req.body);
+				payload = { UserIdentityNo: result.UserIdentityNo, UserStatus: result.UserStatusName };
+				break;
+			case 'institution':
+				result = await institutionUserTransactions.login(req.body);
+				payload = { deneme: 'test' };
+				break;
+		}
 		const token = jwt.sign(payload, req.app.get('api_key'), { expiresIn: 720 });
 		res.json({ userInformation: result, token });
 	} catch (err) {
