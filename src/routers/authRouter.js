@@ -22,6 +22,7 @@ router.post('/login/:loginType', authValidator.login, async (req, res) => {
 				break;
 			default:
 				res.status(userMessage.login.Bad_Request.status).json({message: userMessage.login.Bad_Request.message});
+				return;
 		}
 		const token = jwt.sign(payload, req.app.get('api_key'), { expiresIn: 720 });
 		res.json({ userInformation: result, token });
