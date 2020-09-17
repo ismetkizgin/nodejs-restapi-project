@@ -1,39 +1,52 @@
-import { isAlpha, isEmail, isEmpty, isInt, isMobilePhone } from '../functions/validatorFunctions'
-import { validateMessage } from '../../fixtures/messageStatus.json'
+import { validateMessage } from '../../fixtures/messageStatus.json';
+import joi from 'joi';
 
 module.exports = {
-    login: (req, res, next) => {
-        if (isInt(req.body.UserIdentityNo) && !isEmpty(req.body.UserPassword))
+    login: async (req, res, next) => {
+        try {
+            const loginSchema = joi.object({
+               UserIdentityNo: joi.number().min(10000000000).max(99999999999).required(),
+               UserPassword: joi.string().max(99).required()
+            });
+            await loginSchema.validateAsync(req.body);
             next();
-        else
+        } catch (error) {
             res.status(validateMessage.status).send({ message: validateMessage.message });
+        }
     },
 
-    all: (req, res, next) => {
-        const body = req.body;
-        const state = (isAlpha(body.UserFirstName))
-            && (isAlpha(body.UserLastName))
-            && (isInt(body.UserIdentityNo))
-            && (isEmail(body.UserEmail))
-            && (isMobilePhone(body.UserPhone))
-            && !(isEmpty(body.UserPassword))
-            && !(isEmpty(body.UserAdressCity))
-            && !(isEmpty(body.UserAdressDistrict))
-            && !(isEmpty(body.UserAdressStreet))
-            && (isInt(body.UserAdressNo))
-            && !(isEmpty(body.UserAdressApartmentName))
-            && (isInt(body.UserFamilyPeopleCount));
-
-        if (state)
+    signUp: async (req, res, next) => {
+        try {
+            const signUpSchema = joi.object({
+                UserFirstName:joi.string().min(3).pattern(new RegExp('^[A-Za-zÇçÖöŞşÜüĞğİı]+$')).required(),
+                UserLastName:joi.string().min(3).pattern(new RegExp('^[A-Za-zÇçÖöŞşÜüĞğİı]+$')).required(),
+                UserIdentityNo: joi.number().min(10000000000).max(99999999999).required(),
+                UserEmail: joi.string().email().required(),
+                UserPassword: joi.string().max(99).required(),
+                UserPhone: joi.string().min(11).max(11).pattern(new RegExp('^[0-9]+$')).required(),
+                UserAdressCity: joi.string().min(3).pattern(new RegExp('^[A-Za-zÇçÖöŞşÜüĞğİı]+$')).required(),
+                UserAdressDistrict: joi.string().min(3).pattern(new RegExp('^[A-Za-zÇçÖöŞşÜüĞğİı]+$')).required(),
+                UserAdressStreet: joi.string().min(3).pattern(new RegExp('^[A-Za-zÇçÖöŞşÜüĞğİı]+$')).required(),
+                UserAdressApartmentName: joi.string().min(3).pattern(new RegExp('^[A-Za-zÇçÖöŞşÜüĞğİı]+$')).required(),
+                UserAdressNo: joi.number().required(),
+                UserFamilyPeopleCount: joi.number().required()
+            });
+            await signUpSchema.validateAsync(req.body);
             next();
-        else
+        } catch (error) {
             res.status(validateMessage.status).send({ message: validateMessage.message });
+        }
     },
 
-    deleteMyAccount: (req, res, next) => {
-        if (isInt(req.body.UserIdentityNo))
+    deleteMyAccount: async (req, res, next) => {
+        try {
+            const deleteSchema = joi.object({
+                UserIdentityNo: joi.number().min(10000000000).max(99999999999).required(),
+            });
+            await deleteSchema.validateAsync(req.body);
             next();
-        else
+        } catch (error) {
             res.status(validateMessage.status).send({ message: validateMessage.message });
+        }
     }
 }
