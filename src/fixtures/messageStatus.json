@@ -109,32 +109,57 @@
     "Token_Null": {
       "status": 417,
       "message": "No token provided."
-    },
-    "institutionMessage": {
-      "All_Not_Found": {
+    }
+  },
+  "institutionMessage": {
+    "all": {
+      "Not_Found": {
         "status": 404,
         "message": "No content available !"
-      },
-      "Insert_Ok": {
+      }
+    },
+    "insert": {
+      "Ok": {
         "status": 200,
         "message": "Institution added."
       },
-      "Insert_Internal_Server_Error": {
+      "Internal_Server_Error": {
         "status": 500,
         "message": "There was an error adding Institution !"
       },
-      "Update_Ok": {
+      "Proxy_Authentication_Required": {
+        "status": 407,
+        "message": "You are not authorized to do this !"
+      }
+    },
+    "update": {
+      "Ok": {
         "status": 200,
+        "message": "User registration has taken place."
+      },
+      "Internal_Server_Error": {
+        "status": 500,
         "message": "The Institution has been updated."
       },
-      "Update_Internal_Server_Error": {
-        "status": 500,
-        "message": "Error updating Institution !"
+      "Proxy_Authentication_Required": {
+        "status": 407,
+        "message": "You are not authorized to do this !"
+      }
+    },
+    "delete": {
+      "Ok": {
+        "status": 200,
+        "message": "Institution deletion has occurred."
       },
-      "Delete_Not_Found": {
-        "status": 404,
-        "message": "There is no such Institution!"
+      "Internal_Server_Error": {
+        "status": 500,
+        "message": "An error occurred during Institution deletion !"
+      },
+      "Proxy_Authentication_Required": {
+        "status": 407,
+        "message": "You are not authorized to do this !"
       }
     }
   }
 }
+

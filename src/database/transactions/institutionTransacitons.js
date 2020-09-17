@@ -11,7 +11,7 @@ module.exports = {
                         resolve(result);
                     }
                     else {
-                        resolve({ status: institutionMessage.All_Not_Found.status, message: institutionMessage.All_Not_Found.message });
+                        reject( institutionMessage.all.Not_Found );
                     }
                 }
                 else
