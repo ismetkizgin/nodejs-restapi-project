@@ -31,7 +31,7 @@ router.post('/login/:loginType', authValidator.login, async (req, res) => {
 	}
 });
 
-router.post('/sign-up', authValidator.all, async (req, res) => {
+router.post('/sign-up', authValidator.signUp, async (req, res) => {
 	try {
 		const result = await userTransactions.signup(req.body);
 		res.json({ message: result.message });

@@ -1,15 +1,22 @@
-import { isAlpha, isEmail, isEmpty, isInt, isMobilePhone } from '../functions/validatorFunctions'
-import { validateMessage } from '../../fixtures/messageStatus.json'
+import { isAlpha, isEmail, isEmpty, isInt, isMobilePhone } from '../functions/validatorFunctions';
+import { validateMessage } from '../../fixtures/messageStatus.json';
+import joi from 'joi';
 
 module.exports = {
-    login: (req, res, next) => {
-        if (isInt(req.body.UserIdentityNo) && !isEmpty(req.body.UserPassword))
+    login: async (req, res, next) => {
+        try {
+            const loginSchema = joi.object({
+               UserIdentityNo: joi.number().min(10000000000).max(99999999999).required(),
+               UserPassword: joi.string().required()
+            });
+            await loginSchema.validateAsync(req.body);
             next();
-        else
+        } catch (error) {
             res.status(validateMessage.status).send({ message: validateMessage.message });
+        }
     },
 
-    all: (req, res, next) => {
+    signUp: (req, res, next) => {
         const body = req.body;
         const state = (isAlpha(body.UserFirstName))
             && (isAlpha(body.UserLastName))
