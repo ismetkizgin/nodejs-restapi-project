@@ -31,8 +31,7 @@ module.exports = {
     },
     update: (data) => {
         return new Promise((resolve, reject) => {
-            mysqlDataContext.query('UPDATE tblInstitution SET ? WHERE InstitutionID = ?',
-                [{ InstitutionName:data.InstitutionName,InstitutionNo:data.InstitutionNo, InstitutionEmail:data.InstitutionEmail}, data.InstitutionID], (error, result) => {
+            mysqlDataContext.query('UPDATE tblInstitution SET ? WHERE InstitutionID = ?', [data, data.InstitutionID], (error, result) => {
                 if (!error)
                     if (result.affectedRows != 0)
                         resolve(institutionMessage.update.Ok);

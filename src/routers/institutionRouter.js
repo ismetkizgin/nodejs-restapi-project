@@ -8,34 +8,34 @@ const institutionTransactions = dbFactory('institutionTransactions');
 router.get('/institution', async (req, res) => {
     try {
         const response = await institutionTransactions.list();
-        res.send(response);
+        res.json(response);
     } catch (error) {
-        res.status(error.status).send({ message: error.message });
+        res.status(error.status).json({ message: error.message });
     }
 });
 
-router.post('/institution', verifyToken, institutionValidator.add, async (req, res) => {
+router.post('/institution', institutionValidator.add, async (req, res) => {
     try {
         const response = await institutionTransactions.insert(req.body);
-        res.send(response);
+        res.json({message:response.message});
     } catch (error) {
-        res.status(error.status).send({ message: error.message });
+        res.status(error.status).json({ message: error.message });
     }
 });
-router.put('/institution', verifyToken, institutionValidator.update, async (req, res) => {
+router.put('/institution', institutionValidator.update, async (req, res) => {
     try {
         const response = await institutionTransactions.update(req.body);
-        res.send(response);
+        res.json({message:response.message});
     } catch (error) {
-        res.status(error.status).send({ message: error.message });
+        res.status(error.status).json({ message: error.message });
     }
 });
 router.delete('/institution', verifyToken, institutionValidator.delete, async (req, res) => {
     try {
         const response = await institutionTransactions.delete(req.body.InstitutionID);
-        res.send(response);
+        res.json({message:response.message});
     } catch (error) {
-        res.status(error.status).send({ message: error.message });
+        res.status(error.status).json({ message: error.message });
     }
 });
 
