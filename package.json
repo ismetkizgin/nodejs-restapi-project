@@ -1,6 +1,6 @@
 {
   "name": "myfis-service",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "main": "./build/app.js",
   "scripts": {
     "start": "npm run build && node ./build/app.js -p $PORT",
