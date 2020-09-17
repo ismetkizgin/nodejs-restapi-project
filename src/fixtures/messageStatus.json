@@ -4,6 +4,10 @@
       "Not_Found": {
         "status": 404,
         "message": "There is no such user !"
+      },
+      "Bad_Request": {
+        "status": 400,
+        "message": "The entry type is not correct."
       }
     },
     "signUp": {
@@ -109,6 +113,14 @@
     "Token_Null": {
       "status": 417,
       "message": "No token provided."
+    }
+  },
+  "institutionUserMessage": {
+    "login": {
+      "Not_Found": {
+        "status": 404,
+        "message": "There is no such user !"
+      }
     }
   }
 }
