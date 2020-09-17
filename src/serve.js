@@ -13,12 +13,8 @@ app.use(routers.pageRouter);
 app.use(routers.InstantEarthquakesRouter);
 app.use(routers.institutionRouter);
 
-
-app.set('views', __dirname + '/public/views');
-app.set('view engine', 'twig');
-
 app.get('/', function (req, res) {
-    res.render('index');
+    res.json('MyFIS Serve Project');
 });
 
 app.use((req, res, next) => {
