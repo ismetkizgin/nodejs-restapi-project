@@ -2,27 +2,27 @@ import { isEmpty } from '../functions/validatorFunctions'
 import { validateMessage } from '../../fixtures/messageStatus.json'
 
 module.exports = {
-    institutionAdd: async (req, res, next) => {
+    add: async (req, res, next) => {
         const body = req.body;
-        const state = !isEmpty(body.StateAgencyName)
-            && !isEmpty(body.StateAgencyNo) && !isEmpty(body.StateAgencyEmail);
+        const state = !isEmpty(body.InstitutionName)
+            && !isEmpty(body.InstitutionNo) && !isEmpty(body.InstitutionEmail);
         if (state)
             next();
         else
             res.status(validateMessage.status).send({ message: validateMessage.message });
     },
-    institutionUpdate: async (req, res, next) => {
+    update: async (req, res, next) => {
         const body = req.body;
-        const state = !isEmpty(body.StateAgencyID) && !isEmpty(body.StateAgencyName)
-            && !isEmpty(body.StateAgencyNo) && !isEmpty(body.StateAgencyEmail);
+        const state = !isEmpty(body.InstitutionID) && !isEmpty(body.InstitutionName)
+            && !isEmpty(body.InstitutionNo) && !isEmpty(body.InstitutionEmail);
         if (state)
             next();
         else
             res.status(validateMessage.status).send({ message: validateMessage.message });
     },
-    institutionDelete: async (req, res, next) => {
+    delete: async (req, res, next) => {
         const body = req.body;
-        const state = !isEmpty(body.StateAgencyID);
+        const state = !isEmpty(body.InstitutionID);
         if (state)
             next();
         else

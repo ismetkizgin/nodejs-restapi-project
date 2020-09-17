@@ -11,6 +11,8 @@ app.use(routers.authRouter);
 app.use(routers.slideRouter);
 app.use(routers.pageRouter);
 app.use(routers.InstantEarthquakesRouter);
+app.use(routers.institutionRouter);
+
 
 app.set('views', __dirname + '/public/views');
 app.set('view engine', 'twig');

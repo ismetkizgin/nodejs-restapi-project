@@ -135,7 +135,7 @@
     "update": {
       "Ok": {
         "status": 200,
-        "message": "User registration has taken place."
+        "message": "Institution registration has taken place."
       },
       "Internal_Server_Error": {
         "status": 500,

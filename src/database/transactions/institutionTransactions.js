@@ -1,11 +1,11 @@
+const { mysqlDataContext } = require('../dataContexts');
 import {institutionMessage} from "../../fixtures/messageStatus";
 
-const { mysqlDataContext } = require('../dataContexts');
 
 module.exports = {
     all: () => {
         return new Promise((resolve, reject) => {
-            mysqlDataContext.query('SELECT * FROM tblStateAgency order by StateAgencyID desc', (error, result) => {
+            mysqlDataContext.query('SELECT * FROM tblInstitution order by InstitutionID desc', (error, result) => {
                 if (!error) {
                     if (result != null) {
                         resolve(result);
@@ -21,13 +21,13 @@ module.exports = {
     },
     insert: (data) => {
         return new Promise((resolve, reject) => {
-            mysqlDataContext.query('INSERT INTO tblStateAgency SET ?', [data], (error, result) => {
+            mysqlDataContext.query('INSERT INTO tblInstitution SET ?', [data], (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
-                        resolve({ status: institutionMessage.Insert_Ok.status, message: institutionMessage.Insert_Ok.message });
+                        resolve( institutionMessage.insert.Ok );
                     }
                     else {
-                        resolve({ status: institutionMessage.Insert_Internal_Server_Error.status, message: institutionMessage.Insert_Internal_Server_Error.message });
+                        reject(institutionMessage.insert.Internal_Server_Error);
                     }
                 }
                 else
@@ -37,14 +37,14 @@ module.exports = {
     },
     update: (data) => {
         return new Promise((resolve, reject) => {
-            data.SlideURL = data.SlideURL != null ? data.SlideURL : null;
-            mysqlDataContext.query('UPDATE tblStateAgency SET StateAgencyName = :StateAgencyName, StateAgencyNo = :StateAgencyNo, StateAgencyEmail = :StateAgencyEmail WHERE StateAgencyID = : StateAgencyID', data, (error, result) => {
+            mysqlDataContext.query('UPDATE tblInstitution SET ? WHERE InstitutionID = ?',
+                [{ InstitutionName:data.InstitutionName,InstitutionNo:data.InstitutionNo, InstitutionEmail:data.InstitutionEmail}, data.InstitutionID], (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
-                        resolve({ status: institutionMessage.Update_Ok.status, message: institutionMessage.Update_Ok.message });
+                        resolve(institutionMessage.update.Ok);
                     }
                     else {
-                        resolve({ status: institutionMessage.Update_Internal_Server_Error.status, message: institutionMessage.Update_Internal_Server_Error.message });
+                        reject(institutionMessage.update.Internal_Server_Error);
                     }
                 }
                 else
@@ -52,15 +52,15 @@ module.exports = {
             });
         });
     },
-    delete: (StateAgencyID) => {
+    delete: (InstitutionID) => {
         return new Promise((resolve, reject) => {
-            mysqlDataContext.query('DELETE FROM tblStateAgency WHERE StateAgencyID = ?', [StateAgencyID], (error, result) => {
+            mysqlDataContext.query('DELETE FROM tblInstitution WHERE InstitutionID = ?', [InstitutionID], (error, result) => {
                 if (!error) {
-                    if (result[0] != null) {
-                        resolve(result[0]);
+                    if (result.affectedRows != 0) {
+                        resolve(institutionMessage.delete.Ok);
                     }
                     else {
-                        resolve({ status: institutionMessage.Delete_Not_Found.status, message: institutionMessage.Delete_Not_Found.message });
+                        resolve(institutionMessage.delete.Internal_Server_Error);
                     }
                 }
                 else
@@ -68,4 +68,4 @@ module.exports = {
             });
         });
     }
-};
+}

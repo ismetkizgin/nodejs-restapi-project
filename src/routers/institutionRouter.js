@@ -14,7 +14,7 @@ router.get('/institution', async (req, res) => {
     }
 });
 
-router.post('/institution', verifyToken, institutionValidator.institutionAdd, async (req, res) => {
+router.post('/institution', verifyToken, institutionValidator.add, async (req, res) => {
     try {
         const response = await institutionTransactions.insert(req.body);
         res.send(response);
@@ -22,7 +22,7 @@ router.post('/institution', verifyToken, institutionValidator.institutionAdd, as
         res.status(error.status).send({ message: error.message });
     }
 });
-router.put('/institution', verifyToken, institutionValidator.institutionUpdate, async (req, res) => {
+router.put('/institution', verifyToken, institutionValidator.update, async (req, res) => {
     try {
         const response = await institutionTransactions.update(req.body);
         res.send(response);
@@ -30,9 +30,9 @@ router.put('/institution', verifyToken, institutionValidator.institutionUpdate, 
         res.status(error.status).send({ message: error.message });
     }
 });
-router.delete('/institution', verifyToken, institutionValidator.institutionDelete, async (req, res) => {
+router.delete('/institution', verifyToken, institutionValidator.delete, async (req, res) => {
     try {
-        const response = await institutionTransactions.delete(req.body.institutionID);
+        const response = await institutionTransactions.delete(req.body.InstitutionID);
         res.send(response);
     } catch (error) {
         res.status(error.status).send({ message: error.message });
