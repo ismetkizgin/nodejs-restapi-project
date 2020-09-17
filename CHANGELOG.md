@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/ismetkizgin/Serve/compare/v1.0.0...v1.1.0) (2020-09-17)
+
+
+### Features
+
+* added institution login router ([8680048](https://github.com/ismetkizgin/Serve/commit/8680048ac16a94a152d3dca43cd52619f6dda2b3))
+* added token decode router ([4f64d26](https://github.com/ismetkizgin/Serve/commit/4f64d2601b1981e2781de402f96238cf4904e810))
+
+
+### Bug Fixes
+
+* fix for user transactions ([3eed642](https://github.com/ismetkizgin/Serve/commit/3eed642053d86094bedb84324feab43458cc8aa0))
+* fix for user transactions ([73374f0](https://github.com/ismetkizgin/Serve/commit/73374f010c7812a3f8e4dce0103240f01218f67e))
+* fix for user transactions ([48f7411](https://github.com/ismetkizgin/Serve/commit/48f741128c5f9e38beb8ab946c835408c162d327))
+* fix for user transactions and routers ([9cace45](https://github.com/ismetkizgin/Serve/commit/9cace45d933c9e42008a92bee1814e8112593f55))
+
 ## 1.0.0 (2020-09-11)
 
 
