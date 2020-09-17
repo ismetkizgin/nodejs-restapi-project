@@ -115,6 +115,56 @@
       "message": "No token provided."
     }
   },
+  "institutionMessage": {
+    "all": {
+      "Not_Found": {
+        "status": 404,
+        "message": "No content available !"
+      }
+    },
+    "insert": {
+      "Ok": {
+        "status": 200,
+        "message": "Institution added."
+      },
+      "Internal_Server_Error": {
+        "status": 500,
+        "message": "There was an error adding Institution !"
+      },
+      "Proxy_Authentication_Required": {
+        "status": 407,
+        "message": "You are not authorized to do this !"
+      }
+    },
+    "update": {
+      "Ok": {
+        "status": 200,
+        "message": "Institution registration has taken place."
+      },
+      "Internal_Server_Error": {
+        "status": 500,
+        "message": "The Institution has been updated."
+      },
+      "Proxy_Authentication_Required": {
+        "status": 407,
+        "message": "You are not authorized to do this !"
+      }
+    },
+    "delete": {
+      "Ok": {
+        "status": 200,
+        "message": "Institution deletion has occurred."
+      },
+      "Internal_Server_Error": {
+        "status": 500,
+        "message": "An error occurred during Institution deletion !"
+      },
+      "Proxy_Authentication_Required": {
+        "status": 407,
+        "message": "You are not authorized to do this !"
+      }
+    }
+  },
   "institutionUserMessage": {
     "login": {
       "Not_Found": {
