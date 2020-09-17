@@ -6,11 +6,24 @@ import { userMessage } from '../fixtures/messageStatus.json'
 
 const router = express();
 const userTransactions = dbFactory('userTransactions');
+const institutionUserTransactions = dbFactory('institutionUserTransactions');
 
-router.post('/login', authValidator.login, async (req, res) => {
+router.post('/login/:loginType', authValidator.login, async (req, res) => {
 	try {
-		const result = await userTransactions.login(req.body);
-		const payload = { UserIdentityNo: result.UserIdentityNo, UserStatus: result.UserStatusName };
+		let result, payload;
+		switch (req.params.loginType) {
+			case 'user':
+				result = await userTransactions.login(req.body);
+				payload = { UserIdentityNo: result.UserIdentityNo, UserStatus: result.UserStatusName };
+				break;
+			case 'institution':
+				result = await institutionUserTransactions.login(req.body);
+				payload = { InstitutionUserID: result.institutionUserID };
+				break;
+			default:
+				res.status(userMessage.login.Bad_Request.status).json({message: userMessage.login.Bad_Request.message});
+				return;
+		}
 		const token = jwt.sign(payload, req.app.get('api_key'), { expiresIn: 720 });
 		res.json({ userInformation: result, token });
 	} catch (err) {
@@ -38,6 +51,10 @@ router.delete('/delete-my-account', verifyToken, async (req, res) => {
 	} catch (err) {
 		res.status(err.status).json({ message: err.message });
 	}
+});
+
+router.get('/token-decode', verifyToken, async (req, res) => {
+	res.json(req.decode);
 });
 
 module.exports = router;

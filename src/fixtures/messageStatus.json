@@ -4,6 +4,10 @@
       "Not_Found": {
         "status": 404,
         "message": "There is no such user !"
+      },
+      "Bad_Request": {
+        "status": 400,
+        "message": "The entry type is not correct."
       }
     },
     "signUp": {
@@ -160,6 +164,13 @@
         "message": "You are not authorized to do this !"
       }
     }
+  },
+  "institutionUserMessage": {
+    "login": {
+      "Not_Found": {
+        "status": 404,
+        "message": "There is no such user !"
+      }
+    }
   }
 }
-
