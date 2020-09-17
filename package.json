@@ -22,8 +22,7 @@
     "path": "^0.12.7",
     "request": "^2.88.2",
     "require-directory": "^2.1.1",
-    "twig": "^1.15.1",
-    "validator": "^13.0.0"
+    "twig": "^1.15.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
