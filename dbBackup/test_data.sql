@@ -1,14 +1,11 @@
 /* User Data */
-INSERT INTO tblUser (UserFirstName,UserLastName,UserIdentityNo,UserPassword) VALUES ("İsmet", "KİZGİN", 12345678912, "password");
-INSERT INTO tblUserDetails (UserAdressCity,UserAdressDistrict,UserAdressStreet,UserAdressNo,UserAdressApartmentName,UserEmail,UserPhone,UserFamilyPeopleCount, UserID) VALUES ("İstanbul", "Kadıköy", "Mustafa Kemal CD.", 142,"Gonca Aprt.","izmetkizgin@gmail.com","(554)55512312",5,1);
+CALL UserSignUp("İsmet", "KİZGİN", 12345678912, "password","İstanbul", "Kadıköy", "Mustafa Kemal CD.", 142,"Gonca Aprt.","izmetkizgin@gmail.com","(554)55512312",5,1)
 INSERT INTO tblUserState (UserID,UserState) VALUES (1, 2);
 
-INSERT INTO tblUser (UserFirstName,UserLastName,UserIdentityNo,UserPassword) VALUES ("Yusuf", "DEDE", 12345678932, "password");
-INSERT INTO tblUserDetails (UserAdressCity,UserAdressDistrict,UserAdressStreet,UserAdressNo,UserAdressApartmentName,UserEmail,UserPhone,UserFamilyPeopleCount, UserID) VALUES ("Bursa", "Merkez", "İnönü CD.", 102," Papatya Aprt.","yusufdede@gmail.com","(554)44412312",3,2);
+CALL UserSignUp("Yusuf", "DEDE", 12345678932, "password","Bursa", "Merkez", "İnönü CD.", 102," Papatya Aprt.","yusufdede@gmail.com","(554)44412312",3,2)
 INSERT INTO tblUserState (UserID,UserState) VALUES (2, 2);
 
-INSERT INTO tblUser (UserFirstName,UserLastName,UserIdentityNo,UserPassword) VALUES ("Mehmet Ayberk", "ÇAKAR", 12345678942, "password");
-INSERT INTO tblUserDetails (UserAdressCity,UserAdressDistrict,UserAdressStreet,UserAdressNo,UserAdressApartmentName,UserEmail,UserPhone,UserFamilyPeopleCount, UserID) VALUES ("İzmir", "Dikili", "Cumhuriyet CD.", 8,"Deniz Aprt.","ayberkcakar@gmail.com","(554)33333312",4,3);
+CALL UserSignUp("Mehmet Ayberk", "ÇAKAR", 12345678942, "password","İzmir", "Dikili", "Cumhuriyet CD.", 8,"Deniz Aprt.","ayberkcakar@gmail.com","(554)33333312",4,3)
 INSERT INTO tblUserState (UserID,UserState) VALUES (2, 2);
 
 /* User Family Data */
@@ -38,29 +35,26 @@ INSERT INTO tblPageStatus (PageStatusName) VALUES ("News");
 INSERT INTO tblPageStatus (PageStatusName) VALUES ("Rescue Work");
 
 
-
-
 /* AdminStatus Data */
 
-INSERT INTO tblAdminStatus (AdminStatusName) VALUES ("MyFis Admin");
-INSERT INTO tblAdminStatus (AdminStatusName) VALUES ("AKUT Admin");
-INSERT INTO tblAdminStatus (AdminStatusName) VALUES ("İtfaye Admin");
+INSERT INTO tblInstitutionUserStatus (InstitutionUserStatusName) VALUES ("MyFis Admin");
+INSERT INTO tblInstitutionUserStatus (InstitutionUserStatusName) VALUES ("AKUT Admin");
+INSERT INTO tblInstitutionUserStatus (InstitutionUserStatusName) VALUES ("İtfaye Admin");
 
 /* StatusAuth Data */
 
-INSERT INTO tblStatusAuth (StatusAuthName,AdminStatusID) VALUES ("Kurum Bilgisi İnceleme",1);
-INSERT INTO tblStatusAuth (StatusAuthName,AdminStatusID) VALUES ("Tam Yetkili Admin Ekleme",1);
-INSERT INTO tblStatusAuth (StatusAuthName,AdminStatusID) VALUES ("Kurum Lideri Ekleme",2);
+INSERT INTO tblStatusAuth (StatusAuthName,InstitutionUserStatusID) VALUES ("Kurum Bilgisi İnceleme",1);
+INSERT INTO tblStatusAuth (StatusAuthName,InstitutionUserStatusID) VALUES ("Tam Yetkili Admin Ekleme",1);
+INSERT INTO tblStatusAuth (StatusAuthName,InstitutionUserStatusID) VALUES ("Kurum Lideri Ekleme",2);
 
 /* StateAgency Data */
 
-INSERT INTO tblStateAgency (StateAgencyName,StateAgencyNo,StateAgencyEmail) VALUES ("MyFis",1111111111,"myfis@gmail.com");
-INSERT INTO tblStateAgency (StateAgencyName,StateAgencyNo,StateAgencyEmail) VALUES ("AKUT",2222222222,"akut@gmail.com");
-INSERT INTO tblStateAgency (StateAgencyName,StateAgencyNo,StateAgencyEmail) VALUES ("İTFAYE",3333333333,"itfaye@gmail.com");
+INSERT INTO tblInstitution (InstitutionName,InstitutionNo,InstitutionEmail) VALUES ("MyFis",1111111111,"myfis@gmail.com");
+INSERT INTO tblInstitution (InstitutionName,InstitutionNo,InstitutionEmail) VALUES ("AKUT",2222222222,"akut@gmail.com");
+INSERT INTO tblInstitution (InstitutionName,InstitutionNo,InstitutionEmail) VALUES ("İTFAYE",3333333333,"itfaye@gmail.com");
 
 /* StateAgencyAdmin Data */
 
-INSERT INTO tblStateAgencyAdmin (StateAgencyAdminFirstName,StateAgencyAdminLastName,StateAgencyAdminIdentityNo,StateAgencyAdminEmail,StateAgencyAdminPassword,AdminStatusID,StateAgencyID) VALUES ("Elif Yaren","TAT",12345678954,"elif@gmail.com","password",1,1);
-INSERT INTO tblStateAgencyAdmin (StateAgencyAdminFirstName,StateAgencyAdminLastName,StateAgencyAdminIdentityNo,StateAgencyAdminEmail,StateAgencyAdminPassword,AdminStatusID,StateAgencyID) VALUES ("Kadircan","KARADEMİR",12345678964,"kadircan@gmail.com","password",2,2);
-
+CALL InstitutionUserSignUp("Elif Yaren","TAT",12345678954,"elif@gmail.com","password",1,1);
+CALL InstitutionUserSignUp("Kadircan","KARADEMİR",12345678964,"kadircan@gmail.com","password",2,2);
 
