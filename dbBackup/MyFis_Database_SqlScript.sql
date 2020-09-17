@@ -26,15 +26,15 @@ DELIMITER $$
 --
 -- Yordamlar
 --
-CREATE PROCEDURE `AdminLogin` (IN `AdminIdentitiyNo` BIGINT(11), IN `AdminPassword` VARCHAR(99))  BEGIN
-    select SAA.StateAgencyUserID, SAA.StateAgencyUserIdentityNo , SAA.StateAgencyUserFirstName, SAA.StateAgencyUserLastName,
-    AST.AdminStatusName, SA.StateAgencyName
-    from tblStateAgencyUser SAA inner join tblAdminStatus AST  on SAA.AdminStatusID = AST.AdminStatusID
-    inner join tblStateAgency SA on SAA.StateAgencyID = SA.StateAgencyID
-    where SAA.StateAgencyUserIdentityNo = AdminIdentitiyNo and SAA.StateAgencyUserPassword = AdminPassword;
+CREATE PROCEDURE `InstitutionUserLogin` (IN `AdminIdentitiyNo` BIGINT(11), IN `AdminPassword` VARCHAR(99))  BEGIN
+    select SAA.InstitutionUserID, SAA.InstitutionUserIdentityNo , SAA.InstitutionUserFirstName, SAA.InstitutionUserLastName,
+    AST.InstitutionUserStatusName, SA.InstitutionName
+    from tblInstitutionUser SAA inner join tblInstitutionUserStatus AST  on SAA.InstitutionUserStatusID = AST.InstitutionUserStatusID
+    inner join tblInstitution SA on SAA.InstitutionID = SA.InstitutionID
+    where SAA.InstitutionUserIdentityNo = AdminIdentitiyNo and SAA.InstitutionUserPassword = AdminPassword;
 END$$
 
-CREATE PROCEDURE `AdminSignUp` (IN `AdminFirstName` VARCHAR(30), IN `AdminLastName` VARCHAR(30), IN `AdminIdentityNo` BIGINT(11), IN `AdminPassword` VARCHAR(99), IN `AdminEmail` VARCHAR(40), IN `StatusName` VARCHAR(40), IN `AgencyName` VARCHAR(30))  BEGIN
+CREATE PROCEDURE `InstitutionUserSignUp` (IN `AdminFirstName` VARCHAR(30), IN `AdminLastName` VARCHAR(30), IN `AdminIdentityNo` BIGINT(11), IN `AdminPassword` VARCHAR(99), IN `AdminEmail` VARCHAR(40), IN `StatusName` VARCHAR(40), IN `AgencyName` VARCHAR(30))  BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         GET DIAGNOSTICS CONDITION 1
@@ -43,13 +43,13 @@ CREATE PROCEDURE `AdminSignUp` (IN `AdminFirstName` VARCHAR(30), IN `AdminLastNa
         SIGNAL SQLSTATE '45001' SET MESSAGE_TEXT = @p2;
     END;
     START TRANSACTION;
-		INSERT INTO tblStateAgencyUser (StateAgencyUserFirstName,StateAgencyUserLastName,StateAgencyUserIdentityNo,
-		                                 StateAgencyUserEmail,StateAgencyUserPassword,AdminStatusID,StateAgencyID)
+		INSERT INTO tblInstitutionUser (InstitutionUserFirstName,InstitutionUserLastName,InstitutionUserIdentityNo,
+		                                 InstitutionUserEmail,InstitutionUserPassword,InstitutionUserStatusID,InstitutionID)
 		VALUES (AdminFirstName,AdminLastName,AdminIdentityNo,
 		        AdminEmail,AdminPassword,
-		        (Select AdminStatusID from tblAdminStatus where AdminStatusName=StatusName),
-		        (Select StateAgencyID from tblStateAgency where StateAgencyName=AgencyName));
-    (Select StateAgencyUserID FROM tblStateAgencyUser ORDER BY StateAgencyUserID DESC LIMIT 1);    
+		        (Select InstitutionUserStatusID from tblInstitutionUserStatus where InstitutionUserStatusName=StatusName),
+		        (Select InstitutionID from tblInstitution where InstitutionName=AgencyName));
+    (Select InstitutionUserID FROM tblInstitutionUser ORDER BY InstitutionUserID DESC LIMIT 1);    
 	COMMIT;
 END$$
 
@@ -82,12 +82,12 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Tablo için tablo yapısı `tblAdminStatus`
+-- Tablo için tablo yapısı `tblInstitutionUserStatus`
 --
 
-CREATE TABLE `tblAdminStatus` (
-  `AdminStatusID` int NOT NULL,
-  `AdminStatusName` varchar(20) COLLATE utf8_turkish_ci DEFAULT NULL
+CREATE TABLE `tblInstitutionUserStatus` (
+  `InstitutionUserStatusID` int NOT NULL,
+  `InstitutionUserStatusName` varchar(20) COLLATE utf8_turkish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 -- --------------------------------------------------------
@@ -134,31 +134,31 @@ CREATE TABLE `tblSlide` (
 -- --------------------------------------------------------
 
 --
--- Tablo için tablo yapısı `tblStateAgency`
+-- Tablo için tablo yapısı `tblInstitution`
 --
 
-CREATE TABLE `tblStateAgency` (
-  `StateAgencyID` int NOT NULL,
-  `StateAgencyName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `StateAgencyNo` bigint DEFAULT NULL,
-  `StateAgencyEmail` varchar(40) COLLATE utf8_turkish_ci DEFAULT NULL
+CREATE TABLE `tblInstitution` (
+  `InstitutionID` int NOT NULL,
+  `InstitutionName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `InstitutionNo` bigint DEFAULT NULL,
+  `InstitutionEmail` varchar(40) COLLATE utf8_turkish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Tablo için tablo yapısı `tblStateAgencyUser`
+-- Tablo için tablo yapısı `tblInstitutionUser`
 --
 
-CREATE TABLE `tblStateAgencyUser` (
-  `StateAgencyUserID` int NOT NULL,
-  `StateAgencyUserFirstName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `StateAgencyUserLastName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `StateAgencyUserIdentityNo` bigint DEFAULT NULL,
-  `StateAgencyUserEmail` varchar(40) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `StateAgencyUserPassword` varchar(99) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `AdminStatusID` int DEFAULT NULL,
-  `StateAgencyID` int DEFAULT NULL
+CREATE TABLE `tblInstitutionUser` (
+  `InstitutionUserID` int NOT NULL,
+  `InstitutionUserFirstName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `InstitutionUserLastName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `InstitutionUserIdentityNo` bigint DEFAULT NULL,
+  `InstitutionUserEmail` varchar(40) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `InstitutionUserPassword` varchar(99) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `InstitutionUserStatusID` int DEFAULT NULL,
+  `InstitutionID` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 -- --------------------------------------------------------
@@ -170,7 +170,7 @@ CREATE TABLE `tblStateAgencyUser` (
 CREATE TABLE `tblStatusAuth` (
   `StatusAuthID` int NOT NULL,
   `StatusAuthName` varchar(40) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `AdminStatusID` int DEFAULT NULL
+  `InstitutionUserStatusID` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 -- --------------------------------------------------------
@@ -249,10 +249,10 @@ CREATE TABLE `tblUserState` (
 --
 
 --
--- Tablo için indeksler `tblAdminStatus`
+-- Tablo için indeksler `tblInstitutionUserStatus`
 --
-ALTER TABLE `tblAdminStatus`
-  ADD PRIMARY KEY (`AdminStatusID`);
+ALTER TABLE `tblInstitutionUserStatus`
+  ADD PRIMARY KEY (`InstitutionUserStatusID`);
 
 --
 -- Tablo için indeksler `tblPage`
@@ -274,25 +274,25 @@ ALTER TABLE `tblSlide`
   ADD PRIMARY KEY (`SlideID`);
 
 --
--- Tablo için indeksler `tblStateAgency`
+-- Tablo için indeksler `tblInstitution`
 --
-ALTER TABLE `tblStateAgency`
-  ADD PRIMARY KEY (`StateAgencyID`);
+ALTER TABLE `tblInstitution`
+  ADD PRIMARY KEY (`InstitutionID`);
 
 --
--- Tablo için indeksler `tblStateAgencyUser`
+-- Tablo için indeksler `tblInstitutionUser`
 --
-ALTER TABLE `tblStateAgencyUser`
-  ADD PRIMARY KEY (`StateAgencyUserID`),
-  ADD UNIQUE KEY `AdminStatusID` (`AdminStatusID`),
-  ADD UNIQUE KEY `StateAgencyID` (`StateAgencyID`);
+ALTER TABLE `tblInstitutionUser`
+  ADD PRIMARY KEY (`InstitutionUserID`),
+  ADD UNIQUE KEY `InstitutionUserStatusID` (`InstitutionUserStatusID`),
+  ADD UNIQUE KEY `InstitutionID` (`InstitutionID`);
 
 --
 -- Tablo için indeksler `tblStatusAuth`
 --
 ALTER TABLE `tblStatusAuth`
   ADD PRIMARY KEY (`StatusAuthID`),
-  ADD UNIQUE KEY `AdminStatusID` (`AdminStatusID`);
+  ADD UNIQUE KEY `InstitutionUserStatusID` (`InstitutionUserStatusID`);
 
 --
 -- Tablo için indeksler `tblUser`
@@ -334,10 +334,10 @@ ALTER TABLE `tblUserState`
 --
 
 --
--- Tablo için AUTO_INCREMENT değeri `tblAdminStatus`
+-- Tablo için AUTO_INCREMENT değeri `tblInstitutionUserStatus`
 --
-ALTER TABLE `tblAdminStatus`
-  MODIFY `AdminStatusID` int NOT NULL AUTO_INCREMENT;
+ALTER TABLE `tblInstitutionUserStatus`
+  MODIFY `InstitutionUserStatusID` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `tblPage`
@@ -358,16 +358,16 @@ ALTER TABLE `tblSlide`
   MODIFY `SlideID` int NOT NULL AUTO_INCREMENT;
 
 --
--- Tablo için AUTO_INCREMENT değeri `tblStateAgency`
+-- Tablo için AUTO_INCREMENT değeri `tblInstitution`
 --
-ALTER TABLE `tblStateAgency`
-  MODIFY `StateAgencyID` int NOT NULL AUTO_INCREMENT;
+ALTER TABLE `tblInstitution`
+  MODIFY `InstitutionID` int NOT NULL AUTO_INCREMENT;
 
 --
--- Tablo için AUTO_INCREMENT değeri `tblStateAgencyUser`
+-- Tablo için AUTO_INCREMENT değeri `tblInstitutionUser`
 --
-ALTER TABLE `tblStateAgencyUser`
-  MODIFY `StateAgencyUserID` int NOT NULL AUTO_INCREMENT;
+ALTER TABLE `tblInstitutionUser`
+  MODIFY `InstitutionUserID` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `tblStatusAuth`
@@ -416,17 +416,17 @@ ALTER TABLE `tblPage`
   ADD CONSTRAINT `tblPage_ibfk_1` FOREIGN KEY (`PageStatusID`) REFERENCES `tblPageStatus` (`PageStatusID`) ON DELETE CASCADE;
 
 --
--- Tablo kısıtlamaları `tblStateAgencyUser`
+-- Tablo kısıtlamaları `tblInstitutionUser`
 --
-ALTER TABLE `tblStateAgencyUser`
-  ADD CONSTRAINT `tblStateAgencyUser_ibfk_1` FOREIGN KEY (`StateAgencyID`) REFERENCES `tblStateAgency` (`StateAgencyID`) ON DELETE CASCADE,
-  ADD CONSTRAINT `tblStateAgencyUser_ibfk_2` FOREIGN KEY (`AdminStatusID`) REFERENCES `tblAdminStatus` (`AdminStatusID`) ON DELETE CASCADE;
+ALTER TABLE `tblInstitutionUser`
+  ADD CONSTRAINT `tblInstitutionUser_ibfk_1` FOREIGN KEY (`InstitutionID`) REFERENCES `tblInstitution` (`InstitutionID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `tblInstitutionUser_ibfk_2` FOREIGN KEY (`InstitutionUserStatusID`) REFERENCES `tblInstitutionUserStatus` (`InstitutionUserStatusID`) ON DELETE CASCADE;
 
 --
 -- Tablo kısıtlamaları `tblStatusAuth`
 --
 ALTER TABLE `tblStatusAuth`
-  ADD CONSTRAINT `tblStatusAuth_ibfk_1` FOREIGN KEY (`AdminStatusID`) REFERENCES `tblAdminStatus` (`AdminStatusID`) ON DELETE CASCADE;
+  ADD CONSTRAINT `tblStatusAuth_ibfk_1` FOREIGN KEY (`InstitutionUserStatusID`) REFERENCES `tblInstitutionUserStatus` (`InstitutionUserStatusID`) ON DELETE CASCADE;
 
 --
 -- Tablo kısıtlamaları `tblUserDetails`
