@@ -7,7 +7,7 @@ const institutionTransactions = dbFactory('institutionTransactions');
 
 router.get('/institution', async (req, res) => {
     try {
-        const response = await institutionTransactions.all();
+        const response = await institutionTransactions.list();
         res.send(response);
     } catch (error) {
         res.status(error.status).send({ message: error.message });
