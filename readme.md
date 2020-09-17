@@ -2,7 +2,7 @@
 
 Deploy methods of MyFis REST API project are given below.
 
-### Project Publishing Instructions
+## Project Publishing Instructions
 The project can be published in two different ways.
 * Docker
 * NPM
@@ -48,3 +48,7 @@ As a developer, to start the project and do the test operations, first go to the
   $ npm run start:dev
   
 ```
+
+## Useful resources
+* [API Documentation](https://doc-myfis-serve.herokuapp.com/)
+* [Changelog](https://github.com/ismetkizgin/MyFIS-Serve/blob/master/CHANGELOG.md)
