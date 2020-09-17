@@ -140,7 +140,7 @@ CREATE TABLE `tblSlide` (
 CREATE TABLE `tblInstitution` (
   `InstitutionID` int NOT NULL,
   `InstitutionName` varchar(30) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `InstitutionNo` bigint DEFAULT NULL,
+  `InstitutionPhone` varchar(11) DEFAULT NULL,
   `InstitutionEmail` varchar(40) COLLATE utf8_turkish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
