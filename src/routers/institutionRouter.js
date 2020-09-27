@@ -14,7 +14,7 @@ router.get('/institution', async (req, res) => {
     }
 });
 
-router.post('/institution', institutionValidator.add, async (req, res) => {
+router.post('/institution', verifyToken,institutionValidator.add, async (req, res) => {
     try {
         const response = await institutionTransactions.insert(req.body);
         res.json({message:response.message});
@@ -22,7 +22,7 @@ router.post('/institution', institutionValidator.add, async (req, res) => {
         res.status(error.status).json({ message: error.message });
     }
 });
-router.put('/institution', institutionValidator.update, async (req, res) => {
+router.put('/institution', verifyToken,institutionValidator.update, async (req, res) => {
     try {
         const response = await institutionTransactions.update(req.body);
         res.json({message:response.message});

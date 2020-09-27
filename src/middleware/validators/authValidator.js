@@ -4,11 +4,10 @@ import joi from 'joi';
 module.exports = {
     login: async (req, res, next) => {
         try {
-            const loginSchema = joi.object({
+            await joi.object({
                UserIdentityNo: joi.number().min(10000000000).max(99999999999).required(),
                UserPassword: joi.string().max(99).required()
-            });
-            await loginSchema.validateAsync(req.body);
+            }).validateAsync(req.body);
             next();
         } catch (error) {
             res.status(validateMessage.status).send({ message: validateMessage.message });
@@ -17,7 +16,7 @@ module.exports = {
 
     signUp: async (req, res, next) => {
         try {
-            const signUpSchema = joi.object({
+             await joi.object({
                 UserFirstName:joi.string().min(3).pattern(new RegExp('^[A-Za-zÇçÖöŞşÜüĞğİı]+$')).required(),
                 UserLastName:joi.string().min(3).pattern(new RegExp('^[A-Za-zÇçÖöŞşÜüĞğİı]+$')).required(),
                 UserIdentityNo: joi.number().min(10000000000).max(99999999999).required(),
@@ -30,8 +29,7 @@ module.exports = {
                 UserAdressApartmentName: joi.string().min(3).pattern(new RegExp('^[A-Za-zÇçÖöŞşÜüĞğİı]+$')).required(),
                 UserAdressNo: joi.number().required(),
                 UserFamilyPeopleCount: joi.number().required()
-            });
-            await signUpSchema.validateAsync(req.body);
+            }).validateAsync(req.body);
             next();
         } catch (error) {
             res.status(validateMessage.status).send({ message: validateMessage.message });
@@ -40,10 +38,9 @@ module.exports = {
 
     deleteMyAccount: async (req, res, next) => {
         try {
-            const deleteSchema = joi.object({
+            await joi.object({
                 UserIdentityNo: joi.number().min(10000000000).max(99999999999).required(),
-            });
-            await deleteSchema.validateAsync(req.body);
+            }).validateAsync(req.body);
             next();
         } catch (error) {
             res.status(validateMessage.status).send({ message: validateMessage.message });
