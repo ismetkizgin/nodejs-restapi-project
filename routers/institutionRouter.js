@@ -1,41 +1,41 @@
-import express from 'express'
-import { verifyToken, institutionValidator } from '../middleware'
-import dbFactory from '../database'
+const router = require('express')();
+const { validator, verifyToken } = require('../middleware');
+const institutionValidator = validator.institutionValidator;
+const tokenControl = verifyToken.tokenControl;
+const TransactionsFactory = require('../database/transactionFactory');
+const institutionTransactions = TransactionsFactory.creating('institutionTransactions');
 
-const router = express();
-const institutionTransactions = dbFactory('institutionTransactions');
-
-router.get('/institution', async (req, res) => {
+router.get('/institution', tokenControl, async (req, res) => {
     try {
         const response = await institutionTransactions.list();
         res.json(response);
     } catch (error) {
-        res.status(error.status).json({ message: error.message });
+        res.status(error.status).json(error.message);
     }
 });
 
-router.post('/institution', verifyToken,institutionValidator.add, async (req, res) => {
+router.post('/institution', tokenControl, institutionValidator.add, async (req, res) => {
     try {
         const response = await institutionTransactions.insert(req.body);
-        res.json({message:response.message});
+        res.json(response.message);
     } catch (error) {
-        res.status(error.status).json({ message: error.message });
+        res.status(error.status).json(error.message);
     }
 });
-router.put('/institution', verifyToken,institutionValidator.update, async (req, res) => {
+router.put('/institution', tokenControl, institutionValidator.update, async (req, res) => {
     try {
         const response = await institutionTransactions.update(req.body);
-        res.json({message:response.message});
+        res.json(response.message);
     } catch (error) {
-        res.status(error.status).json({ message: error.message });
+        res.status(error.status).json(error.message);
     }
 });
-router.delete('/institution', verifyToken, institutionValidator.delete, async (req, res) => {
+router.delete('/institution', tokenControl, institutionValidator.delete, async (req, res) => {
     try {
         const response = await institutionTransactions.delete(req.body.InstitutionID);
-        res.json({message:response.message});
+        res.json(response.message);
     } catch (error) {
-        res.status(error.status).json({ message: error.message });
+        res.status(error.status).json(error.message);
     }
 });
 
