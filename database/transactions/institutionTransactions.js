@@ -25,9 +25,9 @@ class InstitutionTransactions {
             mysqlDataContext.query('INSERT INTO tblInstitution SET ?', [data], (error, result) => {
                 if (!error)
                     if (result.affectedRows != 0)
-                        resolve(institutionMessage.insert.Ok);
+                        resolve('Institution added.');
                     else
-                        reject(institutionMessage.insert.Internal_Server_Error);
+                        reject({ status: HttpStatusCode.INTERNAL_SERVER_ERROR, message: 'There was an error adding Institution !' });
                 else
                     reject({ status: 500, message: error.message });
             });
@@ -39,9 +39,9 @@ class InstitutionTransactions {
             mysqlDataContext.query('UPDATE tblInstitution SET ? WHERE InstitutionID = ?', [data, data.InstitutionID], (error, result) => {
                 if (!error)
                     if (result.affectedRows != 0)
-                        resolve(institutionMessage.update.Ok);
+                        resolve('Institution registration has taken place.');
                     else
-                        reject(institutionMessage.update.Internal_Server_Error);
+                        reject({ status: HttpStatusCode.INTERNAL_SERVER_ERROR, message: 'The Institution has been updated.' });
                 else
                     reject({ status: 500, message: error.message });
             });
@@ -53,9 +53,9 @@ class InstitutionTransactions {
             mysqlDataContext.query('DELETE FROM tblInstitution WHERE InstitutionID = ?', [InstitutionID], (error, result) => {
                 if (!error)
                     if (result.affectedRows != 0)
-                        resolve(institutionMessage.delete.Ok);
+                        resolve('Institution deletion has occurred.');
                     else
-                        resolve(institutionMessage.delete.Internal_Server_Error);
+                        resolve({ status: HttpStatusCode.INTERNAL_SERVER_ERROR, message: 'An error occurred during Institution deletion !' });
                 else
                     reject({ status: 500, message: error.message });
             });
