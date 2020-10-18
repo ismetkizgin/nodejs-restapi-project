@@ -8,7 +8,7 @@ class InstitutionTransactions {
 
     listAsync() {
         return new Promise((resolve, reject) => {
-            mysqlDataContext.query('SELECT * FROM tblInstitution order by InstitutionID desc', (error, result) => {
+            this._datacontext.query('SELECT * FROM tblInstitution order by InstitutionID desc', (error, result) => {
                 if (!error)
                     if (result != null)
                         resolve(result);
@@ -22,7 +22,7 @@ class InstitutionTransactions {
 
     insertAsync(data) {
         return new Promise((resolve, reject) => {
-            mysqlDataContext.query('INSERT INTO tblInstitution SET ?', [data], (error, result) => {
+            this._datacontext.query('INSERT INTO tblInstitution SET ?', [data], (error, result) => {
                 if (!error)
                     if (result.affectedRows != 0)
                         resolve('Institution added.');
@@ -36,7 +36,7 @@ class InstitutionTransactions {
 
     updateAsync(data) {
         return new Promise((resolve, reject) => {
-            mysqlDataContext.query('UPDATE tblInstitution SET ? WHERE InstitutionID = ?', [data, data.InstitutionID], (error, result) => {
+            this._datacontext.query('UPDATE tblInstitution SET ? WHERE InstitutionID = ?', [data, data.InstitutionID], (error, result) => {
                 if (!error)
                     if (result.affectedRows != 0)
                         resolve('Institution registration has taken place.');
@@ -50,7 +50,7 @@ class InstitutionTransactions {
 
     deleteAsync(InstitutionID) {
         return new Promise((resolve, reject) => {
-            mysqlDataContext.query('DELETE FROM tblInstitution WHERE InstitutionID = ?', [InstitutionID], (error, result) => {
+            this._datacontext.query('DELETE FROM tblInstitution WHERE InstitutionID = ?', [InstitutionID], (error, result) => {
                 if (!error)
                     if (result.affectedRows != 0)
                         resolve('Institution deletion has occurred.');

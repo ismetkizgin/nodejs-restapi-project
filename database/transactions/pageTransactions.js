@@ -9,13 +9,13 @@ class PageTransactions {
     allAsync(piece) {
         return new Promise((resolve, reject) => {
             const limit = piece != null ? `LIMIT ${piece}` : ''
-            mysqlDataContext.query(`SELECT * FROM tblPage order by PageID desc ${limit}`, (error, result) => {
+            this._datacontext.query(`SELECT * FROM tblPage order by PageID desc ${limit}`, (error, result) => {
                 if (!error) {
                     if (result != null) {
                         resolve(result);
                     }
                     else {
-                        resolve({status: HttpStatusCode.NOT_FOUND, message: 'No content available !' });
+                        resolve({ status: HttpStatusCode.NOT_FOUND, message: 'No content available !' });
                     }
                 }
                 else
@@ -26,7 +26,7 @@ class PageTransactions {
 
     whereStatusAsync(PageStatusID) {
         return new Promise((resolve, reject) => {
-            mysqlDataContext.query('SELECT * FROM tblPage where PageStatusID=? order by PageID desc', [PageStatusID], (error, result) => {
+            this._datacontext.query('SELECT * FROM tblPage where PageStatusID=? order by PageID desc', [PageStatusID], (error, result) => {
                 if (!error) {
                     if (result != null) {
                         resolve(result);
@@ -43,7 +43,7 @@ class PageTransactions {
 
     insertAsync(data) {
         return new Promise((resolve, reject) => {
-            mysqlDataContext.query('INSERT INTO tblPage SET ?', data, (error, result) => {
+            this._datacontext.query('INSERT INTO tblPage SET ?', data, (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
                         resolve('Page added.');
@@ -61,7 +61,7 @@ class PageTransactions {
     updateAsync(data) {
         return new Promise((resolve, reject) => {
             data.SlideURL = data.SlideURL != null ? data.SlideURL : null;
-            mysqlDataContext.query('UPDATE tblPage SET PageTitle=:PageTitle, PageContent=:PageContent, PageDateTime=:PageDateTime, PagePicture=:PagePicture, PageStatusID=:PageStatusID, PageDescription=:PageDescription, PageKeywords=:PageKeywords where PageID=:PageID', data, (error, result) => {
+            this._datacontext.query('UPDATE tblPage SET PageTitle=:PageTitle, PageContent=:PageContent, PageDateTime=:PageDateTime, PagePicture=:PagePicture, PageStatusID=:PageStatusID, PageDescription=:PageDescription, PageKeywords=:PageKeywords where PageID=:PageID', data, (error, result) => {
                 if (!error) {
                     if (result.affectedRows != 0) {
                         resolve('The page has been updated.');
@@ -78,7 +78,7 @@ class PageTransactions {
 
     deleteAsync(PageID) {
         return new Promise((resolve, reject) => {
-            mysqlDataContext.query('DELETE FROM tblPage WHERE PageID = ?', [PageID], (error, result) => {
+            this._datacontext.query('DELETE FROM tblPage WHERE PageID = ?', [PageID], (error, result) => {
                 if (!error) {
                     if (result[0] != null) {
                         resolve(result[0]);

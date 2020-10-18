@@ -5,6 +5,7 @@ class SlideTransactions {
     constructor() {
         this._datacontext = mysqlDataContext.connection();
     }
+    
     allAsync() {
         return new Promise((resolve, reject) => {
             mysqlDataContext.query('SELECT * FROM tblSlide order by SlideID desc', (error, result) => {

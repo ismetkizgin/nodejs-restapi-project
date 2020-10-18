@@ -8,7 +8,7 @@ class UserTransactions {
 
     loginAsync (data) {
         return new Promise((resolve, reject) => {
-            mysqlDataContext.query('CALL UserLogin(?, ?)', [data.UserIdentityNo, data.UserPassword], (error, result) => {
+            this._datacontext.query('CALL UserLogin(?, ?)', [data.UserIdentityNo, data.UserPassword], (error, result) => {
                 if (!error)
                     if (result[0][0] != null)
                         resolve(result[0][0]);
@@ -19,22 +19,24 @@ class UserTransactions {
             });
         });
     }
+
     signupAsync (data) {
         return new Promise((resolve, reject) => {
-            mysqlDataContext.query('CALL UserSignUp(?,?,?,?,?,?,?,?,?,?,?,?)', [data.UserFirstName, data.UserLastName, data.UserIdentityNo, data.UserPassword, data.UserAdressCity, data.UserAdressDistrict, data.UserAdressStreet, data.UserAdressNo, data.UserAdressApartmentName, data.UserEmail, data.UserPhone, data.UserFamilyPeopleCount], (error, result) => {
+            this._datacontext.query('CALL UserSignUp(?,?,?,?,?,?,?,?,?,?,?,?)', [data.UserFirstName, data.UserLastName, data.UserIdentityNo, data.UserPassword, data.UserAdressCity, data.UserAdressDistrict, data.UserAdressStreet, data.UserAdressNo, data.UserAdressApartmentName, data.UserEmail, data.UserPhone, data.UserFamilyPeopleCount], (error, result) => {
                 if (!error)
-                    if (result[0][0]?.UserID != null)
+                    if (result[0][0].UserID != null)
                         resolve('User registration has taken place.');
                     else
                         reject({ status: HttpStatusCode.NOT_FOUND, message: 'Error while registering user !' });
                 else
-                    reject(error.errno == 1644 ? userMessage.signUp.Conflict : { status: 500, message: error.message });
+                    reject(error.errno == 1644 ? HttpStatusCode.CONFLICT : { status: 500, message: error.message });
             });
         });
     }
+    
     findUserIdentityNoAsync(UserIdentityNo) {
         return new Promise((resolve, reject) => {
-            mysqlDataContext.query('SELECT * FROM tblUser WHERE UserIdentityNo = ?', [UserIdentityNo], (error, result) => {
+            this._datacontext.query('SELECT * FROM tblUser WHERE UserIdentityNo = ?', [UserIdentityNo], (error, result) => {
                 if (!error)
                     if (result[0] != null)
                         resolve(result[0]);
@@ -45,9 +47,10 @@ class UserTransactions {
             });
         });
     }
+    
     deleteAsync (UserIdentityNo) {
         return new Promise((resolve, reject) => {
-            mysqlDataContext.query('DELETE FROM tblUser WHERE UserIdentityNo = ?', [UserIdentityNo], (error, result) => {
+            this._datacontext.query('DELETE FROM tblUser WHERE UserIdentityNo = ?', [UserIdentityNo], (error, result) => {
                 console.log(result);
                 if (!error)
                     if (result.affectedRows != 0)

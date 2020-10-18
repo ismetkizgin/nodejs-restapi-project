@@ -8,7 +8,7 @@ class InstitutionUserTransactions {
 
     loginAsync(data) {
         return new Promise((resolve, reject) => {
-            mysqlDataContext.query('CALL InstitutionUserLogin(?, ?)', [data.UserIdentityNo, data.UserPassword], (error, result) => {
+            this._datacontext.query('CALL InstitutionUserLogin(?, ?)', [data.UserIdentityNo, data.UserPassword], (error, result) => {
                 if (!error)
                     if (result[0][0] != null)
                         resolve(result[0][0]);

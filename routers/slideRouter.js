@@ -1,24 +1,24 @@
-const express = require('express');
-const dbFactory = require('../database');
-const { verifyToken, slideValidator } = require('../middleware');
+const router = require('express')();
+const TransactionsFactory = require('../database/transactionFactory');
+const slideTransactions = TransactionsFactory.creating('slideTransactions');
+const { validators, verifyToken } = require('../middleware');
+const slideValidator = validators.slideValidator;
+const tokenControl = verifyToken.tokenControl;
 const HttpStatusCode = require('http-status-codes');
-
-const router = express();
-const slideTransactions = dbFactory('slideTransactions');
 
 router.get('/slide', async (req, res) => {
 	try {
-		const response = await slideTransactions.all();
+		const response = await slideTransactions.allAsync();
 		res.json(response);
 	} catch (error) {
 		res.status(error.status).json(error.message);
 	}
 });
 
-router.post('/slide/add', verifyToken, slideValidator.sliderAdd, async (req, res) => {
+router.post('/slide/add', tokenControl, slideValidator.sliderAdd, async (req, res) => {
 	try {
 		if (req.decode.UserStatus == 'Admin') {
-			const response = await slideTransactions.insert(req.body);
+			const response = await slideTransactions.insertAsync(req.body);
 			res.json(response);
 		} else {
 			res.status(HttpStatusCode.BAD_REQUEST).json('Unauthorized transaction !');

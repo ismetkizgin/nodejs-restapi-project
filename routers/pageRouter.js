@@ -1,12 +1,10 @@
-const express = require('express');
-const dbFactory = require('../database');
-
-const router = express();
-const pageTransactions = dbFactory('pageTransactions');
+const router = require('express')();
+const TransactionsFactory = require('../database/transactionFactory');
+const pageTransactions = TransactionsFactory.creating('pageTransactions');
 
 router.get('/news', async (req, res) => {
     try {
-        const response = await pageTransactions.whereStatus(1);
+        const response = await pageTransactions.whereStatusAsync(1);
         res.json(response);
     } catch (error) {
         res.status(error.status).json(error.message);
@@ -15,7 +13,7 @@ router.get('/news', async (req, res) => {
 
 router.get('/rescue-works', async (req, res) => {
     try {
-        const response = await pageTransactions.whereStatus(2);
+        const response = await pageTransactions.whereStatusAsync(2);
         res.json(response);
     } catch (error) {
         res.status(error.status).json(error.message);
@@ -24,7 +22,7 @@ router.get('/rescue-works', async (req, res) => {
 
 router.get('/page/:piece', async (req, res) => {
     try {
-        const response = await pageTransactions.all(req.params.piece);
+        const response = await pageTransactions.allAsync(req.params.piece);
         res.json(response);
     } catch (error) {
         res.status(error.status).json(error.message);
