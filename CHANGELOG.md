@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.2.1 (2020-10-18)
+
+
+### Bug Fixes
+
+* project infrastructure revised ([f1a22fb](https://github.com/ismetkizgin/MyFIS-Serve/commit/f1a22fb56ab1c06c5d3f92a3409f2de5227d2dc1))
+
+
 ## [1.2.0](https://github.com/ismetkizgin/Serve/compare/v1.0.0...v1.2.0) (2020-09-17)
 
 
