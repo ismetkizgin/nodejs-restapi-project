@@ -1,6 +1,6 @@
-# MyFIS RESTFUL API Project
+# NodeJS REST API Project
 
-Deploy methods of MyFis REST API project are given below.
+Deploy methods of NodeJS REST API project are given below.
 
 ## Project Publishing Instructions
 The project can be published in two different ways.
@@ -50,5 +50,5 @@ As a developer, to start the project and do the test operations, first go to the
 ```
 
 ## Useful resources
-* [API Documentation](https://doc-myfis-serve.herokuapp.com/)
-* [Changelog](https://github.com/ismetkizgin/MyFIS-Serve/blob/master/CHANGELOG.md)
+* [API Documentation](https://doc-nodejs-restapi-project.herokuapp.com/)
+* [Changelog](https://github.com/ismetkizgin/nodejs-restapi-project/blob/master/CHANGELOG.md)
