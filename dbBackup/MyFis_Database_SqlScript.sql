@@ -86,8 +86,8 @@ DELIMITER ;
 --
 
 CREATE TABLE `tblInstitutionUserStatus` (
-  `InstitutionUserStatusID` int NOT NULL,
-  `InstitutionUserStatusName` varchar(20) COLLATE utf8_turkish_ci DEFAULT NULL
+  `InstitutionUserStatusName` varchar(20) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `InstitutionUserStatusNumber` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 -- --------------------------------------------------------
@@ -157,20 +157,8 @@ CREATE TABLE `tblInstitutionUser` (
   `InstitutionUserIdentityNo` bigint DEFAULT NULL,
   `InstitutionUserEmail` varchar(40) COLLATE utf8_turkish_ci DEFAULT NULL,
   `InstitutionUserPassword` varchar(99) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `InstitutionUserStatusID` int DEFAULT NULL,
+  `InstitutionUserStatusName` varchar(20) COLLATE utf8_turkish_ci DEFAULT NULL,
   `InstitutionID` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
-
--- --------------------------------------------------------
-
---
--- Tablo için tablo yapısı `tblStatusAuth`
---
-
-CREATE TABLE `tblStatusAuth` (
-  `StatusAuthID` int NOT NULL,
-  `StatusAuthName` varchar(40) COLLATE utf8_turkish_ci DEFAULT NULL,
-  `InstitutionUserStatusID` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
 
 -- --------------------------------------------------------
@@ -252,7 +240,7 @@ CREATE TABLE `tblUserState` (
 -- Tablo için indeksler `tblInstitutionUserStatus`
 --
 ALTER TABLE `tblInstitutionUserStatus`
-  ADD PRIMARY KEY (`InstitutionUserStatusID`);
+  ADD PRIMARY KEY (`InstitutionUserStatusName`);
 
 --
 -- Tablo için indeksler `tblPage`
@@ -286,13 +274,6 @@ ALTER TABLE `tblInstitutionUser`
   ADD PRIMARY KEY (`InstitutionUserID`),
   ADD UNIQUE KEY `InstitutionUserStatusID` (`InstitutionUserStatusID`),
   ADD UNIQUE KEY `InstitutionID` (`InstitutionID`);
-
---
--- Tablo için indeksler `tblStatusAuth`
---
-ALTER TABLE `tblStatusAuth`
-  ADD PRIMARY KEY (`StatusAuthID`),
-  ADD UNIQUE KEY `InstitutionUserStatusID` (`InstitutionUserStatusID`);
 
 --
 -- Tablo için indeksler `tblUser`
